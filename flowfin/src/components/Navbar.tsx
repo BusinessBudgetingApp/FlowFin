@@ -1,10 +1,11 @@
 import avatar from '../../public/avatar.png'
 import AI from '../../public/AI.png'
+// import MainContent from './MainContent'
 
 export default function Navbar() {
     return (
         <>
-            <div className="main-container w-full h-[100vh] bg-[#F6F6F6]">
+            <nav className='main-container w-full h-fit bg-[#F6F6F6]'>
                 <div className="navbar-container flex justify-between px-10 py-4 bg-white items-center">
                     <h1 className='header-title font-bold text-[24px] text-[#212121]'>Dashboard</h1>
                     <div className="flex items-center gap-5">
@@ -22,7 +23,8 @@ export default function Navbar() {
                         </div>
                     </div>
                 </div>
-            </div>
+                {/* <MainContent /> */}
+            </nav>
         </>
     )
 }
