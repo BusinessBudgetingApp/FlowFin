@@ -1,13 +1,13 @@
 import { AddCircle } from "iconsax-react";
-import DataTable from "./DataTable";
-import Pagination from "./Pagination";
+import DataTable from "./DataTablePendapatan";
+import Pagination from "./PaginationPendapatan";
 
-export default function MainContent() {
+export default function MainContentPendapatan() {
     return (
         <>
-            <div className="main-content px-6 py-6 h-[100vh]">
+            <div className="main-content px-6 py-6 h-fit">
                 <div className="content bg-white p-4 rounded-md">
-                    <h1 className='text-[18px] font-bold text-[#212121] pb-4'>Daftar Transaksi Pengeluaran</h1>
+                    <h1 className='text-[18px] font-bold text-[#212121] pb-4'>Daftar Transaksi Pendapatan</h1>
                     <div className="flex w-full pb-2 gap-5 items-center justify-between">
                         <form action="">
                             <input

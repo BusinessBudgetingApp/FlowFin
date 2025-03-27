@@ -5,7 +5,7 @@ import AI from '../../public/AI.png'
 export default function Navbar() {
     return (
         <>
-            <nav className=' sticky top-0 z-10 main-container w-full h-fit bg-[#F6F6F6]'>
+            <nav className='sticky top-0 z-10 main-container w-full h-fit bg-[#F6F6F6]'>
                 <div className="navbar-container flex justify-between px-10 py-4 bg-white items-center">
                     <h1 className='header-title font-bold text-[24px] text-[#212121]'>Dashboard</h1>
                     <div className="flex items-center gap-5">

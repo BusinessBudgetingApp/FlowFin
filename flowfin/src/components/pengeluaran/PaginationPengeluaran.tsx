@@ -1,6 +1,6 @@
 import { ArrowDown2, ArrowLeft2, ArrowRight2 } from "iconsax-react";
 
-export default function Pagination() {
+export default function PaginationPengeluaran() {
     return (
         <>
             <div className="flex items-center justify-between">
