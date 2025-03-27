@@ -32,7 +32,7 @@ export default function MainContent() {
                                 </div>
                             </div>
                             <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                                <button className='btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px]  flex gap-2 items-center'><AddCircle size="20" color="#ffff" variant="Bold" />Tambah Data</button>
+                                <button className='btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center'><AddCircle size="20" color="#ffff" variant="Bold" />Tambah Data</button>
                             </div>
                         </div>
                     </div>

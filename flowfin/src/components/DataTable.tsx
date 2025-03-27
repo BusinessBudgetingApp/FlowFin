@@ -16,11 +16,11 @@ export default function DataTable() {
                 </thead>
                 <tbody>
                     <tr className='border-b-2 border-gray-200'>
-                        <td className='index-info px-3 text-[14px] font-medium'>1</td>
-                        <td className='tanggal px-3 text-[14px] font-medium'>26/03/2025</td>
-                        <td className='kategori-penjualan px-3 text-[14px] font-medium'>Penjualan Video Tutorial</td>
-                        <td className='jumlah px-3 text-[14px] font-medium'>Rp. 350.000</td>
-                        <td className='deskripsi px-3 text-[14px] font-medium'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
+                        <td className='index-info px-3 text-[14px] font-normal'>1</td>
+                        <td className='tanggal px-3 text-[14px] font-normal'>26/03/2025</td>
+                        <td className='kategori-penjualan px-3 text-[14px] font-normal'>Penjualan Video Tutorial</td>
+                        <td className='jumlah px-3 text-[14px] font-normal'>Rp. 350.000</td>
+                        <td className='deskripsi px-3 text-[14px] font-normal'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
                         <td className='aksi'>
                             <button className='p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white'>
                                 <Edit2 size="20" color="#797B8C" variant="Bold" />
@@ -31,11 +31,11 @@ export default function DataTable() {
                         </td>
                     </tr>
                     <tr className='border-b-2 border-gray-200'>
-                        <td className='index-info px-3 text-[14px] font-medium'>1</td>
-                        <td className='tanggal px-3 text-[14px] font-medium'>26/03/2025</td>
-                        <td className='kategori-penjualan px-3 text-[14px] font-medium'>Penjualan Video Tutorial</td>
-                        <td className='jumlah px-3 text-[14px] font-medium'>Rp. 350.000</td>
-                        <td className='deskripsi px-3 text-[14px] font-medium'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
+                        <td className='index-info px-3 text-[14px] font-normal'>1</td>
+                        <td className='tanggal px-3 text-[14px] font-normal'>26/03/2025</td>
+                        <td className='kategori-penjualan px-3 text-[14px] font-normal'>Penjualan Video Tutorial</td>
+                        <td className='jumlah px-3 text-[14px] font-normal'>Rp. 350.000</td>
+                        <td className='deskripsi px-3 text-[14px] font-normal'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
                         <td className='aksi'>
                             <button className='p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white'>
                                 <Edit2 size="20" color="#797B8C" variant="Bold" />
@@ -46,11 +46,11 @@ export default function DataTable() {
                         </td>
                     </tr>
                     <tr className='border-b-2 border-gray-200'>
-                        <td className='index-info px-3 text-[14px] font-medium'>1</td>
-                        <td className='tanggal px-3 text-[14px] font-medium'>26/03/2025</td>
-                        <td className='kategori-penjualan px-3 text-[14px] font-medium'>Penjualan Video Tutorial</td>
-                        <td className='jumlah px-3 text-[14px] font-medium'>Rp. 350.000</td>
-                        <td className='deskripsi px-3 text-[14px] font-medium'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
+                        <td className='index-info px-3 text-[14px] font-normal'>1</td>
+                        <td className='tanggal px-3 text-[14px] font-normal'>26/03/2025</td>
+                        <td className='kategori-penjualan px-3 text-[14px] font-normal'>Penjualan Video Tutorial</td>
+                        <td className='jumlah px-3 text-[14px] font-normal'>Rp. 350.000</td>
+                        <td className='deskripsi px-3 text-[14px] font-normal'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
                         <td className='aksi'>
                             <button className='p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white'>
                                 <Edit2 size="20" color="#797B8C" variant="Bold" />
@@ -61,11 +61,11 @@ export default function DataTable() {
                         </td>
                     </tr>
                     <tr className='border-b-2 border-gray-200'>
-                        <td className='index-info px-3 text-[14px] font-medium'>1</td>
-                        <td className='tanggal px-3 text-[14px] font-medium'>26/03/2025</td>
-                        <td className='kategori-penjualan px-3 text-[14px] font-medium'>Penjualan Video Tutorial</td>
-                        <td className='jumlah px-3 text-[14px] font-medium'>Rp. 350.000</td>
-                        <td className='deskripsi px-3 text-[14px] font-medium'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
+                        <td className='index-info px-3 text-[14px] font-normal'>1</td>
+                        <td className='tanggal px-3 text-[14px] font-normal'>26/03/2025</td>
+                        <td className='kategori-penjualan px-3 text-[14px] font-normal'>Penjualan Video Tutorial</td>
+                        <td className='jumlah px-3 text-[14px] font-normal'>Rp. 350.000</td>
+                        <td className='deskripsi px-3 text-[14px] font-normal'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
                         <td className='aksi'>
                             <button className='p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white'>
                                 <Edit2 size="20" color="#797B8C" variant="Bold" />
@@ -76,11 +76,11 @@ export default function DataTable() {
                         </td>
                     </tr>
                     <tr className='border-b-2 border-gray-200'>
-                        <td className='index-info px-3 text-[14px] font-medium'>1</td>
-                        <td className='tanggal px-3 text-[14px] font-medium'>26/03/2025</td>
-                        <td className='kategori-penjualan px-3 text-[14px] font-medium'>Penjualan Video Tutorial</td>
-                        <td className='jumlah px-3 text-[14px] font-medium'>Rp. 350.000</td>
-                        <td className='deskripsi px-3 text-[14px] font-medium'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
+                        <td className='index-info px-3 text-[14px] font-normal'>1</td>
+                        <td className='tanggal px-3 text-[14px] font-normal'>26/03/2025</td>
+                        <td className='kategori-penjualan px-3 text-[14px] font-normal'>Penjualan Video Tutorial</td>
+                        <td className='jumlah px-3 text-[14px] font-normal'>Rp. 350.000</td>
+                        <td className='deskripsi px-3 text-[14px] font-normal'>Penjualan video tutorial membuat aplikasi manajemen kas berbasis web</td>
                         <td className='aksi'>
                             <button className='p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white'>
                                 <Edit2 size="20" color="#797B8C" variant="Bold" />
