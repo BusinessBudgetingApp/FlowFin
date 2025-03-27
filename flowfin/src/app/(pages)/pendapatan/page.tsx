@@ -1,4 +1,5 @@
 
+
 import { Pencil, PlusCircle, Trash } from "lucide-react";
 
 export default function Income() {
@@ -140,5 +141,6 @@ export default function Income() {
       </section>
     </div>
   )
+
 
 }
