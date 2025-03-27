@@ -1,7 +1,7 @@
 import { addDoc, collection } from "firebase/firestore";
 import { db } from "./firebase";
-import { Transaction } from "@/types/transaction";
+import { IncomeTransaction } from "@/types/transaction";
 
-export async function addData(transaction: Transaction) {
+export async function addData(transaction: IncomeTransaction) {
   await addDoc(collection(db, "transaction"), transaction);
 }

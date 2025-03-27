@@ -1,20 +1,27 @@
+"use client";
+
 import { addData } from "@/lib/firestore";
+import { usePathname } from "next/navigation";
 
 export default function AddData() {
+  const pathname = usePathname();
+  const baseRoute = pathname.split("/")[1];
+
   async function createPost(formData: FormData) {
-    "use server";
     const productName = formData.get("productName") as string;
     const amount = Number(formData.get("amount"));
     const category = formData.get("category") as string;
     const timestamp = new Date(formData.get("timestamp") as string);
+    const transactionType = baseRoute;
 
     const data = {
       productName,
       amount,
       category,
       timestamp,
+      transactionType,
     };
-    addData(data);
+    await addData(data);
   }
 
   return (
