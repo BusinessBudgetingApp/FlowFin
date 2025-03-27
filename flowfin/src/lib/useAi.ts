@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_KEY = "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";
+const API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY;
 
 export async function getAiRecommendation(financeData: {
   pendapatan: number;
