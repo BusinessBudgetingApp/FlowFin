@@ -1,6 +1,7 @@
 "use client";
 
 import { addData } from "@/lib/firestore";
+import { Timestamp } from "firebase/firestore";
 import { usePathname } from "next/navigation";
 
 export default function AddData() {
@@ -11,6 +12,7 @@ export default function AddData() {
     const productName = formData.get("productName") as string;
     const amount = Number(formData.get("amount"));
     const category = formData.get("category") as string;
+    const description = formData.get("description") as string;
     const timestamp = new Date(formData.get("timestamp") as string);
     const transactionType = baseRoute;
 
@@ -18,7 +20,8 @@ export default function AddData() {
       productName,
       amount,
       category,
-      timestamp,
+      description,
+      timestamp: Timestamp.fromDate(timestamp),
       transactionType,
     };
     await addData(data);
@@ -60,6 +63,17 @@ export default function AddData() {
                 type="text"
                 name="category"
                 id="category"
+                className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
+              />
+            </div>
+            <div className="grid grid-cols-1 gap-6">
+              <label className="text-gray-700" htmlFor="category">
+                Description
+              </label>
+              <input
+                type="area"
+                name="description"
+                id="description"
                 className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500"
               />
             </div>

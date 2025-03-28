@@ -1,6 +1,12 @@
 import { db } from "@/lib/firebase";
 import { IncomeTransaction } from "@/types/transaction";
-import { collection, onSnapshot, query, where } from "firebase/firestore";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
 export const useRealTimeUpdate = (categoryTransaction?: string) => {
@@ -10,6 +16,7 @@ export const useRealTimeUpdate = (categoryTransaction?: string) => {
     const q = query(
       collection(db, "transaction"),
       where("transactionType", "==", `${categoryTransaction}`)
+      // orderBy("timestamp", "desc")
     );
     const unsubscribe = onSnapshot(q, (snapshot) => {
       setTransactions(
