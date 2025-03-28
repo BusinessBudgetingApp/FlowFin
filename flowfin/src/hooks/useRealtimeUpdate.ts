@@ -1,24 +1,33 @@
 import { db } from "@/lib/firebase";
-import { Transaction } from "@/types/transaction";
-import { collection, onSnapshot } from "firebase/firestore";
+import { IncomeTransaction } from "@/types/transaction";
+import {
+  collection,
+  onSnapshot,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore";
 import { useEffect, useState } from "react";
 
-export const realTimeUpdate = () => {
-  const [transactions, setTransactions] = useState<Transaction[]>([]);
+export const useRealTimeUpdate = (categoryTransaction?: string) => {
+  const [transactions, setTransactions] = useState<IncomeTransaction[]>([]);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(
+    const q = query(
       collection(db, "transaction"),
-      (snapshot) => {
-        setTransactions(
-          snapshot.docs.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          })) as Transaction[]
-        );
-      }
+      where("transactionType", "==", `${categoryTransaction}`)
+      // orderBy("timestamp", "desc")
     );
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      setTransactions(
+        snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        })) as IncomeTransaction[]
+      );
+    });
 
     return () => unsubscribe();
   }, []);
+  return transactions;
 };
