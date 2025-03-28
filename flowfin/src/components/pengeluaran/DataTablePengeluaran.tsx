@@ -99,6 +99,9 @@ export default function DataTablePengeluaran({
               Tanggal
             </th>
             <th className="bg-gray-100 p-3 font-semibold text-center text-[14px]">
+              Nama Produk
+            </th>
+            <th className="bg-gray-100 p-3 font-semibold text-center text-[14px]">
               Kategori Pengeluaran
             </th>
             <th className="bg-gray-100 p-3 font-semibold text-center text-[14px]">
@@ -121,6 +124,9 @@ export default function DataTablePengeluaran({
                 </td>
                 <td className="tanggal px-3 text-[14px] font-normal">
                   {formatDate(data.timestamp)}
+                </td>
+                <td className="kategori-penjualan px-3 text-[14px] font-normal">
+                  {data.productName}
                 </td>
                 <td className="kategori-penjualan px-3 text-[14px] font-normal">
                   {data.category}

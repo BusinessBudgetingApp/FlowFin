@@ -113,8 +113,8 @@ export default function AddData() {
             <input
               placeholder="Nama Produk"
               type="text"
-              name="productname"
-              id="productname"
+              name="productName"
+              id="productName"
               className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
             />
           </div>
