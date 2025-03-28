@@ -7,7 +7,6 @@ import { IncomeTransaction } from "@/types/transaction";
 
 export default function MainContentPendapatan() {
   const transaction: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
-
   return (
     <>
       <div className="main-content px-6 py-6 h-fit w-full">
