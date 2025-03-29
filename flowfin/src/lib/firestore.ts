@@ -1,15 +1,16 @@
-import { addDoc, collection, doc, updateDoc, deleteDoc } from "firebase/firestore";
+import { addDoc, collection, getDocs, query } from "firebase/firestore";
 import { db } from "./firebase";
 import { IncomeTransaction } from "@/types/transaction";
 
+// fungsi add data ke firestore
 export async function addData(transaction: IncomeTransaction) {
   await addDoc(collection(db, "transaction"), transaction);
 }
 
-export async function updateData(id: string, transaction: Partial<IncomeTransaction>) {
-  await updateDoc(doc(db, "transaction", id), transaction);
-}
-
-export async function deleteData(id: string) {
-  await deleteDoc(doc(db, "transaction", id));
+// fungsi mengambil data dari firestore
+export async function getData() {
+  const q = query(collection(db, "transaction"));
+  const querySnapshot = await getDocs(q);
+  const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
+  return data as IncomeTransaction[];
 }
