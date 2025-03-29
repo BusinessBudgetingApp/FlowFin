@@ -11,9 +11,7 @@ export default function MainContentPendapatan() {
   const router = useRouter();
   const transactions: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
 
-  const handleAddClick = () => {
-    router.push("/pendapatan/add");
-  };
+
 
   return (
     <>
@@ -51,7 +49,7 @@ export default function MainContentPendapatan() {
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
                 <Link href="/pendapatan/add" passHref>
                   <button 
-                    onClick={handleAddClick}
+                
                     className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200"
                   >
                     <AddCircle size="20" color="#ffff" variant="Bold" />

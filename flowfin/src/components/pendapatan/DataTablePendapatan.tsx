@@ -101,7 +101,7 @@ export default function DataTablePendapatan({
                   {data.category}
                 </td>
                 <td className="jumlah px-3 text-[14px] font-normal">
-                  {data.amount}
+                Rp. {data.amount.toLocaleString('id-ID')}
                 </td>
                 <td className="deskripsi px-3 text-[14px] font-normal">
                   {data.description}

@@ -57,7 +57,7 @@ export default function AddData() {
 
       setTimeout(() => {
         router.push("/pendapatan");
-      }, 800);
+      });
 
     } catch (error) {
       console.error("Error saving data:", error);
