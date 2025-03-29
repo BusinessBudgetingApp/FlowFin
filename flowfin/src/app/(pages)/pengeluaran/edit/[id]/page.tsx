@@ -1,4 +1,4 @@
-// app/pendapatan/edit/[id]/page.tsx
+
 "use client";
 
 import { useEffect, useState } from "react";
@@ -11,7 +11,7 @@ import { updateData } from "@/lib/firestore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function EditPendapatan() {
+export default function EditPengeluaran() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -41,7 +41,7 @@ export default function EditPendapatan() {
           });
         } else {
           toast.error("Dokumen tidak ditemukan");
-          router.push("/pendapatan");
+          router.push("/pengeluaran");
         }
       } catch (error) {
         console.error("Error fetching document: ", error);
@@ -79,19 +79,19 @@ export default function EditPendapatan() {
       await updateData(id, formData);
       
       toast.update(toastId, {
-        render: "Perubahan berhasil disimpan!",
+        render: "Perubahan pengeluaran berhasil disimpan!",
         type: "success",
         isLoading: false,
         autoClose: 2000,
       });
 
       setTimeout(() => {
-        router.push("/pendapatan");
+        router.push("/pengeluaran");
       });
 
     } catch (error) {
       console.error("Error updating document: ", error);
-      toast.error("Gagal menyimpan perubahan", {
+      toast.error("Gagal menyimpan perubahan pengeluaran", {
         position: "top-right",
         autoClose: 3000,
       });
@@ -107,15 +107,15 @@ export default function EditPendapatan() {
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow">
       <h2 className="text-xl text-black font-semibold mb-4 flex items-center gap-2 border-b pb-2 border-gray-300">
         <span className="w-3 h-3 bg-teal-500 rounded-full"></span>
-        Edit Data Pendapatan
+        Edit Data Pengeluaran
       </h2>
 
       <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="flex gap-4">
           <div className="flex-1">
-            <label className="block text-gray-700">Nama Produk</label>
+            <label className="block text-gray-700">Nama Produk/Layanan <span className="text-red-500">*</span></label>
             <input
-              placeholder="Nama Produk"
+              placeholder="Nama Produk/Layanan"
               type="text"
               name="productName"
               value={formData.productName}
@@ -128,7 +128,7 @@ export default function EditPendapatan() {
 
         <div className="flex gap-4">
           <div className="flex-1">
-            <label className="block text-gray-700">Tanggal</label>
+            <label className="block text-gray-700">Tanggal <span className="text-red-500">*</span></label>
             <input
               type="date"
               name="timestamp"
@@ -140,28 +140,29 @@ export default function EditPendapatan() {
           </div>
 
           <div className="flex-1">
-            <label className="block text-gray-700">Kategori Pendapatan</label>
+            <label className="block text-gray-700">Kategori Pengeluaran <span className="text-red-500">*</span></label>
             <input
               name="category"
               value={formData.category}
               onChange={handleChange}
               type="text"
-              placeholder="Kategori Pendapatan"
+              placeholder="Kategori Pengeluaran"
               className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
               required
             />
           </div>
 
           <div className="flex-1">
-            <label className="block text-gray-700">Jumlah Pendapatan</label>
+            <label className="block text-gray-700">Jumlah Pengeluaran <span className="text-red-500">*</span></label>
             <input
               type="number"
               name="amount"
               value={formData.amount}
               onChange={handleChange}
-              placeholder="Jumlah Pendapatan"
+              placeholder="Jumlah Pengeluaran"
               className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
               required
+              min="0"
             />
           </div>
         </div>
@@ -175,14 +176,13 @@ export default function EditPendapatan() {
             name="description"
             value={formData.description}
             onChange={handleChange}
-            required
           />
         </div>
 
         <div className="flex justify-end gap-4">
           <button
             type="button"
-            onClick={() => router.push("/pendapatan")}
+            onClick={() => router.push("/pengeluaran")}
             className="bg-gray-300 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-400 transition-colors"
           >
             Batal

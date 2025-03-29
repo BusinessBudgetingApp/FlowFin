@@ -1,6 +1,7 @@
 import { formatDate } from "@/app/utils/formatDate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Edit2, Trash } from "iconsax-react";
+import Link from "next/link";
 
 export default function DataTablePengeluaran({
   data,
@@ -138,9 +139,11 @@ export default function DataTablePengeluaran({
                   {data.description}
                 </td>
                 <td className="aksi flex text-center">
-                  <button className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white">
-                    <Edit2 size="20" color="#797B8C" variant="Bold" />
-                  </button>
+                  <Link href={`/pengeluaran/edit/${data.id}`}>
+                    <button className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100">
+                      <Edit2 size="20" color="#797B8C" variant="Bold" />
+                    </button>
+                  </Link>
                   <button className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-red-100 hover:text-white">
                     <Trash size="20" color="#F74B4B" variant="Bold" />
                   </button>
