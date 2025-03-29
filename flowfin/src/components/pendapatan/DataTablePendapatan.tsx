@@ -1,91 +1,60 @@
+// DataTablePendapatan.tsx
 import { formatDate } from "@/app/utils/formatDate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Edit2, Trash } from "iconsax-react";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { deleteData } from "@/lib/firestore";
+import { toast } from "react-toastify";
 
 export default function DataTablePendapatan({
   item,
 }: {
   item: IncomeTransaction[];
 }) {
-  // const data = [
-  //   {
-  //     id: 1,
-  //     date: "01/03/2025",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 350.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi manajemen kas berbasis web",
-  //   },
-  //   {
-  //     id: 2,
-  //     date: "15/01/2025",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 370.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi pencatatan keuangan pribadi dengan react js",
-  //   },
-  //   {
-  //     id: 3,
-  //     date: "09/11/2025",
-  //     category: "Penjualan Source Code",
-  //     amount: "Rp. 700.000",
-  //     description: "Penjualan source code aplikasi manajemen berbasis web",
-  //   },
-  //   {
-  //     id: 4,
-  //     date: "18/12/2024",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 550.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi manajemen kas berbasis web",
-  //   },
-  //   {
-  //     id: 5,
-  //     date: "06/12/2024",
-  //     category: "Penjualan Source Code",
-  //     amount: "Rp. 400.000",
-  //     description: "Penjualan source code aplikasi persediaan barang",
-  //   },
-  //   {
-  //     id: 6,
-  //     date: "01/12/2024",
-  //     category: "Jasa Web Development",
-  //     amount: "Rp. 3.250.000",
-  //     description: "Pembuatan aplikasi antrian pengunjung",
-  //   },
-  //   {
-  //     id: 7,
-  //     date: "22/11/2024",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 1.000.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi pencatatan keuangan pribadi dengan next js",
-  //   },
-  //   {
-  //     id: 8,
-  //     date: "20/11/2024",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 750.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi manajemen kas berbasis web",
-  //   },
-  //   {
-  //     id: 9,
-  //     date: "13/10/2024",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 550.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi manajemen kas berbasis web",
-  //   },
-  //   {
-  //     id: 10,
-  //     date: "13/09/2024",
-  //     category: "Penjualan Video Tutorial",
-  //     amount: "Rp. 370.000",
-  //     description:
-  //       "Penjualan video tutorial membuat aplikasi manajemen kas berbasis web",
-  //   },
-  // ];
+  const router = useRouter();
+
+  const handleDelete = async (id?: string) => {
+    // 1. Validasi ID
+    if (!id) {
+      console.error("ID tidak tersedia");
+      toast.error("ID transaksi tidak valid", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+      return;
+    }
+  
+    // 2. Konfirmasi penghapusan
+    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data ini?");
+    if (!isConfirmed) return;
+  
+    try {
+      // Tampilkan toast loading
+      const toastId = toast.loading("Menghapus data...", {
+        position: "top-right",
+      });
+  
+      await deleteData(id);
+      
+      // Update toast menjadi sukses
+      toast.update(toastId, {
+        render: "Data berhasil dihapus!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
+  
+      router.refresh();
+      
+    } catch (error) {
+      console.error("Gagal menghapus data:", error);
+      toast.error("Terjadi kesalahan saat menghapus data", {
+        position: "top-right",
+        autoClose: 3000,
+      });
+    }
+  };
 
   return (
     <>
@@ -137,11 +106,16 @@ export default function DataTablePendapatan({
                 <td className="deskripsi px-3 text-[14px] font-normal">
                   {data.description}
                 </td>
-                <td className="aksi flex">
-                  <button className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100 hover:text-white">
-                    <Edit2 size="20" color="#797B8C" variant="Bold" />
-                  </button>
-                  <button className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-red-100 hover:text-white">
+                <td className="aksi flex justify-center">
+                  <Link href={`/pendapatan/edit/${data.id}`}>
+                    <button className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-gray-100">
+                      <Edit2 size="20" color="#797B8C" variant="Bold" />
+                    </button>
+                  </Link>
+                  <button 
+                    onClick={() => handleDelete(data.id)}
+                    className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-red-100"
+                  >
                     <Trash size="20" color="#F74B4B" variant="Bold" />
                   </button>
                 </td>

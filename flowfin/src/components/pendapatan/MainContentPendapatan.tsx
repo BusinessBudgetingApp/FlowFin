@@ -4,9 +4,17 @@ import DataTable from "./DataTablePendapatan";
 import Pagination from "./PaginationPendapatan";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 export default function MainContentPendapatan() {
-  const transaction: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+  const router = useRouter();
+  const transactions: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+
+  const handleAddClick = () => {
+    router.push("/pendapatan/add");
+  };
+
   return (
     <>
       <div className="main-content px-6 py-6 h-fit w-full">
@@ -41,14 +49,19 @@ export default function MainContentPendapatan() {
                 </div>
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                <button className="btn-add bg-[#00859B] text-white px-4  py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center">
-                  <AddCircle size="20" color="#ffff" variant="Bold" />
-                  Tambah Data
-                </button>
+                <Link href="/pendapatan/add" passHref>
+                  <button 
+                    onClick={handleAddClick}
+                    className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200"
+                  >
+                    <AddCircle size="20" color="#ffff" variant="Bold" />
+                    Tambah Data
+                  </button>
+                </Link>
               </div>
             </div>
           </div>
-          <DataTable item={transaction} />
+          <DataTable item={transactions} />
           <Pagination />
         </div>
       </div>
