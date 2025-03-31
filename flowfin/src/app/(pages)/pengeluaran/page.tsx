@@ -1,9 +1,9 @@
-import MainContent from "@/components/MainContent";
+import MainContentPengeluaran from "@/components/pengeluaran/MainContentPengeluaran";
 
 export default function page() {
     return (
         <>
-            <MainContent />
+            <MainContentPengeluaran />
         </>
     )
 }

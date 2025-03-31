@@ -5,6 +5,10 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
@@ -115,8 +119,10 @@
 @layer base {
   * {
     @apply border-border outline-ring/50;
+
   }
   body {
     @apply bg-background text-foreground;
   }
 }
+
