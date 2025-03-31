@@ -1,95 +1,116 @@
+
 "use client";
 
-import { addData } from "@/lib/firestore";
+import { useEffect, useState } from "react";
+import { useRouter, useParams } from "next/navigation";
+import { doc, getDoc } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import { IncomeTransaction } from "@/types/transaction";
 import { Timestamp } from "firebase/firestore";
-import { usePathname, useRouter } from "next/navigation";
-import { useEffect } from "react";
+import { updateData } from "@/lib/firestore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-export default function AddPengeluaran() {
-  const pathname = usePathname();
+export default function EditPengeluaran() {
   const router = useRouter();
-  const baseRoute = pathname.split("/")[1];
+  const params = useParams();
+  const id = params.id as string;
+
+  const [formData, setFormData] = useState<Partial<IncomeTransaction>>({
+    productName: "",
+    amount: 0,
+    category: "",
+    description: "",
+    timestamp: Timestamp.now(),
+  });
 
   useEffect(() => {
-    return () => {
-      toast.dismiss();
-    };
-  }, []);
-
-  async function createPost(formData: FormData) {
-    try {
-      const productName = formData.get("productName") as string;
-      const amount = Number(formData.get("amount"));
-      const category = formData.get("category") as string;
-      const description = formData.get("description") as string;
-      const timestamp = new Date(formData.get("timestamp") as string);
-      const transactionType = baseRoute;
-
-      // Validate required fields
-      if (!productName || !amount || !category || !timestamp) {
-        toast.error("Harap isi semua field yang wajib diisi", {
-          position: "top-right",
-          autoClose: 3000,
-        });
-        return;
+    const fetchData = async () => {
+      try {
+        const docRef = doc(db, "transaction", id);
+        const docSnap = await getDoc(docRef);
+        
+        if (docSnap.exists()) {
+          const data = docSnap.data() as IncomeTransaction;
+          setFormData({
+            productName: data.productName,
+            amount: data.amount,
+            category: data.category,
+            description: data.description,
+            timestamp: data.timestamp,
+          });
+        } else {
+          toast.error("Dokumen tidak ditemukan");
+          router.push("/pengeluaran");
+        }
+      } catch (error) {
+        console.error("Error fetching document: ", error);
+        toast.error("Gagal memuat data");
       }
+    };
 
-      const data = {
-        productName,
-        amount,
-        category,
-        description,
-        timestamp: Timestamp.fromDate(timestamp),
-        transactionType,
-      };
+    fetchData();
+  }, [id, router]);
 
-      // Show loading toast
-      const toastId = toast.loading("Menyimpan data pengeluaran...", {
-        position: "top-right",
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === "amount" ? Number(value) : value,
+    }));
+  };
+
+  const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const date = new Date(e.target.value);
+    setFormData(prev => ({
+      ...prev,
+      timestamp: Timestamp.fromDate(date),
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    try {
+      const toastId = toast.loading("Menyimpan perubahan...", {
+        position: "top-right"
       });
 
-      await addData(data);
+      await updateData(id, formData);
       
-      // Update toast to success
       toast.update(toastId, {
-        render: "Data pengeluaran berhasil disimpan!",
+        render: "Perubahan pengeluaran berhasil disimpan!",
         type: "success",
         isLoading: false,
         autoClose: 2000,
       });
 
-      // Redirect after success
       setTimeout(() => {
         router.push("/pengeluaran");
       });
 
     } catch (error) {
-      console.error("Error saving data:", error);
-      toast.error("Gagal menyimpan data pengeluaran", {
+      console.error("Error updating document: ", error);
+      toast.error("Gagal menyimpan perubahan pengeluaran", {
         position: "top-right",
         autoClose: 3000,
       });
     }
-  }
+  };
+
+  const formatDateForInput = (timestamp: Timestamp) => {
+    const date = timestamp.toDate();
+    return date.toISOString().split('T')[0];
+  };
 
   return (
     <div className="max-w-3xl mx-auto mt-10 p-6 bg-white rounded-lg shadow">
       <h2 className="text-xl text-black font-semibold mb-4 flex items-center gap-2 border-b pb-2 border-gray-300">
         <span className="w-3 h-3 bg-teal-500 rounded-full"></span>
-        Tambah Data Pengeluaran
+        Edit Data Pengeluaran
       </h2>
 
-      <form 
-        className="space-y-4" 
-        action={createPost} 
-        method="POST"
-        onSubmit={(e) => {
-          e.preventDefault();
-          createPost(new FormData(e.currentTarget));
-        }}
-      >
+      <form className="space-y-4" onSubmit={handleSubmit}>
         <div className="flex gap-4">
           <div className="flex-1">
             <label className="block text-gray-700">Nama Produk/Layanan <span className="text-red-500">*</span></label>
@@ -97,7 +118,8 @@ export default function AddPengeluaran() {
               placeholder="Nama Produk/Layanan"
               type="text"
               name="productName"
-              id="productName"
+              value={formData.productName}
+              onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
               required
             />
@@ -110,7 +132,8 @@ export default function AddPengeluaran() {
             <input
               type="date"
               name="timestamp"
-              id="timestamp"
+              value={formData.timestamp ? formatDateForInput(formData.timestamp) : ""}
+              onChange={handleDateChange}
               className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
               required
             />
@@ -120,7 +143,8 @@ export default function AddPengeluaran() {
             <label className="block text-gray-700">Kategori Pengeluaran <span className="text-red-500">*</span></label>
             <input
               name="category"
-              id="category"
+              value={formData.category}
+              onChange={handleChange}
               type="text"
               placeholder="Kategori Pengeluaran"
               className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
@@ -133,7 +157,8 @@ export default function AddPengeluaran() {
             <input
               type="number"
               name="amount"
-              id="amount"
+              value={formData.amount}
+              onChange={handleChange}
               placeholder="Jumlah Pengeluaran"
               className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
               required
@@ -149,7 +174,8 @@ export default function AddPengeluaran() {
             placeholder="Deskripsi Transaksi"
             maxLength={100}
             name="description"
-            id="description"
+            value={formData.description}
+            onChange={handleChange}
           />
         </div>
 
@@ -165,7 +191,7 @@ export default function AddPengeluaran() {
             className="bg-teal-500 text-white px-4 py-2 rounded-lg hover:bg-teal-600 transition-colors"
             type="submit"
           >
-            Simpan Data
+            Simpan Perubahan
           </button>
         </div>
       </form>
