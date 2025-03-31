@@ -1,6 +1,5 @@
 import avatar from '../../public/avatar.png'
 import AI from '../../public/AI.png'
-// import MainContent from './MainContent'
 
 export default function Navbar() {
     return (
@@ -23,7 +22,6 @@ export default function Navbar() {
                         </div>
                     </div>
                 </div>
-                {/* <MainContent /> */}
             </nav>
         </>
     )

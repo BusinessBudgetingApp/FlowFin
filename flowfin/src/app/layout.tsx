@@ -23,7 +23,7 @@ export default function RootLayout({ children, }: Readonly<{ children: React.Rea
   return (
     <html lang="en">
       <body>
-        <div className="Container min-h-screen bg-gray-100 flex">
+        <div className="Container w-full min-h-screen bg-gray-100 flex">
           <Sidebar />
           <div className="w-full">
             <Navbar />

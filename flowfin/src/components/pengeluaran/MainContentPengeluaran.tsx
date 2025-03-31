@@ -1,6 +1,7 @@
 import { AddCircle } from "iconsax-react";
 import DataTable from "./DataTablePengeluaran";
 import Pagination from "./PaginationPengeluaran";
+import Link from 'next/link'
 
 export default function MainContentPengeluaran() {
     return (
@@ -32,7 +33,9 @@ export default function MainContentPengeluaran() {
                                 </div>
                             </div>
                             <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                                <button className='btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center'><AddCircle size="20" color="#ffff" variant="Bold" />Tambah Data</button>
+                                <Link href="/addPengeluaran">
+                                    <button className='btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#497d88]'><AddCircle size="20" color="#ffff" variant="Bold" />Tambah Data</button>
+                                </Link>
                             </div>
                         </div>
                     </div>
