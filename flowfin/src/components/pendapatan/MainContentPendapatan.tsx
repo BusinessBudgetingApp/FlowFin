@@ -4,9 +4,38 @@ import DataTable from "./DataTablePendapatan";
 import Pagination from "./PaginationPendapatan";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
+import { useEffect, useState } from "react";
 
 export default function MainContentPendapatan() {
+  const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
+    []
+  );
+  const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
   const transaction: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+
+  // fungsi search
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (!query) {
+      setFilteredData(transaction);
+      return;
+    }
+    const filterData = transaction.filter((item) =>
+      item.category.toLowerCase().includes(query)
+    );
+    setFilteredData(filterData);
+  };
+
+  useEffect(() => {
+    if (transaction) {
+      setDataTransaction(transaction);
+      setFilteredData(transaction); // Simpan semua data untuk pencarian
+    }
+  }, [transaction]);
 
   return (
     <>
@@ -20,8 +49,10 @@ export default function MainContentPendapatan() {
               <input
                 className="search h-[40px] text-[14px] text-gray-600 w-full max-w-full bg-[#F2F2F2] px-3 py-1 rounded-lg border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#00859B] focus:ring-offset-0.5 focus:ring-offset-[#09090b] transition-all duration-150 ease-in-out"
                 name="text"
+                onChange={handleSearch}
                 type="text"
                 placeholder="Search..."
+                value={searchQuery}
               />
             </form>
             <div className="flex gap-15 w-full">
@@ -49,7 +80,7 @@ export default function MainContentPendapatan() {
               </div>
             </div>
           </div>
-          <DataTable item={transaction} />
+          <DataTable item={filteredData} />
           <Pagination />
         </div>
       </div>
