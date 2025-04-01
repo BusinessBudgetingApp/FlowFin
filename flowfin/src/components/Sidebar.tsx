@@ -3,10 +3,23 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { Category, DirectboxReceive, DirectboxSend, LogoutCurve } from 'iconsax-react'
 import Logo2 from '../../public/Logo2.png'
+import { signOut } from 'firebase/auth'
+import { auth } from '@/lib/firebase'
+import { useRouter } from 'next/navigation'
 
 export default function Sidebar() {
     const pathname = usePathname()
+    const router = useRouter()
     const isActive = (href: string): boolean => href === pathname
+
+    const handleSignOut = async () => {
+        try {
+            await signOut(auth)
+            router.push('/signin')
+        } catch (error) {
+            console.error('Failed to sign out:', error)
+        }
+    }
 
     return (
         <>
@@ -53,7 +66,12 @@ export default function Sidebar() {
 
                     <div className="account py-3">
                         <h1 className='text-[18px] font-bold text-[#212121] px-2 py-2'>Account</h1>
-                        <button className='group flex gap-3 px-5 py-2.5 my-1 items-center text-[16px] font-semibold  w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer'><LogoutCurve size="20" className='icon fill-[#797B8C] group-hover:fill-[#00859B]' variant="Bold" />Sign Out</button>
+                        <button
+                            onClick={handleSignOut}
+                            className='group flex gap-3 px-5 py-2.5 my-1 items-center text-[16px] font-semibold  w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer'>
+                            <LogoutCurve size="20" className='icon fill-[#797B8C] group-hover:fill-[#00859B]' variant="Bold" />
+                            Sign Out
+                        </button>
                     </div>
                 </div>
             </div>
