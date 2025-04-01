@@ -1,7 +1,7 @@
 'use client'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { Category, DirectboxReceive, DirectboxSend, LogoutCurve } from 'iconsax-react'
+import { Category, ClipboardExport, ClipboardImport, DirectboxReceive, DirectboxSend, LogoutCurve } from 'iconsax-react'
 import Logo2 from '../../public/Logo2.png'
 
 export default function Sidebar() {
@@ -49,12 +49,30 @@ export default function Sidebar() {
                                 Pengeluaran
                             </button>
                         </Link>
-                    </div>
 
-                    <div className="account py-3">
-                        <h1 className='text-[18px] font-bold text-[#212121] px-2 py-2'>Account</h1>
-                        <button className='group flex gap-3 px-5 py-2.5 my-1 items-center text-[16px] font-semibold  w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer'><LogoutCurve size="20" className='icon fill-[#797B8C] group-hover:fill-[#00859B]' variant="Bold" />Sign Out</button>
+                        <Link href="/laporanPendapatan">
+                            <button className={isActive("/laporanPendapatan")
+                                ? 'group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold  w-full bg-[#F2F2F2] text-[#00859B] rounded-md cursor-pointer'
+                                : "group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer"}>
+                                <ClipboardImport size="20" className='icon fill-[#797B8C] group-hover:fill-[#00859B]' variant="Bold" />
+                                Laporan Pendapatan
+                            </button>
+                        </Link>
+
+                        <Link href="/laporanPengeluaran">
+                            <button className={isActive("/laporanPengeluaran")
+                                ? 'group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold  w-full bg-[#F2F2F2] text-[#00859B] rounded-md cursor-pointer'
+                                : "group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer"}>
+                                <ClipboardExport size="20" className='icon fill-[#797B8C] group-hover:fill-[#00859B]' variant="Bold" />
+                                Laporan Pengeluaran
+                            </button>
+                        </Link>
                     </div>
+                </div>
+
+                <div className="account py-3">
+                    <h1 className='text-[18px] font-bold text-[#212121] px-2 py-2'>Account</h1>
+                    <button className='group flex gap-3 px-5 py-2.5 my-1 items-center text-[16px] font-semibold  w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer'><LogoutCurve size="20" className='icon fill-[#797B8C] group-hover:fill-[#00859B]' variant="Bold" />Sign Out</button>
                 </div>
             </div>
         </>

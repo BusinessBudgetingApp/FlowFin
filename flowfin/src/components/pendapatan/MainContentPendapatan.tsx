@@ -1,7 +1,7 @@
 import { AddCircle } from "iconsax-react";
-import DataTable from "./DataTablePendapatan";
-import Pagination from "./PaginationPendapatan";
 import Link from 'next/link'
+import DataTablePendapatan from "./DataTablePendapatan";
+import PaginationPendapatan from "./PaginationPendapatan";
 
 export default function MainContentPendapatan() {
     return (
@@ -39,8 +39,8 @@ export default function MainContentPendapatan() {
                             </div>
                         </div>
                     </div>
-                    <DataTable />
-                    <Pagination />
+                    <DataTablePendapatan />
+                    <PaginationPendapatan />
                 </div>
             </div>
         </>
