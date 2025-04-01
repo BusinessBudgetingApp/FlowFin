@@ -1,9 +1,14 @@
-import Dashboard from "@/components/Dashboard";
+"use client";
 
-export default function dasboard() {
+import Dashboard from "@/components/Dashboard";
+import { withAuth } from "@/lib/withAuth";
+
+function DashboardPage() {
     return (
         <>
-        <Dashboard/>
+            <Dashboard />
         </>
-    )
+    );
 }
+
+export default withAuth(DashboardPage);
