@@ -1,4 +1,4 @@
-export default function DataTabelLaporanPendapatan() {
+export default function DataTabelLaporanPengeluaran() {
     const data = [
         {
             id: 1,
@@ -85,8 +85,8 @@ export default function DataTabelLaporanPendapatan() {
                     <tr>
                         <th className='bg-gray-100 p-3 font-semibold rounded-tl-lg text-[14px] text-center'>No</th>
                         <th className='bg-gray-100 p-3 font-semibold text-center text-[14px]'>Tanggal</th>
-                        <th className='bg-gray-100 p-3 font-semibold text-center text-[14px]'>Kategori Pendapatan</th>
-                        <th className='bg-gray-100 p-3 font-semibold text-center text-[14px]'>Jumlah Pendapatan</th>
+                        <th className='bg-gray-100 p-3 font-semibold text-center text-[14px]'>Kategori Pengeluaran</th>
+                        <th className='bg-gray-100 p-3 font-semibold text-center text-[14px]'>Jumlah Pengeluaran</th>
                         <th className='bg-gray-100 p-3 font-semibold text-center text-[14px]'>Deskripsi Transaksi</th>
                     </tr>
                 </thead>

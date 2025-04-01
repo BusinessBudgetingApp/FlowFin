@@ -1,10 +1,10 @@
 import Link from "next/link";
-import DataTabelLaporanPendapatan from "./DataTabelLaporanPendapatan";
-import PaginationLaporanPendapatan from "./PaginationLaporanPendapatan";
 import { DocumentDownload } from "iconsax-react";
-import iconLaporanPendapatan from '../../../public/iconLaporanPendapatan.png'
+import iconLaporanPengeluaran from '../../../public/iconLaporanPengeluaran.png'
+import DataTabelLaporanPengeluaran from "./DataTabelLaporanPengeluaran";
+import PaginationLaporanPengeluaran from "./PaginationLaporanPengeluaran";
 
-export default function MainContentLaporanPendapatan() {
+export default function MainContentLaporanPengeluaran() {
     return (
         <>
             <div className="main-content px-6 py-6 h-fit">
@@ -31,7 +31,7 @@ export default function MainContentLaporanPendapatan() {
                                     required />
                             </div>
                             <div className="flex-1">
-                                <label className="block text-gray-700 font-medium">Kategori Pendapatan <span className="text-red-500">*</span></label>
+                                <label className="block text-gray-700 font-medium">Kategori Pengeluaran <span className="text-red-500">*</span></label>
                                 <input
                                     name="category"
                                     id="category"
@@ -41,7 +41,7 @@ export default function MainContentLaporanPendapatan() {
                                     required />
                             </div>
                             <div className="flex-1">
-                                <label className="block text-gray-700 font-medium">Jumlah Pendapatan <span className="text-red-500">*</span></label>
+                                <label className="block text-gray-700 font-medium">Jumlah Pengeluaran <span className="text-red-500">*</span></label>
                                 <input
                                     type="number"
                                     name="amount"
@@ -64,6 +64,7 @@ export default function MainContentLaporanPendapatan() {
                         </div>
                         <div className="flex justify-end gap-4">
                             <button className='btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#497d88]'>Simpan Data</button>
+
                         </div>
                     </form>
                 </div>
@@ -73,27 +74,27 @@ export default function MainContentLaporanPendapatan() {
                 <div className="content bg-white p-4 rounded-md">
                     <div className="flex w-full pb-2 gap-5 items-center justify-between">
                         <div className="gap-1">
-                            <h1 className='text-[18px] font-bold text-[#212121]'>Daftar Laporan Pendapatan</h1>
-                            <p className="text-[14px] text-[#797B8C]">Laporan pendapatan penjualan video tutorial <span className="text-[14px] text-[#212121] font-medium">06/12/2024</span> s.d. <span className="text-[14px] text-[#212121] font-medium">01/03/2025</span></p>
+                            <h1 className='text-[18px] font-bold text-[#212121]'>Daftar Laporan Pengeluaran</h1>
+                            <p className="text-[14px] text-[#797B8C]">Laporan pengeluaran penjualan video tutorial <span className="text-[14px] text-[#212121] font-medium">06/12/2024</span> s.d. <span className="text-[14px] text-[#212121] font-medium">01/03/2025</span></p>
                         </div>
                         <div className="flex items-center">
                             <picture>
-                                <img src={iconLaporanPendapatan.src} width={60} height={60} alt="" />
+                                <img src={iconLaporanPengeluaran.src} width={60} height={60} alt="" />
                             </picture>
                             <div className="gap-1 px-4">
                                 <h1 className='text-[18px] font-bold text-[#212121]'>Rp. 2.370.000</h1>
-                                <p className="text-[14px] text-[#797B8C]">Total Pendapatan</p>
+                                <p className="text-[14px] text-[#797B8C]">Total Pengeluaran</p>
                             </div>
 
                             <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                                <Link href="/laporanPendapatan">
+                                <Link href="/addPendapatan">
                                     <button className='btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white'><DocumentDownload size="20" variant="Bold" className="group-hover:fill-white fill-[#00859B]" />Cetak</button>
                                 </Link>
                             </div>
                         </div>
                     </div>
-                    <DataTabelLaporanPendapatan />
-                    <PaginationLaporanPendapatan />
+                    <DataTabelLaporanPengeluaran />
+                    <PaginationLaporanPengeluaran />
                 </div>
             </div>
         </>
