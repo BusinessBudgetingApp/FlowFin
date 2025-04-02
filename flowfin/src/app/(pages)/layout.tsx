@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+// Update the path to the correct location of globals.css
+import "../globals.css";
 import Sidebar from "@/components/Sidebar";
 import Navbar from "@/components/Navbar";
 import { ToastContainer } from "react-toastify";
