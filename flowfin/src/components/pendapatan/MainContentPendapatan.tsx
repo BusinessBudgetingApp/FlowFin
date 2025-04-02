@@ -1,12 +1,12 @@
 "use client";
 import { AddCircle } from "iconsax-react";
-import DataTable from "./DataTablePendapatan";
-import Pagination from "./PaginationPendapatan";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import DataTablePendapatan from "./DataTablePendapatan";
+import PaginationPendapatan from "./PaginationPendapatan";
 
 export default function MainContentPendapatan() {
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
@@ -59,7 +59,7 @@ export default function MainContentPendapatan() {
                 value={searchQuery}
               />
             </form>
-            <div className="flex gap-15 w-full">
+            <div className="flex gap-15 w-full items-center">
               <div className="flex items-center gap-3">
                 <h2 className="font-medium items-center text-[#797B8C] text-[16px]">
                   Urutkan:
@@ -86,9 +86,8 @@ export default function MainContentPendapatan() {
               </div>
             </div>
           </div>
-          <DataTable item={filteredData} />
-          <DataTable item={transactions} />
-          <Pagination />
+          <DataTablePendapatan item={transactions} />
+          <PaginationPendapatan />
         </div>
       </div>
     </>

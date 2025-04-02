@@ -51,7 +51,7 @@ export default function AddPengeluaran() {
       });
 
       await addData(data);
-      
+
       // Update toast to success
       toast.update(toastId, {
         render: "Data pengeluaran berhasil disimpan!",
@@ -81,9 +81,9 @@ export default function AddPengeluaran() {
         Tambah Data Pengeluaran
       </h2>
 
-      <form 
-        className="space-y-4" 
-        action={createPost} 
+      <form
+        className="space-y-4"
+        action={createPost}
         method="POST"
         onSubmit={(e) => {
           e.preventDefault();

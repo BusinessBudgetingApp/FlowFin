@@ -6,6 +6,8 @@ import Pagination from "./PaginationPengeluaran";
 import { IncomeTransaction } from "@/types/transaction";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import Link from "next/link";
+import DataTablePengeluaran from "./DataTablePengeluaran";
+import PaginationPengeluaran from "./PaginationPengeluaran";
 
 export default function MainContentPengeluaran() {
   const transaction: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
@@ -25,7 +27,7 @@ export default function MainContentPengeluaran() {
                 placeholder="Search..."
               />
             </form>
-            <div className="flex gap-5 w-full">
+            <div className="flex gap-5 w-full items-center">
               <div className="flex items-center gap-3">
                 <h2 className="font-medium items-center text-[#797B8C] text-[16px]">
                   Urutkan:
@@ -43,8 +45,8 @@ export default function MainContentPengeluaran() {
                 </div>
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
-              <Link href="/pengeluaran/add" passHref>
-                  <button 
+                <Link href="/pengeluaran/add" passHref>
+                  <button
                     className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200"
                   >
                     <AddCircle size="20" color="#ffff" variant="Bold" />
@@ -54,8 +56,8 @@ export default function MainContentPengeluaran() {
               </div>
             </div>
           </div>
-          <DataTable data={transaction} />
-          <Pagination />
+          <DataTablePengeluaran data={transaction} />
+          <PaginationPengeluaran />
         </div>
       </div>
     </>
