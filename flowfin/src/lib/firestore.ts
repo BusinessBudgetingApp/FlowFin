@@ -4,6 +4,7 @@ import {
   deleteDoc,
   doc,
   getDocs,
+  orderBy,
   query,
   updateDoc,
 } from "firebase/firestore";
@@ -17,7 +18,7 @@ export async function addData(transaction: IncomeTransaction) {
 
 // fungsi mengambil data dari firestore
 export async function getData() {
-  const q = query(collection(db, "transaction"));
+  const q = query(collection(db, "transaction"), orderBy("timestamp", "desc"));
   const querySnapshot = await getDocs(q);
   const data = querySnapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }));
   return data as IncomeTransaction[];

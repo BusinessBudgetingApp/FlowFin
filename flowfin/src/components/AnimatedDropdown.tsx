@@ -10,11 +10,11 @@ export default function AnimatedDropdown({
   selected,
   onSelect,
 }: {
-  label: string;
+  label: number | string;
   children: ReactNode;
-  selected?: string;
+  selected?: number | string;
   className?: string;
-  onSelect: (value: string) => void;
+  onSelect: (value: number | string) => void;
 }) {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -85,8 +85,8 @@ export function DropdownItem({
   onSelect,
 }: {
   children: ReactNode;
-  value: string;
-  onSelect: (value: string) => void;
+  value: number | string;
+  onSelect: (value: number | string) => void;
 }) {
   return (
     <button

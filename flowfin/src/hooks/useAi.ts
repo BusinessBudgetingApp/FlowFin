@@ -5,8 +5,8 @@ const API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY;
 
 export async function getAiRecommendation(month?: number, year?: number) {
   const now = new Date();
-  const selectedMonth = month || now.getMonth() + 1;
-  const selectedYear = year || now.getFullYear();
+  const selectedMonth = now.getMonth() + 1;
+  const selectedYear = now.getFullYear();
   const { pemasukan, pengeluaran } = await getDataByMonth(
     selectedMonth,
     selectedYear

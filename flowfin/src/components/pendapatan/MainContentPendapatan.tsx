@@ -39,7 +39,6 @@ export default function MainContentPendapatan() {
     }
   }, [transaction]);
   const router = useRouter();
-  const transactions: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
 
   return (
     <>
@@ -86,7 +85,8 @@ export default function MainContentPendapatan() {
               </div>
             </div>
           </div>
-          <DataTablePendapatan item={transactions} />
+          <DataTablePendapatan item={filteredData} />
+
           <PaginationPendapatan />
         </div>
       </div>
