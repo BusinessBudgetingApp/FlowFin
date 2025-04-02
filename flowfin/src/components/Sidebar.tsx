@@ -23,7 +23,7 @@ export default function Sidebar() {
 
     return (
         <>
-            <div className="sidebar w-[240px] hidden md:block min-h-screen bg-white px-4 py-6">
+            <div className="sidebar w-[310px] hidden md:block min-h-screen bg-white px-4 py-6">
                 <Link href="/">
                     <div className="logo pt-2 pb-8 flex items-center justify-center">
                         <picture>
