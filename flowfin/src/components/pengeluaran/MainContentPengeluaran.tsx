@@ -8,9 +8,47 @@ import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import Link from "next/link";
 import DataTablePengeluaran from "./DataTablePengeluaran";
 import PaginationPengeluaran from "./PaginationPengeluaran";
+import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
+import { useEffect, useState } from "react";
+import PaginationLaporanPengeluaran from "../laporanPengeluaran/PaginationLaporanPengeluaran";
 
 export default function MainContentPengeluaran() {
-  const transaction: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
+  const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
+    []
+  );
+  const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const {
+    transactions,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    hasNext,
+    hasPrev,
+  } = usePaginatedTransactions("pengeluaran", 8);
+
+  // fungsi search
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (!query) {
+      setFilteredData(transactions);
+      return;
+    }
+    const filterData = transactions.filter((item) =>
+      item.category.toLowerCase().includes(query)
+    );
+    setFilteredData(filterData);
+  };
+
+  useEffect(() => {
+    if (transactions) {
+      setDataTransaction(transactions);
+      setFilteredData(transactions); // Simpan semua data untuk pencarian
+    }
+  }, [transactions]);
   return (
     <>
       <div className="main-content px-6 py-6 h-fit">
@@ -46,9 +84,7 @@ export default function MainContentPengeluaran() {
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
                 <Link href="/pengeluaran/add" passHref>
-                  <button
-                    className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200"
-                  >
+                  <button className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200">
                     <AddCircle size="20" color="#ffff" variant="Bold" />
                     Tambah Data
                   </button>
@@ -56,8 +92,8 @@ export default function MainContentPengeluaran() {
               </div>
             </div>
           </div>
-          <DataTablePengeluaran data={transaction} />
-          <PaginationPengeluaran />
+          <DataTablePengeluaran data={transactions} />
+          <PaginationLaporanPengeluaran />
         </div>
       </div>
     </>

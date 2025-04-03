@@ -7,6 +7,8 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DataTablePendapatan from "./DataTablePendapatan";
 import PaginationPendapatan from "./PaginationPendapatan";
+import PaginationLaporanPendapatan from "../laporanPendapatan/PaginationLaporanPendapatan";
+import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 
 export default function MainContentPendapatan() {
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
@@ -15,7 +17,14 @@ export default function MainContentPendapatan() {
   const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
-  const transaction: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+  const {
+    transactions,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    hasNext,
+    hasPrev,
+  } = usePaginatedTransactions("pendapatan", 8);
 
   // fungsi search
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -23,22 +32,21 @@ export default function MainContentPendapatan() {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
     if (!query) {
-      setFilteredData(transaction);
+      setFilteredData(transactions);
       return;
     }
-    const filterData = transaction.filter((item) =>
+    const filterData = transactions.filter((item) =>
       item.category.toLowerCase().includes(query)
     );
     setFilteredData(filterData);
   };
 
   useEffect(() => {
-    if (transaction) {
-      setDataTransaction(transaction);
-      setFilteredData(transaction); // Simpan semua data untuk pencarian
+    if (transactions) {
+      setDataTransaction(transactions);
+      setFilteredData(transactions); // Simpan semua data untuk pencarian
     }
-  }, [transaction]);
-  const router = useRouter();
+  }, [transactions]);
 
   return (
     <>
@@ -87,7 +95,7 @@ export default function MainContentPendapatan() {
           </div>
           <DataTablePendapatan item={filteredData} />
 
-          <PaginationPendapatan />
+          <PaginationLaporanPendapatan />
         </div>
       </div>
     </>
