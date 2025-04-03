@@ -94,7 +94,13 @@ export default function MainContentPengeluaran() {
             </div>
           </div>
           <DataTablePengeluaran data={transactions} />
-          <PaginationLaporanPengeluaran />
+          <PaginationPengeluaran
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
         </div>
       </div>
     </>

@@ -95,7 +95,13 @@ export default function MainContentPendapatan() {
           </div>
           <DataTablePendapatan item={filteredData} />
 
-          <PaginationLaporanPendapatan />
+          <PaginationPendapatan
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
         </div>
       </div>
     </>
