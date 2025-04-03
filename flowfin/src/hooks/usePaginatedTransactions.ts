@@ -27,11 +27,13 @@ export const usePaginatedTransactions = (
     setIsLoading(true);
 
     const productRef = collection(db, "transaction");
-    const conditions = [
+    let conditions = [
       where("transactionType", "==", categoryTransaction),
       orderBy("timestamp", "desc"),
     ];
-
+    if (!categoryTransaction) {
+      conditions = [orderBy("timestamp", "desc")];
+    }
     let q = query(productRef, ...conditions, limit(pageLimit));
 
     if (page > 1 && lastVisible) {

@@ -63,6 +63,7 @@ export default function MainContentPengeluaran() {
                 name="text"
                 type="text"
                 placeholder="Search..."
+                onChange={handleSearch}
               />
             </form>
             <div className="flex gap-5 w-full items-center">

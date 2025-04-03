@@ -6,11 +6,11 @@ export default function TotalRincian({
   pengeluaran: number;
 }) {
   return (
-    <div className="content bg-white rounded-md col-span-3">
-      <h2 className="text-lg font-bold p-4 b ffffsssxx////lx x,,m , m,zorder-b mb-2">
+    <div className="content bg-white rounded-md col-span-4">
+      <h2 className="text-lg font-bold p-4 border-b mb-2">
         Total Rincian Transaksi
       </h2>
-      <div className="space-y-4 p-4">
+      <div className="space-y-4 p-4 w-full">
         <div className="flex items-center p-4 border border-gray-200 rounded-md">
           <div className="mr-4">
             <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center">

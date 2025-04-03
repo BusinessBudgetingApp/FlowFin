@@ -15,7 +15,6 @@ export default function Dashboard() {
   const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1);
 
   const item = useGetAllData();
-  console.log(item, "<< Data Semua Transaksi");
 
   // Ambil data pendapatan & pengeluaran secara real-time
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
@@ -85,7 +84,7 @@ export default function Dashboard() {
         <TotalRincian pendapatan={totalIncome} pengeluaran={totalOutcome} />
 
         {/* Chart Section */}
-        <div className="content bg-white rounded-md col-span-9">
+        <div className="content bg-white rounded-md col-span-8">
           <div className="flex justify-between p-4 border-b">
             <div className="flex flex-col gap-2 mb-0">
               <h2 className="text-lg font-bold">Pendapatan VS Pengeluaran</h2>
@@ -95,40 +94,48 @@ export default function Dashboard() {
             </div>
 
             {/* Dropdown Pilihan Tahun */}
-            <AnimatedDropdown
-              label="Pilih Tahun"
-              selected={selectedYear.toString()}
-              onSelect={(value) => setSelectedYear(Number(value))}
-              className="w-full"
-            >
-              {uniqueYears.map((year) => (
-                <DropdownItem
-                  key={year}
-                  value={year.toString()}
-                  onSelect={() => setSelectedYear(year)}
+            <div className="flex gap-6">
+              <div>
+                <p className="text-center">Pilih Tahun</p>
+                <AnimatedDropdown
+                  label="Pilih Tahun"
+                  selected={selectedYear.toString()}
+                  onSelect={(value) => setSelectedYear(Number(value))}
+                  className="w-full"
                 >
-                  {year}
-                </DropdownItem>
-              ))}
-            </AnimatedDropdown>
+                  {uniqueYears.map((year) => (
+                    <DropdownItem
+                      key={year}
+                      value={year.toString()}
+                      onSelect={() => setSelectedYear(year)}
+                    >
+                      {year}
+                    </DropdownItem>
+                  ))}
+                </AnimatedDropdown>
+              </div>
 
-            {/* Dropdown Pilihan Bulan */}
-            <AnimatedDropdown
-              label="Pilih Bulan"
-              selected={selectedMonth.toString()}
-              onSelect={(value) => setSelectedMonth(Number(value))}
-              className="w-full"
-            >
-              {months.map(({ id, name }) => (
-                <DropdownItem
-                  key={id}
-                  value={id.toString()}
-                  onSelect={() => setSelectedMonth(id)}
+              {/* Dropdown Pilihan Bulan */}
+              <div>
+                <p className="text-center">Pilih Bulan</p>
+                <AnimatedDropdown
+                  label="Pilih Bulan"
+                  selected={selectedMonth.toString()}
+                  onSelect={(value) => setSelectedMonth(Number(value))}
+                  className="w-full"
                 >
-                  {name}
-                </DropdownItem>
-              ))}
-            </AnimatedDropdown>
+                  {months.map(({ id, name }) => (
+                    <DropdownItem
+                      key={id}
+                      value={id.toString()}
+                      onSelect={() => setSelectedMonth(id)}
+                    >
+                      {name}
+                    </DropdownItem>
+                  ))}
+                </AnimatedDropdown>
+              </div>
+            </div>
           </div>
           <Chart month={selectedMonth} year={selectedYear} />
         </div>
