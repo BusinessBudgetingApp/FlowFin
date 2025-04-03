@@ -24,19 +24,21 @@ export default function DataTablePengeluaran({
       });
       return;
     }
-  
+
     // 2. Konfirmasi penghapusan
-    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data pengeluaran ini?");
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data pengeluaran ini?"
+    );
     if (!isConfirmed) return;
-  
+
     try {
       // Tampilkan toast loading
       const toastId = toast.loading("Menghapus data pengeluaran...", {
         position: "top-right",
       });
-  
+
       await deleteData(id);
-      
+
       // Update toast menjadi sukses
       toast.update(toastId, {
         render: "Data pengeluaran berhasil dihapus!",
@@ -44,9 +46,8 @@ export default function DataTablePengeluaran({
         isLoading: false,
         autoClose: 2000,
       });
-  
+
       router.refresh();
-      
     } catch (error) {
       console.error("Gagal menghapus data:", error);
       toast.error("Terjadi kesalahan saat menghapus data pengeluaran", {
@@ -101,7 +102,7 @@ export default function DataTablePengeluaran({
                   {item.category}
                 </td>
                 <td className="jumlah px-3 text-[14px] font-normal">
-                  Rp. {item.amount.toLocaleString('id-ID')}
+                  Rp. {item.amount.toLocaleString("id-ID")}
                 </td>
                 <td className="deskripsi px-3 text-[14px] font-normal">
                   {item.description}
@@ -112,7 +113,7 @@ export default function DataTablePengeluaran({
                       <Edit2 size="20" color="#797B8C" variant="Bold" />
                     </button>
                   </Link>
-                  <button 
+                  <button
                     onClick={() => handleDelete(item.id)}
                     className="p-3 rounded-md cursor-pointer mx-1.5 my-3 hover:bg-red-100"
                   >
