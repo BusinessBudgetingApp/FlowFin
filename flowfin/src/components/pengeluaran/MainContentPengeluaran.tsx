@@ -1,8 +1,6 @@
 "use client";
 
-import { AddCircle } from "iconsax-react";
-import DataTable from "./DataTablePengeluaran";
-import Pagination from "./PaginationPengeluaran";
+import { AddCircle, DocumentDownload } from "iconsax-react";
 import { IncomeTransaction } from "@/types/transaction";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import Link from "next/link";
@@ -15,7 +13,7 @@ export default function MainContentPengeluaran() {
     <>
       <div className="main-content px-6 py-6 h-fit">
         <div className="content bg-white p-4 rounded-md">
-          <h1 className="text-[18px] font-bold text-[#212121] pb-4">
+          <h1 className="text-[16px] font-bold text-[#212121] pb-4">
             Daftar Transaksi Pengeluaran
           </h1>
           <div className="flex w-full pb-2 gap-5 items-center justify-between">
@@ -45,14 +43,16 @@ export default function MainContentPengeluaran() {
                 </div>
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                <Link href="/pengeluaran/add" passHref>
-                  <button
-                    className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200"
-                  >
-                    <AddCircle size="20" color="#ffff" variant="Bold" />
-                    Tambah Data
-                  </button>
-                </Link>
+                <div className="flex gap-3">
+                  <button className='btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white'><DocumentDownload size="18" variant="Bold" className="group-hover:fill-white fill-[#00859B]" />Cetak</button>
+                  <Link href="/pengeluaran/add" passHref>
+                    <button
+                      className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer">
+                      <AddCircle size="18" color="#ffff" variant="Bold" />
+                      Tambah Data
+                    </button>
+                  </Link>
+                </div>
               </div>
             </div>
           </div>
