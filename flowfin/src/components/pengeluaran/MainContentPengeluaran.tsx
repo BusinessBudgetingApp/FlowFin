@@ -83,10 +83,16 @@ export default function MainContentPengeluaran() {
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
                 <div className="flex gap-3">
-                  <button className='btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white'><DocumentDownload size="18" variant="Bold" className="group-hover:fill-white fill-[#00859B]" />Cetak</button>
+                  <button className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white">
+                    <DocumentDownload
+                      size="18"
+                      variant="Bold"
+                      className="group-hover:fill-white fill-[#00859B]"
+                    />
+                    Cetak
+                  </button>
                   <Link href="/pengeluaran/add" passHref>
-                    <button
-                      className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer">
+                    <button className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer">
                       <AddCircle size="18" color="#ffff" variant="Bold" />
                       Tambah Data
                     </button>
@@ -95,7 +101,7 @@ export default function MainContentPengeluaran() {
               </div>
             </div>
           </div>
-          <DataTablePengeluaran data={transactions} />
+          <DataTablePengeluaran data={filteredData} />
           <PaginationPengeluaran
             currentPage={currentPage}
             totalPages={totalPages}
