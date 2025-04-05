@@ -26,7 +26,9 @@ export default function DataTablePengeluaran({
     }
 
     // 2. Konfirmasi penghapusan
-    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data pengeluaran ini?");
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data pengeluaran ini?"
+    );
     if (!isConfirmed) return;
 
     try {
@@ -46,7 +48,6 @@ export default function DataTablePengeluaran({
       });
 
       router.refresh();
-
     } catch (error) {
       console.error("Gagal menghapus data:", error);
       toast.error("Terjadi kesalahan saat menghapus data pengeluaran", {

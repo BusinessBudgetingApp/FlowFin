@@ -6,9 +6,47 @@ import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import Link from "next/link";
 import DataTablePengeluaran from "./DataTablePengeluaran";
 import PaginationPengeluaran from "./PaginationPengeluaran";
+import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
+import { useEffect, useState } from "react";
+import PaginationLaporanPengeluaran from "../laporanPengeluaran/PaginationLaporanPengeluaran";
 
 export default function MainContentPengeluaran() {
-  const transaction: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
+  const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
+    []
+  );
+  const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
+  const [searchQuery, setSearchQuery] = useState<string>("");
+
+  const {
+    transactions,
+    currentPage,
+    totalPages,
+    setCurrentPage,
+    hasNext,
+    hasPrev,
+  } = usePaginatedTransactions("pengeluaran", 8);
+
+  // fungsi search
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+    const query = e.target.value.toLowerCase();
+    setSearchQuery(query);
+    if (!query) {
+      setFilteredData(transactions);
+      return;
+    }
+    const filterData = transactions.filter((item) =>
+      item.category.toLowerCase().includes(query)
+    );
+    setFilteredData(filterData);
+  };
+
+  useEffect(() => {
+    if (transactions) {
+      setDataTransaction(transactions);
+      setFilteredData(transactions); // Simpan semua data untuk pencarian
+    }
+  }, [transactions]);
   return (
     <>
       <div className="main-content px-6 py-6 h-fit">
@@ -23,6 +61,7 @@ export default function MainContentPengeluaran() {
                 name="text"
                 type="text"
                 placeholder="Search..."
+                onChange={handleSearch}
               />
             </form>
             <div className="flex gap-5 w-full items-center">
@@ -56,8 +95,14 @@ export default function MainContentPengeluaran() {
               </div>
             </div>
           </div>
-          <DataTablePengeluaran data={transaction} />
-          <PaginationPengeluaran />
+          <DataTablePengeluaran data={transactions} />
+          <PaginationPengeluaran
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
         </div>
       </div>
     </>

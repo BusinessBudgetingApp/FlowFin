@@ -5,14 +5,12 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import aiPen from "../../../public/ai-pen.png";
 import { getAiRecommendation } from "@/hooks/useAi";
+
 interface AIInsightProps {
   show: boolean;
   onClose: () => void;
 }
-interface AIInsightProps {
-  show: boolean;
-  onClose: () => void;
-}
+
 export default function AiModal({ show, onClose }: AIInsightProps) {
   const [response, setResponse] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
