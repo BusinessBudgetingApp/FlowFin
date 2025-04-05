@@ -2,13 +2,15 @@
 
 import { AddCircle, DocumentDownload } from "iconsax-react";
 import { IncomeTransaction } from "@/types/transaction";
-import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import Link from "next/link";
 import DataTablePengeluaran from "./DataTablePengeluaran";
 import PaginationPengeluaran from "./PaginationPengeluaran";
 import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import { useEffect, useState } from "react";
-import PaginationLaporanPengeluaran from "../laporanPengeluaran/PaginationLaporanPengeluaran";
+import { jsPDF } from "jspdf";
+import autoTable from "jspdf-autotable";
+import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
+import { exportPDF } from "@/app/utils/exportPDF";
 
 export default function MainContentPengeluaran() {
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
@@ -40,6 +42,9 @@ export default function MainContentPengeluaran() {
     );
     setFilteredData(filterData);
   };
+
+  // data cetak
+  const bodyData = useRealTimeUpdate("pengeluaran");
 
   useEffect(() => {
     if (transactions) {
@@ -88,6 +93,7 @@ export default function MainContentPengeluaran() {
                       size="18"
                       variant="Bold"
                       className="group-hover:fill-white fill-[#00859B]"
+                      onClick={() => exportPDF(bodyData, "Pengeluaran")}
                     />
                     Cetak
                   </button>
