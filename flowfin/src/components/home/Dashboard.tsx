@@ -1,12 +1,12 @@
 "use client";
 import { useState } from "react";
-import TotalRincian from "../TotalRincian";
 import Chart from "./Chart";
 import AnimatedDropdown, { DropdownItem } from "../AnimatedDropdown";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Timestamp } from "firebase/firestore";
 import { useGetAllData } from "@/hooks/useGetAllData";
+import { TotalRincian } from "../TotalRincian";
 
 const now = new Date();
 
@@ -15,12 +15,9 @@ export default function Dashboard() {
   const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1);
 
   const item = useGetAllData();
-
-  // Ambil data pendapatan & pengeluaran secara real-time
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
   const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
 
-  // **Filter pendapatan berdasarkan tahun dan bulan yang dipilih**
   const incomeByYearMonth = income.filter((i) => {
     if (!i.timestamp) return false;
     const transactionDate = (i.timestamp as Timestamp).toDate();
@@ -30,13 +27,11 @@ export default function Dashboard() {
     );
   });
 
-  // **Hitung total pendapatan**
   const totalIncome = incomeByYearMonth.reduce(
     (sum, i) => sum + (i.amount || 0),
     0
   );
 
-  // **Filter pengeluaran berdasarkan tahun dan bulan yang dipilih**
   const outcomeByYearMonth = outcome.filter((i) => {
     if (!i.timestamp) return false;
     const transactionDate = (i.timestamp as Timestamp).toDate();
@@ -46,22 +41,19 @@ export default function Dashboard() {
     );
   });
 
-  // **Hitung total pengeluaran**
   const totalOutcome = outcomeByYearMonth.reduce(
     (sum, i) => sum + (i.amount || 0),
     0
   );
 
-  // **Buat daftar tahun unik**
   const uniqueYears = Array.from(
     new Set(
       item.map(
         (data) => data.timestamp && data.timestamp.toDate().getFullYear()
       )
     )
-  ).sort((a, b) => b - a); // Urutkan tahun dari terbaru ke lama
+  ).sort((a, b) => b - a);
 
-  // **Daftar bulan dengan angka (1-12) dan nama**
   const months = [
     { id: 1, name: "Jan" },
     { id: 2, name: "Feb" },
@@ -78,25 +70,25 @@ export default function Dashboard() {
   ];
 
   return (
-    <div className="main-content px-6 py-6 h-[100vh] overflow-auto">
-      <div className="grid grid-cols-12 gap-5">
+    <div className="main-content px-4 py-4 md:px-6 md:py-6 h-[100vh] overflow-auto">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-12 gap-4 md:gap-5">
         {/* Total Rincian Pendapatan */}
         <TotalRincian pendapatan={totalIncome} pengeluaran={totalOutcome} />
 
         {/* Chart Section */}
-        <div className="content bg-white rounded-md col-span-8">
-          <div className="flex justify-between p-4 border-b">
-            <div className="flex flex-col gap-2 mb-0">
-              <h2 className="text-lg font-bold">Pendapatan VS Pengeluaran</h2>
-              <h4 className="text-sm font-medium text-gray-500">
+        <div className="content bg-white rounded-md col-span-1 sm:col-span-2 md:col-span-8">
+          <div className="flex flex-col md:flex-row justify-between p-4 border-b">
+            <div className="flex flex-col gap-2 mb-4 md:mb-0">
+              <h2 className="text-base md:text-lg font-bold">Pendapatan VS Pengeluaran</h2>
+              <h4 className="text-xs md:text-sm font-medium text-gray-500">
                 Berdasarkan kategori transaksi
               </h4>
             </div>
 
-            {/* Dropdown Pilihan Tahun */}
-            <div className="flex gap-6">
-              <div>
-                <p className="text-center">Pilih Tahun</p>
+            {/* Dropdown Pilihan Tahun dan Bulan */}
+            <div className="flex flex-col sm:flex-row gap-4 md:gap-6">
+              <div className="w-full sm:w-auto">
+                <p className="text-center text-sm">Pilih Tahun</p>
                 <AnimatedDropdown
                   label="Pilih Tahun"
                   selected={selectedYear.toString()}
@@ -115,9 +107,8 @@ export default function Dashboard() {
                 </AnimatedDropdown>
               </div>
 
-              {/* Dropdown Pilihan Bulan */}
-              <div>
-                <p className="text-center">Pilih Bulan</p>
+              <div className="w-full sm:w-auto">
+                <p className="text-center text-sm">Pilih Bulan</p>
                 <AnimatedDropdown
                   label="Pilih Bulan"
                   selected={selectedMonth.toString()}
