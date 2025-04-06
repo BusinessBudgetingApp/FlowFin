@@ -19,7 +19,7 @@ export default function SignInPage() {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            router.push("/dashboard");
+            router.push("/");
         } catch (err) {
             console.error(err);
             setError("Failed to sign in. Please check your credentials.");
@@ -31,7 +31,7 @@ export default function SignInPage() {
         const provider = new GoogleAuthProvider();
         try {
             await signInWithPopup(auth, provider);
-            router.push("/dashboard");
+            router.push("/");
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);
