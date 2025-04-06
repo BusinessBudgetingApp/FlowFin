@@ -160,9 +160,9 @@ export default function MainContentPendapatan() {
                   </select>
                 </div>
               </div>
-              <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                <div className="flex gap-3">
-                  <button className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white">
+              <div className="pl-5 border-l-1 border-[#B7BBC0] w-full">
+                <div className="flex gap-3 w-full items-center">
+                  <button className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white h-[40px]">
                     <DocumentDownload
                       size="18"
                       variant="Bold"
@@ -172,7 +172,7 @@ export default function MainContentPendapatan() {
                     Cetak
                   </button>
                   <Link href="/pendapatan/add" passHref>
-                    <button className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer">
+                    <button className="btn-add bg-[#00859B] text-white px-4 py-5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer h-[40px]">
                       <AddCircle size="18" color="#ffff" variant="Bold" />
                       Tambah Data
                     </button>
