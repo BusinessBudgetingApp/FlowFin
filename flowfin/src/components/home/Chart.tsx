@@ -91,14 +91,14 @@ export default function Chart({
     <div className="grid grid-cols-2 px-2">
       <div className="w-[300px] h-[200px] p-2">
         <h3 className="font-semibold ">Pendapatan Terbesar</h3>
-        <div className="relative h-[180px] w-[270px] mx-auto">
+        <div className="relative h-[170px] w-[270px] mx-auto">
           <Pie data={incomeThisMonth} options={options} />
         </div>
       </div>
 
       <div className="w-[300px] h-[200px] p-2">
         <h3 className="font-semibold ">Pengeluaran Terbesar</h3>
-        <div className="relative h-[180px] w-[270px] mx-auto">
+        <div className="relative h-[170px] w-[270px] mx-auto">
           <Pie data={outcomeThisMonth} options={options} />
         </div>
       </div>
