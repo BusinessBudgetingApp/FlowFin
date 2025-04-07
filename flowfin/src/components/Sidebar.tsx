@@ -76,7 +76,7 @@ export default function Sidebar() {
 
       {/* Sidebar */}
       <div
-        className={`sidebar w-[310px] min-h-screen bg-white px-4 py-6 fixed lg:relative z-20 transition-all duration-300 ease-in-out ${
+        className={`sidebar w-[310px] min-h-screen bg-white px-4 py-6 fixed lg:relative z-10 transition-all duration-300 ease-in-out ${
           isSmallScreen ? (isOpen ? "left-0" : "-left-full") : "left-0"
         }`}
       >

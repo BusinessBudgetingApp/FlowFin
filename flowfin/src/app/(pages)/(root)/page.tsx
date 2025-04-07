@@ -25,10 +25,11 @@ function Home() {
         <Dashboard />
       </div>
 
-      <div className="bg-white mx-6 py-4 rounded-lg md:px-6">
-        <h1 className="text-lg font-bold text-[#212121] pb-2">
+      <div className="bg-white mx-4 md:mx-6 py-4 rounded-lg px-4 md:px-6">
+        <h1 className="text-base md:text-lg font-bold text-[#212121] pb-2 text-center md:text-left">
           Daftar Transaksi Pendapatan & Pengeluaran
         </h1>
+
         {/* Desktop Table */}
         <div className="hidden md:block overflow-x-auto rounded-lg border border-gray-200 bg-white">
           <table className="min-w-full text-sm text-left divide-y divide-gray-200">
@@ -47,7 +48,9 @@ function Home() {
               {transactions?.map((data, index) => (
                 <tr key={data.id} className="hover:bg-gray-50 text-center">
                   <td className="p-4">{index + 1}</td>
-                  <td className="p-4 text-left">{formatDate(data.timestamp)}</td>
+                  <td className="p-4 text-left">
+                    {formatDate(data.timestamp)}
+                  </td>
                   <td className="p-4 text-left">{data.productName}</td>
                   <td className="p-4 text-left">{data.category}</td>
                   <td className="p-4 text-green-600 font-medium text-left">
@@ -94,7 +97,7 @@ function Home() {
                 </p>
               </div>
 
-              <div className="text-sm mt-2">
+              <div className="text-sm mt-2 space-y-1">
                 <p className="text-green-600">
                   <span className="font-medium">Pendapatan: </span>
                   {data.transactionType === "pendapatan"
@@ -108,7 +111,7 @@ function Home() {
                     : "-"}
                 </p>
                 {data.description && (
-                  <p className="mt-1 text-gray-700">
+                  <p className="text-gray-700">
                     <span className="font-medium">Deskripsi: </span>
                     {truncate(data.description)}
                   </p>
@@ -119,7 +122,7 @@ function Home() {
         </div>
 
         {/* Pagination */}
-        <div className="justify-center flex">
+        <div className="justify-center flex mt-4">
           <PaginationPendapatan
             currentPage={currentPage}
             totalPages={totalPages}
