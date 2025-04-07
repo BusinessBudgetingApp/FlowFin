@@ -21,11 +21,6 @@ export const usePaginatedTransactions = (
   const [lastVisible, setLastVisible] = useState<DocumentSnapshot | null>(null);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
-  const [prevPagesLastVisible, setPrevPagesLastVisible] = useState<
-    DocumentSnapshot[]
-  >(
-    [] // Menyimpan lastVisible untuk setiap halaman sebelumnya
-  );
 
   // Fetch transactions saat halaman berubah
   const fetchTransactions = async (page = 1) => {
@@ -43,12 +38,17 @@ export const usePaginatedTransactions = (
       }
       let q = query(productRef, ...conditions, limit(pageLimit));
 
-      if (page > 1 && prevPagesLastVisible[page - 2]) {
-        // Gunakan lastVisible dari halaman sebelumnya
+      if (page > 1 && lastVisible) {
+        // Jika ada lastVisible, gunakan startAfter untuk pagination
+        const prevQuerySnapshot = await getDocs(
+          query(productRef, ...conditions, limit(pageLimit))
+        );
+        const lastVisible =
+          prevQuerySnapshot.docs[prevQuerySnapshot.docs.length - 1];
         q = query(
           productRef,
           ...conditions,
-          startAfter(prevPagesLastVisible[page - 2]), // Mulai mengambil data setelah halaman sebelumnya
+          startAfter(lastVisible),
           limit(pageLimit)
         );
       }
@@ -60,15 +60,6 @@ export const usePaginatedTransactions = (
       })) as IncomeTransaction[];
 
       setTransactions(data);
-      setLastVisible(querySnapshot.docs[querySnapshot.docs.length - 1]); // Update lastVisible untuk halaman sekarang
-
-      // Jika halaman baru, simpan lastVisible ke dalam array
-      if (page > 1) {
-        setPrevPagesLastVisible((prev) => [
-          ...prev,
-          querySnapshot.docs[querySnapshot.docs.length - 1],
-        ]);
-      }
 
       setCurrentPage(page);
       setIsLoading(false);
