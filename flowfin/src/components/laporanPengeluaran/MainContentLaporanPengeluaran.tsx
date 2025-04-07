@@ -4,6 +4,7 @@ import iconLaporanPengeluaran from '../../../public/iconLaporanPengeluaran.png'
 import DataTabelLaporanPengeluaran from "./DataTabelLaporanPengeluaran";
 import PaginationLaporanPengeluaran from "./PaginationLaporanPengeluaran";
 
+
 export default function MainContentLaporanPengeluaran() {
     return (
         <>

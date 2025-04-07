@@ -8,9 +8,13 @@ import DataTablePengeluaran from "./DataTablePengeluaran";
 import PaginationPengeluaran from "./PaginationPengeluaran";
 import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import { useEffect, useState } from "react";
+import * as XLSX from "xlsx";
+import { toast } from "react-toastify";
 
 export default function MainContentPengeluaran() {
-  const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>([]);
+  const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
+    []
+  );
   const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
 
@@ -23,6 +27,8 @@ export default function MainContentPengeluaran() {
     hasPrev,
   } = usePaginatedTransactions("pengeluaran", 8);
 
+  const [isExporting, setIsExporting] = useState(false);
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
@@ -34,6 +40,78 @@ export default function MainContentPengeluaran() {
       item.category.toLowerCase().includes(query)
     );
     setFilteredData(filterData);
+  };
+
+  const exportToExcel = () => {
+    if (isExporting) return;
+
+    setIsExporting(true);
+
+    try {
+      if (!filteredData || filteredData.length === 0) {
+        toast.warning("Tidak ada data untuk diekspor");
+        return;
+      }
+
+      // Format data untuk Excel
+      const formattedData = filteredData.map((item) => ({
+        Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "numeric",
+        }),
+        "Nama Produk": item.productName,
+        Kategori: item.category,
+        Jumlah: item.amount,
+        Deskripsi: item.description || "-",
+        "Tipe Transaksi": item.transactionType || "-",
+      }));
+
+      // Buat worksheet
+      const worksheet = XLSX.utils.json_to_sheet(formattedData);
+
+      // Atur lebar kolom
+      worksheet["!cols"] = [
+        { wch: 12 }, // Tanggal
+        { wch: 20 }, // Nama Produk
+        { wch: 20 }, // Kategori
+        { wch: 15 }, // Jumlah
+        { wch: 30 }, // Deskripsi
+        { wch: 20 }, // Tipe Transaksi
+      ];
+
+      // Buat workbook
+      const workbook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pengeluaran");
+
+      // Generate file Excel
+      const excelBuffer = XLSX.write(workbook, {
+        bookType: "xlsx",
+        type: "array",
+      });
+
+      // Buat blob dan download
+      const blob = new Blob([excelBuffer], {
+        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+      });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      const transactionType = filteredData[0]?.transactionType || "Pengeluaran";
+      a.href = url;
+      a.download = `Data_${transactionType}_${
+        new Date().toISOString().split("T")[0]
+      }.xlsx`;
+      a.click();
+
+      URL.revokeObjectURL(url);
+
+      toast.success("Data berhasil diunduh");
+    } catch (error) {
+      console.error("Gagal mengekspor data:", error);
+      toast.error("Gagal mengekspor data");
+    } finally {
+      setIsExporting(false);
+    }
   };
 
   useEffect(() => {
@@ -67,7 +145,10 @@ export default function MainContentPengeluaran() {
           {/* Filter + Buttons */}
           <div className="flex flex-col sm:flex-row lg:items-center gap-4 w-full lg:w-1/2 justify-between flex-wrap">
             <div className="flex items-center gap-3">
-              <label htmlFor="urutkan" className="font-medium text-[#797B8C] text-[14px] sm:text-[16px]">
+              <label
+                htmlFor="urutkan"
+                className="font-medium text-[#797B8C] text-[14px] sm:text-[16px]"
+              >
                 Urutkan:
               </label>
               <div className="border border-gray-300 px-1.5 rounded-full font-semibold text-[14px] cursor-pointer">
@@ -84,13 +165,21 @@ export default function MainContentPengeluaran() {
             </div>
 
             <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button className="group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto">
+              <button
+                onClick={exportToExcel}
+                disabled={isExporting}
+                className={`group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto ${
+                  isExporting ? "opacity-50 cursor-not-allowed" : ""
+                }`}
+              >
                 <DocumentDownload
                   size="18"
                   variant="Bold"
-                  className="group-hover:fill-white fill-[#00859B]"
+                  className={`group-hover:fill-white fill-[#00859B] ${
+                    isExporting ? "animate-pulse" : ""
+                  }`}
                 />
-                Cetak
+                {isExporting ? "Mengekspor..." : "Download"}
               </button>
               <Link href="/pengeluaran/add" passHref>
                 <button className="bg-[#00859B] text-white px-4 py-2 cursor-pointer rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#006F7D] transition-colors duration-200 w-full sm:w-auto">
