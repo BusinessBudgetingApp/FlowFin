@@ -169,7 +169,6 @@ export default function EditPendapatan() {
               <textarea
                 className="w-full p-2 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400"
                 placeholder="Deskripsi Transaksi"
-                maxLength={100}
                 name="description"
                 value={formData.description}
                 onChange={handleChange}

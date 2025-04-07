@@ -159,7 +159,6 @@ export default function AddPengeluaran() {
                 <textarea
                   className="w-full p-2 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400"
                   placeholder="Deskripsi Transaksi"
-                  maxLength={100}
                   name="description"
                   id="description"
                 />

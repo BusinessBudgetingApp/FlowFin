@@ -8,7 +8,6 @@ import DataTablePengeluaran from "./DataTablePengeluaran";
 import PaginationPengeluaran from "./PaginationPengeluaran";
 import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import { useEffect, useState } from "react";
-import PaginationLaporanPengeluaran from "../laporanPengeluaran/PaginationLaporanPengeluaran";
 
 export default function MainContentPengeluaran() {
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>([]);
@@ -25,7 +24,6 @@ export default function MainContentPengeluaran() {
   } = usePaginatedTransactions("pengeluaran", 8);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
     if (!query) {
@@ -53,9 +51,9 @@ export default function MainContentPengeluaran() {
         </h1>
 
         {/* Search + Controls */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 w-full pb-4">
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-4 w-full pb-4">
           {/* Search Input */}
-          <form className="w-full md:w-1/2">
+          <form className="w-full lg:w-1/2">
             <input
               className="h-[40px] text-[14px] text-gray-600 w-full bg-[#F2F2F2] px-3 py-1 rounded-lg border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#00859B] transition-all duration-150"
               name="text"
@@ -67,7 +65,7 @@ export default function MainContentPengeluaran() {
           </form>
 
           {/* Filter + Buttons */}
-          <div className="flex flex-col sm:flex-row md:items-center gap-4 w-full md:w-1/2 justify-between">
+          <div className="flex flex-col sm:flex-row lg:items-center gap-4 w-full lg:w-1/2 justify-between flex-wrap">
             <div className="flex items-center gap-3">
               <label htmlFor="urutkan" className="font-medium text-[#797B8C] text-[14px] sm:text-[16px]">
                 Urutkan:
@@ -85,8 +83,8 @@ export default function MainContentPengeluaran() {
               </div>
             </div>
 
-            <div className="flex gap-3">
-              <button className="group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#00859B] hover:text-white transition-colors duration-200">
+            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+              <button className="group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto">
                 <DocumentDownload
                   size="18"
                   variant="Bold"
@@ -95,7 +93,7 @@ export default function MainContentPengeluaran() {
                 Cetak
               </button>
               <Link href="/pengeluaran/add" passHref>
-                <button className="bg-[#00859B] text-white px-4 py-2 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200">
+                <button className="bg-[#00859B] text-white px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#006F7D] transition-colors duration-200 w-full sm:w-auto">
                   <AddCircle size="18" color="#ffff" variant="Bold" />
                   Tambah Data
                 </button>
