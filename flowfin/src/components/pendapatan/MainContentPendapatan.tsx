@@ -5,15 +5,12 @@ import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import DataTablePendapatan from "./DataTablePendapatan";
 import PaginationPendapatan from "./PaginationPendapatan";
-import PaginationLaporanPendapatan from "../laporanPendapatan/PaginationLaporanPendapatan";
 import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
 import { exportPDF } from "@/app/utils/exportPDF";
-
 
 export default function MainContentPendapatan() {
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
@@ -29,6 +26,7 @@ export default function MainContentPendapatan() {
     setCurrentPage,
     hasNext,
     hasPrev,
+    isLoading,
   } = usePaginatedTransactions("pendapatan", 8);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -210,7 +208,11 @@ export default function MainContentPendapatan() {
         </div>
 
         {/* Tabel */}
-        <DataTablePendapatan item={filteredData} />
+        {isLoading ? (
+          <p>Loading...</p>
+        ) : (
+          <DataTablePendapatan item={filteredData} currentPage={currentPage} />
+        )}
 
         {/* Pagination */}
         <PaginationPendapatan

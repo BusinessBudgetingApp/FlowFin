@@ -25,6 +25,7 @@ export default function MainContentPengeluaran() {
     setCurrentPage,
     hasNext,
     hasPrev,
+    isLoading,
   } = usePaginatedTransactions("pengeluaran", 8);
 
   const [isExporting, setIsExporting] = useState(false);
@@ -206,7 +207,11 @@ export default function MainContentPengeluaran() {
         </div>
 
         {/* Tabel */}
-        <DataTablePengeluaran data={filteredData} />
+        {isLoading ? (
+          <p className="text-center text-gray-500">Loading...</p>
+        ) : (
+          <DataTablePengeluaran data={filteredData} currentPage={currentPage} />
+        )}
 
         {/* Pagination */}
         <PaginationPengeluaran
