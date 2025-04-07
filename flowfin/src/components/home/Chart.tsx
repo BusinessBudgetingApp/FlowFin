@@ -12,7 +12,13 @@ const options = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      position: "right",
+      position: "bottom",
+      labels: {
+        boxWidth: 20, 
+        font: {
+          size: 12,
+        },
+      },
     },
     tooltip: {
       enabled: true,
@@ -33,7 +39,6 @@ export default function Chart({
 }) {
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
   const incomeByMonth = income.filter((i) => {
-    const now = new Date();
     const transactionDate = (i.timestamp as Timestamp).toDate();
     return (
       transactionDate.getMonth() + 1 === month &&
@@ -43,7 +48,6 @@ export default function Chart({
 
   const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
   const outcomeByMonth = outcome.filter((i) => {
-    const now = new Date();
     const transactionDate = (i.timestamp as Timestamp).toDate();
     return (
       transactionDate.getMonth() + 1 === month &&
@@ -88,17 +92,21 @@ export default function Chart({
   };
 
   return (
-    <div className="grid grid-cols-2 px-2">
-      <div className="w-[300px] h-[200px] p-2">
-        <h3 className="font-semibold ">Pendapatan Terbesar</h3>
-        <div className="relative h-[180px] w-[270px] mx-auto">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2 py-4">
+      <div className="w-full max-w-[300px] mx-auto">
+        <h3 className="font-semibold text-sm md:text-base text-center mb-2">
+          Pendapatan Terbesar
+        </h3>
+        <div className="relative w-full h-[170px] sm:h-[200px]">
           <Pie data={incomeThisMonth} options={options} />
         </div>
       </div>
 
-      <div className="w-[300px] h-[200px] p-2">
-        <h3 className="font-semibold ">Pengeluaran Terbesar</h3>
-        <div className="relative h-[180px] w-[270px] mx-auto">
+      <div className="w-full max-w-[300px] mx-auto">
+        <h3 className="font-semibold text-sm md:text-base text-center mb-2">
+          Pengeluaran Terbesar
+        </h3>
+        <div className="relative w-full h-[170px] sm:h-[200px]">
           <Pie data={outcomeThisMonth} options={options} />
         </div>
       </div>
