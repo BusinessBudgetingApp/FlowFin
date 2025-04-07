@@ -64,7 +64,6 @@ export default function AddPengeluaran() {
       setTimeout(() => {
         router.push("/pengeluaran");
       });
-
     } catch (error) {
       console.error("Error saving data:", error);
       toast.error("Gagal menyimpan data pengeluaran", {
@@ -89,10 +88,14 @@ export default function AddPengeluaran() {
               onSubmit={(e) => {
                 e.preventDefault();
                 createPost(new FormData(e.currentTarget));
-              }}>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Nama Produk <span className="text-red-500">*</span></label>
+              }}
+            >
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+                {/* Nama Produk */}
+                <div>
+                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">
+                    Nama Produk <span className="text-red-500">*</span>
+                  </label>
                   <input
                     placeholder="Nama Produk"
                     type="text"
@@ -102,27 +105,41 @@ export default function AddPengeluaran() {
                     required
                   />
                 </div>
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Tanggal <span className="text-red-500">*</span></label>
+
+                {/* Tanggal */}
+                <div>
+                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">
+                    Tanggal <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="date"
                     name="timestamp"
                     id="timestamp"
                     className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
-                    required />
+                    required
+                  />
                 </div>
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Kategori Pengeluaran <span className="text-red-500">*</span></label>
+
+                {/* Kategori */}
+                <div>
+                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">
+                    Kategori Pengeluaran <span className="text-red-500">*</span>
+                  </label>
                   <input
                     name="category"
                     id="category"
                     type="text"
                     placeholder="Kategori Pengeluaran"
                     className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
-                    required />
+                    required
+                  />
                 </div>
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Jumlah Pengeluaran <span className="text-red-500">*</span></label>
+
+                {/* Jumlah */}
+                <div>
+                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">
+                    Jumlah Pengeluaran <span className="text-red-500">*</span>
+                  </label>
                   <input
                     type="number"
                     name="amount"
@@ -130,29 +147,34 @@ export default function AddPengeluaran() {
                     placeholder="Jumlah Pengeluaran"
                     className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
                     required
-                    min="0" />
+                    min="0"
+                  />
                 </div>
               </div>
 
               <div>
-                <label className="block text-[14px] text-[#212121] mb-3 font-medium">Deskripsi Transaksi</label>
+                <label className="block text-[14px] text-[#212121] mb-3 font-medium">
+                  Deskripsi Transaksi
+                </label>
                 <textarea
                   className="w-full p-2 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400"
                   placeholder="Deskripsi Transaksi"
-                  maxLength={100}
                   name="description"
-                  id="description" />
+                  id="description"
+                />
               </div>
               <div className="flex justify-end gap-4">
                 <button
                   type="button"
                   onClick={() => router.push("/pengeluaran")}
-                  className="bg-gray-300 text-gray-700 px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-gray-400 transition-colors cursor-pointer">
+                  className="bg-gray-300 text-gray-700 px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-gray-400 transition-colors cursor-pointer"
+                >
                   Batal
                 </button>
                 <button
-                  className='btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#497d88]'
-                  type="submit">
+                  className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#497d88]"
+                  type="submit"
+                >
                   Simpan Data
                 </button>
               </div>

@@ -1,4 +1,3 @@
-// app/pendapatan/edit/[id]/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -87,7 +86,7 @@ export default function EditPendapatan() {
 
       setTimeout(() => {
         router.push("/pendapatan");
-      });
+      }, 1000);
 
     } catch (error) {
       console.error("Error updating document: ", error);
@@ -104,97 +103,95 @@ export default function EditPendapatan() {
   };
 
   return (
-    <>
-      <div className="main-content px-6 py-6 h-fit">
-        <div className="content bg-white p-4 rounded-md">
-          <h1 className="text-[16px] font-bold text-[#212121] pb-4 border-b-2 border-gray-200">
-            Edit Data Pendapatan
-          </h1>
-          <div className="pt-4">
-            <form className="space-y-4" onSubmit={handleSubmit}>
-              <div className="flex gap-4">
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3  font-medium">Nama Produk</label>
-                  <input
-                    placeholder="Nama Produk"
-                    type="text"
-                    name="productName"
-                    value={formData.productName}
-                    onChange={handleChange}
-                    className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
-                    required
-                  />
-                </div>
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Tanggal</label>
-                  <input
-                    type="date"
-                    name="timestamp"
-                    value={formData.timestamp ? formatDateForInput(formData.timestamp) : ""}
-                    onChange={handleDateChange}
-                    className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
-                    required
-                  />
-                </div>
-
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Kategori Pendapatan</label>
-                  <input
-                    name="category"
-                    value={formData.category}
-                    onChange={handleChange}
-                    type="text"
-                    placeholder="Kategori Pendapatan"
-                    className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
-                    required
-                  />
-                </div>
-
-                <div className="flex-1">
-                  <label className="block text-[14px] text-[#212121] mb-3 font-medium">Jumlah Pendapatan</label>
-                  <input
-                    type="number"
-                    name="amount"
-                    value={formData.amount}
-                    onChange={handleChange}
-                    placeholder="Jumlah Pendapatan"
-                    className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
-                    required
-                  />
-                </div>
-              </div>
-
-              <div>
-                <label className="block text-[14px] text-[#212121] mb-3 font-medium">Deskripsi Transaksi</label>
-                <textarea
-                  className="w-full p-2 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400"
-                  placeholder="Deskripsi Transaksi"
-                  maxLength={100}
-                  name="description"
-                  value={formData.description}
+    <div className="main-content px-4 sm:px-6 py-6 h-fit">
+      <div className="content bg-white p-4 rounded-md">
+        <h1 className="text-[16px] font-bold text-[#212121] pb-4 border-b-2 border-gray-200">
+          Edit Data Pendapatan
+        </h1>
+        <div className="pt-4">
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            {/* Responsive grid */}
+            <div className="flex flex-col md:flex-row flex-wrap gap-4">
+              <div className="flex-1 min-w-[240px]">
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Nama Produk</label>
+                <input
+                  placeholder="Nama Produk"
+                  type="text"
+                  name="productName"
+                  value={formData.productName}
                   onChange={handleChange}
+                  className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
                   required
                 />
               </div>
 
-              <div className="flex justify-end gap-4">
-                <button
-                  type="button"
-                  onClick={() => router.push("/pendapatan")}
-                  className="bg-gray-300 text-gray-700 px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-gray-400 transition-colors cursor-pointer">
-                  Batal
-                </button>
-                <button
-                  className="bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#497d88]"
-                  type="submit">
-                  Simpan Perubahan
-                </button>
+              <div className="flex-1 min-w-[240px]">
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Tanggal</label>
+                <input
+                  type="date"
+                  name="timestamp"
+                  value={formData.timestamp ? formatDateForInput(formData.timestamp) : ""}
+                  onChange={handleDateChange}
+                  className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
+                  required
+                />
               </div>
-            </form>
 
-          </div>
+              <div className="flex-1 min-w-[240px]">
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Kategori Pendapatan</label>
+                <input
+                  name="category"
+                  value={formData.category}
+                  onChange={handleChange}
+                  type="text"
+                  placeholder="Kategori Pendapatan"
+                  className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
+                  required
+                />
+              </div>
+
+              <div className="flex-1 min-w-[240px]">
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Jumlah Pendapatan</label>
+                <input
+                  type="number"
+                  name="amount"
+                  value={formData.amount}
+                  onChange={handleChange}
+                  placeholder="Jumlah Pendapatan"
+                  className="w-full p-2 border border-gray-300 text-gray-600 rounded-md placeholder-gray-400"
+                  required
+                />
+              </div>
+            </div>
+
+            <div>
+              <label className="block text-[14px] text-[#212121] mb-2 font-medium">Deskripsi Transaksi</label>
+              <textarea
+                className="w-full p-2 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400"
+                placeholder="Deskripsi Transaksi"
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                required
+              />
+            </div>
+
+            <div className="flex flex-col sm:flex-row justify-end gap-4 pt-2">
+              <button
+                type="button"
+                onClick={() => router.push("/pendapatan")}
+                className="bg-gray-300 text-gray-700 px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-gray-400 transition-colors cursor-pointer">
+                Batal
+              </button>
+              <button
+                className="bg-[#00859B] text-white px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-[#497d88] transition-colors cursor-pointer"
+                type="submit">
+                Simpan Perubahan
+              </button>
+            </div>
+          </form>
         </div>
       </div>
-    </>
+    </div>
   );
 }
