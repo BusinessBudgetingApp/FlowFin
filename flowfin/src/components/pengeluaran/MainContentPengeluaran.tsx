@@ -93,7 +93,7 @@ export default function MainContentPengeluaran() {
                 Cetak
               </button>
               <Link href="/pengeluaran/add" passHref>
-                <button className="bg-[#00859B] text-white px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#006F7D] transition-colors duration-200 w-full sm:w-auto">
+                <button className="bg-[#00859B] text-white px-4 py-2 cursor-pointer rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#006F7D] transition-colors duration-200 w-full sm:w-auto">
                   <AddCircle size="18" color="#ffff" variant="Bold" />
                   Tambah Data
                 </button>
