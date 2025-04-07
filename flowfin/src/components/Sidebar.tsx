@@ -23,7 +23,7 @@ export default function Sidebar() {
 
   useEffect(() => {
     const handleResize = () => {
-      setIsSmallScreen(window.innerWidth < 1024); // mobile + tablet
+      setIsSmallScreen(window.innerWidth < 1024);
     };
 
     handleResize();
@@ -44,31 +44,34 @@ export default function Sidebar() {
 
   return (
     <>
-      {/* Sidebar Toggle Button (mobile & tablet) */}
-      {isSmallScreen && (
+      {isSmallScreen && !isOpen && (
         <button
-          onClick={() => setIsOpen(!isOpen)}
-          className="fixed lg:hidden z-30 top-4 left-4 p-2 rounded-md bg-white shadow-md"
+          onClick={() => setIsOpen(true)}
+          className="fixed lg:hidden z-30 top-4 left-4 p-2 rounded-md bg-white"
         >
-          {isOpen ? (
-            <CloseSquare size={24} />
-          ) : (
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            </svg>
-          )}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="h-6 w-6"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
         </button>
+      )}
+
+      {/* Overlay */}
+      {isSmallScreen && isOpen && (
+        <div
+          className="fixed inset-0 bg-black/40 z-10"
+          onClick={() => setIsOpen(false)}
+        />
       )}
 
       {/* Sidebar */}
@@ -80,22 +83,30 @@ export default function Sidebar() {
         <Link href="/">
           <div className="logo pt-2 pb-8 flex items-center justify-center">
             <picture>
-              <img src={Logo2.src} width={130} height={130} alt="" />
+              <img src={Logo2.src} width={130} height={130} alt="Logo" />
             </picture>
           </div>
         </Link>
 
         <div className="sidebar-content">
           <div className="menu pb-3 border-b border-[#B7BBC0]">
-            <h1 className="text-[18px] font-bold text-[#212121] px-2 py-2">Menu</h1>
+            <h1 className="text-[18px] font-bold text-[#212121] px-2 py-2">
+              Menu
+            </h1>
 
             <Link href="/" onClick={() => setIsOpen(false)}>
               <button
                 className={`group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold w-full rounded-md cursor-pointer ${
-                  isActive("/") ? "bg-[#F2F2F2] text-[#00859B]" : "hover:bg-[#F2F2F2] hover:text-[#00859B]"
+                  isActive("/")
+                    ? "bg-[#F2F2F2] text-[#00859B]"
+                    : "hover:bg-[#F2F2F2] hover:text-[#00859B]"
                 }`}
               >
-                <Category size="20" className="icon fill-[#797B8C] group-hover:fill-[#00859B]" variant="Bold" />
+                <Category
+                  size="20"
+                  className="icon fill-[#797B8C] group-hover:fill-[#00859B]"
+                  variant="Bold"
+                />
                 Dashboard
               </button>
             </Link>
@@ -103,10 +114,16 @@ export default function Sidebar() {
             <Link href="/pendapatan" onClick={() => setIsOpen(false)}>
               <button
                 className={`group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold w-full rounded-md cursor-pointer ${
-                  isActive("/pendapatan") ? "bg-[#F2F2F2] text-[#00859B]" : "hover:bg-[#F2F2F2] hover:text-[#00859B]"
+                  isActive("/pendapatan")
+                    ? "bg-[#F2F2F2] text-[#00859B]"
+                    : "hover:bg-[#F2F2F2] hover:text-[#00859B]"
                 }`}
               >
-                <DirectboxReceive size="20" className="icon fill-[#797B8C] group-hover:fill-[#00859B]" variant="Bold" />
+                <DirectboxReceive
+                  size="20"
+                  className="icon fill-[#797B8C] group-hover:fill-[#00859B]"
+                  variant="Bold"
+                />
                 Pendapatan
               </button>
             </Link>
@@ -114,22 +131,34 @@ export default function Sidebar() {
             <Link href="/pengeluaran" onClick={() => setIsOpen(false)}>
               <button
                 className={`group flex gap-3 px-5 py-2.5 mt-1 items-center text-[16px] font-semibold w-full rounded-md cursor-pointer ${
-                  isActive("/pengeluaran") ? "bg-[#F2F2F2] text-[#00859B]" : "hover:bg-[#F2F2F2] hover:text-[#00859B]"
+                  isActive("/pengeluaran")
+                    ? "bg-[#F2F2F2] text-[#00859B]"
+                    : "hover:bg-[#F2F2F2] hover:text-[#00859B]"
                 }`}
               >
-                <DirectboxSend size="20" className="icon fill-[#797B8C] group-hover:fill-[#00859B]" variant="Bold" />
+                <DirectboxSend
+                  size="20"
+                  className="icon fill-[#797B8C] group-hover:fill-[#00859B]"
+                  variant="Bold"
+                />
                 Pengeluaran
               </button>
             </Link>
           </div>
 
           <div className="account py-3">
-            <h1 className="text-[18px] font-bold text-[#212121] px-2 py-2">Account</h1>
+            <h1 className="text-[18px] font-bold text-[#212121] px-2 py-2">
+              Account
+            </h1>
             <button
               onClick={handleSignOut}
               className="group flex gap-3 px-5 py-2.5 my-1 items-center text-[16px] font-semibold w-full hover:bg-[#F2F2F2] hover:text-[#00859B] rounded-md cursor-pointer"
             >
-              <LogoutCurve size="20" className="icon fill-[#797B8C] group-hover:fill-[#00859B]" variant="Bold" />
+              <LogoutCurve
+                size="20"
+                className="icon fill-[#797B8C] group-hover:fill-[#00859B]"
+                variant="Bold"
+              />
               Sign Out
             </button>
           </div>
