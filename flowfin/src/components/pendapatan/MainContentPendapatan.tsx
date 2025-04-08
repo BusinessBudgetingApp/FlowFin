@@ -149,11 +149,11 @@ export default function MainContentPendapatan() {
               >
                 Urutkan:
               </label>
-              <div className="border border-gray-300 px-1.5 rounded-full font-semibold text-[14px] cursor-pointer">
+              <div className="border border-gray-300 px-1.5 rounded-full font-semibold text-[14px]">
                 <select
                   name="urutkan"
                   id="urutkan"
-                  className="py-2 pr-2 mx-1.5 outline-none bg-transparent"
+                  className="py-2 pr-2 mx-1.5 outline-none bg-transparent cursor-pointer"
                   defaultValue=""
                 >
                   <option value="harga-tertinggi">Harga Tertinggi</option>
@@ -166,7 +166,7 @@ export default function MainContentPendapatan() {
               <button
                 onClick={exportToExcel}
                 disabled={isExporting}
-                className={`group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto ${
+                className={`group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto cursor-pointer ${
                   isExporting ? "opacity-50 cursor-not-allowed" : ""
                 }`}
               >

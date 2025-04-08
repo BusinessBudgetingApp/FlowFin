@@ -53,7 +53,7 @@ export default function PaginationPengeluaran({
         {pagesToShow.map((page) => (
           <button
             key={page}
-            className={`border px-3 py-2 rounded-md font-medium min-w-[36px] ${
+            className={`border px-3 py-2 rounded-md font-medium min-w-[36px] cursor-pointer ${
               currentPage === page
                 ? "bg-[#00859B] text-white"
                 : "hover:bg-gray-100 text-[#212121] border-[#B7BBC0]"
