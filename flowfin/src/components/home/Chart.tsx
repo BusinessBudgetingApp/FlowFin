@@ -92,7 +92,7 @@ export default function Chart({
   };
 
   return (
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2 py-4">
+    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-2">
       <div className="w-full max-w-[300px] mx-auto">
         <h3 className="font-semibold text-sm md:text-base text-center mb-2">
           Pendapatan Terbesar
