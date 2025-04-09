@@ -20,14 +20,14 @@ const options: ChartOptions<"pie"> = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-
-      position: "bottom",
-      labels: {
-        boxWidth: 20,
-        font: {
-          size: 12,
-        },
-      },
+      display: false
+      // position: "bottom",
+      // labels: {
+      //   boxWidth: 20,
+      //   font: {
+      //     size: 12,
+      //   },
+      // },
 
 
     },
