@@ -101,7 +101,7 @@ export default function DataTablePengeluaran({
                 {item.category}
               </td>
               <td className="px-3 text-[14px] font-normal text-left">
-                Rp. {item.amount.toLocaleString("id-ID")}
+                Rp {item.amount.toLocaleString("id-ID")}
               </td>
               <td className="px-3 text-[14px] font-normal text-left">
                 {truncateDescription(item.description || "")}
@@ -153,7 +153,7 @@ export default function DataTablePengeluaran({
 
             <div className="mt-2 text-sm">
               <p>
-                <span className="font-medium">Jumlah:</span> Rp.{" "}
+                <span className="font-medium">Jumlah:</span> Rp{" "}
                 {item.amount.toLocaleString("id-ID")}
               </p>
               {item.description && (

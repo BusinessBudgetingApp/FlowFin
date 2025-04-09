@@ -62,12 +62,12 @@ export default function MainContentHome() {
                     <td className="p-4 text-left">{data.category}</td>
                     <td className="p-4 text-green-600 font-medium text-left">
                       {data.transactionType === "pendapatan"
-                        ? `Rp. ${data.amount.toLocaleString("id-ID")}`
+                        ? `Rp ${data.amount.toLocaleString("id-ID")}`
                         : "-"}
                     </td>
                     <td className="p-4 text-red-500 font-medium text-left">
                       {data.transactionType === "pengeluaran"
-                        ? `Rp. ${data.amount.toLocaleString("id-ID")}`
+                        ? `Rp ${data.amount.toLocaleString("id-ID")}`
                         : "-"}
                     </td>
                     <td className="p-4 text-left text-gray-600">
@@ -109,13 +109,13 @@ export default function MainContentHome() {
                 <p className="text-green-600">
                   <span className="font-medium">Pendapatan: </span>
                   {data.transactionType === "pendapatan"
-                    ? `Rp. ${data.amount.toLocaleString("id-ID")}`
+                    ? `Rp ${data.amount.toLocaleString("id-ID")}`
                     : "-"}
                 </p>
                 <p className="text-red-500">
                   <span className="font-medium">Pengeluaran: </span>
                   {data.transactionType === "pengeluaran"
-                    ? `Rp. ${data.amount.toLocaleString("id-ID")}`
+                    ? `Rp ${data.amount.toLocaleString("id-ID")}`
                     : "-"}
                 </p>
                 {data.description && (

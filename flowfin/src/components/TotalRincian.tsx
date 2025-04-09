@@ -22,7 +22,9 @@ export function TotalRincian({
             </div>
           </div>
           <div>
-            <p className="text-lg md:text-2xl font-bold">Rp. {pendapatan}</p>
+            <p className="text-lg md:text-2xl font-bold">
+              Rp {pendapatan.toLocaleString("id-ID")}
+            </p>
             <p className="text-gray-500 text-sm md:text-base">Total Pendapatan</p>
           </div>
         </div>
@@ -38,7 +40,9 @@ export function TotalRincian({
             </div>
           </div>
           <div>
-            <p className="text-lg md:text-2xl font-bold">Rp. {pengeluaran}</p>
+            <p className="text-lg md:text-2xl font-bold">
+              Rp {pengeluaran.toLocaleString("id-ID")}
+            </p>
             <p className="text-gray-500 text-sm md:text-base">Total Pengeluaran</p>
           </div>
         </div>

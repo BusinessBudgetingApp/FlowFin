@@ -104,7 +104,7 @@ export default function DataTablePendapatan({
                   {data.category}
                 </td>
                 <td className="px-3 text-[14px] font-normal text-left">
-                  Rp. {data.amount.toLocaleString("id-ID")}
+                  Rp {data.amount.toLocaleString("id-ID")}
                 </td>
                 <td className="px-3 text-[14px] font-normal text-left">
                   {truncateDescription(data.description || "")}
@@ -160,7 +160,7 @@ export default function DataTablePendapatan({
               {/* Amount & Description */}
               <div className="mt-2">
                 <p className="text-sm">
-                  <span className="font-medium">Jumlah:</span> Rp.{" "}
+                  <span className="font-medium">Jumlah:</span> Rp{" "}
                   {data.amount.toLocaleString("id-ID")}
                 </p>
                 {data.description && (

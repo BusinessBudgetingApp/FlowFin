@@ -20,7 +20,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "FlowFin",
   icons: {
-    icon: "Logo2.png",
+    icon: "favicon.png",
   },
   description: "Aplikasi Keuangan ",
 };

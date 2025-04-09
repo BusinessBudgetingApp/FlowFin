@@ -11,7 +11,7 @@ export const exportPDF = (
     item.timestamp.toDate().toLocaleDateString(),
     item.productName,
     item.category,
-    `Rp.${item.amount.toLocaleString("id-ID")}`,
+    `Rp${item.amount.toLocaleString("id-ID")}`,
     item.description,
   ]);
 
