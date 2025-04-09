@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import AiModal from "./AI/AiModal";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
+import Link from "next/link";
 
 export default function Navbar() {
   const [showAI, setShowAI] = useState(false);
@@ -39,9 +40,11 @@ export default function Navbar() {
     <>
       <nav className="sticky top-0 z-10 main-container w-full h-fit bg-[#F6F6F6]">
         <div className="navbar-container flex justify-between pl-20 lg:pl-10 pr-4 py-4 bg-white items-center">
-          <h1 className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-bold text-[#212121]">
-            Dashboard
-          </h1>
+          <Link href={"/"}>
+            <h1 className="text-[18px] sm:text-[20px] md:text-[22px] lg:text-[24px] font-bold text-[#212121]">
+              Dashboard
+            </h1>
+          </Link>
           <div className="flex items-center gap-3 md:gap-5">
             <button
               className="flex bg-[#0C0011] px-3 md:px-5 py-2 gap-2 rounded-full items-center cursor-pointer"

@@ -32,7 +32,6 @@ export default function PaginationPendapatan({
   };
 
   return (
-    <div className="flex items-center justify-between">
       <div className="flex items-center justify-center pt-5 pb-2.5 gap-3">
         {/* Tombol "Sebelumnya" */}
         <button
@@ -89,23 +88,6 @@ export default function PaginationPendapatan({
         </button>
       </div>
 
-      {/* Tombol "Selanjutnya" */}
-      <button
-        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${
-          hasNext
-            ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
-            : "cursor-not-allowed text-gray-400 border-gray-300"
-        }`}
-        onClick={() => hasNext && setCurrentPage(currentPage + 1)}
-        disabled={!hasNext}
-      >
-        <span>Selanjutnya</span>
-        <ArrowRight2
-          size="16"
-          color={hasNext ? "#797B8C" : "#B7BBC0"}
-          variant="Bold"
-        />
-      </button>
-    </div>
+      
   );
 }
