@@ -48,7 +48,7 @@ export default function PaginationPengeluaran({
   </button>
 
   {/* Nomor Halaman (maksimal 3, tetap tampil di mobile) */}
-  <div className="flex gap-1 overflow-x-auto max-w-full scrollbar-hide">
+  <div className="flex gap-1 md:gap-2 overflow-x-auto max-w-full scrollbar-hide">
     {pagesToShow.map((page) => (
       <button
         key={page}
