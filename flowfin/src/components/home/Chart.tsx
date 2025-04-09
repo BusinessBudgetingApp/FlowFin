@@ -4,6 +4,7 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from "chart.js";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Timestamp } from "firebase/firestore";
+import { useAuth } from "@/hooks/useAuth"; 
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
@@ -14,7 +15,7 @@ const options = {
     legend: {
       position: "bottom",
       labels: {
-        boxWidth: 20, 
+        boxWidth: 20,
         font: {
           size: 12,
         },
@@ -37,19 +38,23 @@ export default function Chart({
   month: number;
   year: number;
 }) {
+  const { user } = useAuth(); 
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+  const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
+
   const incomeByMonth = income.filter((i) => {
     const transactionDate = (i.timestamp as Timestamp).toDate();
     return (
+      i.userId === user?.uid && 
       transactionDate.getMonth() + 1 === month &&
       transactionDate.getFullYear() === year
     );
   });
 
-  const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
   const outcomeByMonth = outcome.filter((i) => {
     const transactionDate = (i.timestamp as Timestamp).toDate();
     return (
+      i.userId === user?.uid && 
       transactionDate.getMonth() + 1 === month &&
       transactionDate.getFullYear() === year
     );

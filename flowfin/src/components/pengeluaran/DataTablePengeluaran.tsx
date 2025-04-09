@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 export default function DataTablePengeluaran({
   data,
   currentPage,
+  onDelete,
 }: {
   data: IncomeTransaction[];
   currentPage: number;
+  onDelete: (id?: string) => void;
 }) {
   const router = useRouter();
 
@@ -113,7 +115,7 @@ export default function DataTablePengeluaran({
                   </button>
                 </Link>
                 <button
-                  onClick={() => handleDelete(item.id)}
+                  onClick={() => onDelete(item.id)}
                   className="p-3 rounded-md cursor-pointer mx-1 my-1.5 hover:bg-red-100"
                 >
                   <Trash size="18" color="#F74B4B" variant="Bold" />
@@ -171,7 +173,7 @@ export default function DataTablePengeluaran({
                 </button>
               </Link>
               <button
-                onClick={() => handleDelete(item.id)}
+                onClick={() => onDelete(item.id)}
                 className="p-2 rounded-md cursor-pointer hover:bg-red-100"
               >
                 <Trash size="18" color="#F74B4B" variant="Bold" />

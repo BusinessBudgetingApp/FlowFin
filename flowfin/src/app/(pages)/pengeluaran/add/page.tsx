@@ -6,8 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "@/hooks/useAuth";
 
 export default function AddPengeluaran() {
+  const { user } = useAuth(); 
   const pathname = usePathname();
   const router = useRouter();
   const baseRoute = pathname.split("/")[1];
@@ -27,7 +29,6 @@ export default function AddPengeluaran() {
       const timestamp = new Date(formData.get("timestamp") as string);
       const transactionType = baseRoute;
 
-      // Validate required fields
       if (!productName || !amount || !category || !timestamp) {
         toast.error("Harap isi semua field yang wajib diisi", {
           position: "top-right",
@@ -43,6 +44,7 @@ export default function AddPengeluaran() {
         description,
         timestamp: Timestamp.fromDate(timestamp),
         transactionType,
+        userId: user?.uid, 
       };
 
       // Show loading toast

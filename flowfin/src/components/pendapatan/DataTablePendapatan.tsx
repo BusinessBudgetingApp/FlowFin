@@ -9,9 +9,11 @@ import { toast } from "react-toastify";
 export default function DataTablePendapatan({
   item,
   currentPage,
+  onDelete,
 }: {
   item: IncomeTransaction[];
   currentPage: number;
+  onDelete: (id?: string) => void;
 }) {
   const router = useRouter();
 
@@ -116,7 +118,7 @@ export default function DataTablePendapatan({
                     </button>
                   </Link>
                   <button
-                    onClick={() => handleDelete(data.id)}
+                    onClick={() => onDelete(data.id)}
                     className="p-3 rounded-md cursor-pointer mx-1 my-1.5 hover:bg-red-100"
                   >
                     <Trash size="18" color="#F74B4B" variant="Bold" />
@@ -179,7 +181,7 @@ export default function DataTablePendapatan({
                   </button>
                 </Link>
                 <button
-                  onClick={() => handleDelete(data.id)}
+                  onClick={() => onDelete(data.id)}
                   className="p-2 rounded-md cursor-pointer hover:bg-red-100"
                 >
                   <Trash size="18" color="#F74B4B" variant="Bold" />
