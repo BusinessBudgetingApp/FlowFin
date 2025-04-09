@@ -19,7 +19,7 @@ export default function SignInPage() {
 
         try {
             await signInWithEmailAndPassword(auth, email, password);
-            router.push("/dashboard");
+            router.push("/");
         } catch (err) {
             console.error(err);
             setError("Failed to sign in. Please check your credentials.");
@@ -31,7 +31,7 @@ export default function SignInPage() {
         const provider = new GoogleAuthProvider();
         try {
             await signInWithPopup(auth, provider);
-            router.push("/dashboard");
+            router.push("/");
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);
@@ -73,7 +73,7 @@ export default function SignInPage() {
             >
                 Sign In with Google
             </button>
-            <p className="mt-4 text-sm text-center text-gray-600">
+            <p className="mt-4 text-[14px] font-medium text-center text-[#212121]">
                 Do not have an account?{" "}
                 <Link href="/signup" className="text-teal-600 hover:underline cursor-pointer">
                     Sign Up
