@@ -29,14 +29,13 @@ export default function PaginationPengeluaran({
   }
 
   return (
-    <div className="flex items-center justify-center pt-5 pb-2.5 gap-2 flex-wrap text-[12px]">
+    <div className="flex items-center justify-center py-5 gap-2 flex-wrap text-[12px] bg-white">
       {/* Tombol "Sebelumnya" */}
       <button
-        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${
-          hasPrev
-            ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
-            : "cursor-not-allowed text-gray-400 border-gray-300"
-        }`}
+        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${hasPrev
+          ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
+          : "cursor-not-allowed text-gray-400 border-gray-300"
+          }`}
         onClick={() => hasPrev && setCurrentPage(currentPage - 1)}
         disabled={!hasPrev}
       >
@@ -53,11 +52,10 @@ export default function PaginationPengeluaran({
         {pagesToShow.map((page) => (
           <button
             key={page}
-            className={`border px-3 py-2 rounded-md font-medium min-w-[36px] cursor-pointer ${
-              currentPage === page
-                ? "bg-[#00859B] text-white"
-                : "hover:bg-gray-100 text-[#212121] border-[#B7BBC0]"
-            }`}
+            className={`border px-3 py-2 rounded-md font-medium min-w-[36px] cursor-pointer ${currentPage === page
+              ? "bg-[#00859B] text-white"
+              : "hover:bg-gray-100 text-[#212121] border-[#B7BBC0]"
+              }`}
             onClick={() => setCurrentPage(page)}
           >
             {page}
@@ -67,11 +65,10 @@ export default function PaginationPengeluaran({
 
       {/* Tombol "Selanjutnya" */}
       <button
-        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${
-          hasNext
-            ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
-            : "cursor-not-allowed text-gray-400 border-gray-300"
-        }`}
+        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${hasNext
+          ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
+          : "cursor-not-allowed text-gray-400 border-gray-300"
+          }`}
         onClick={() => hasNext && setCurrentPage(currentPage + 1)}
         disabled={!hasNext}
       >

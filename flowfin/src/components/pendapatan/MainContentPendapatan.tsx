@@ -42,7 +42,7 @@ export default function MainContentPendapatan() {
       return;
     }
     const filterData = transactions.filter((item) =>
-      item.category.toLowerCase().includes(query)
+      item.productName.toLowerCase().includes(query)
     );
     setFilteredData(filterData);
   };
@@ -182,7 +182,7 @@ export default function MainContentPendapatan() {
 
         {/* Tabel */}
         {isLoading ? (
-          <p>Loading...</p>
+          <p className="text-center">Loading...</p>
         ) : (
           <DataTablePendapatan item={filteredData} currentPage={currentPage} />
         )}
