@@ -4,7 +4,7 @@ import { Pie } from "react-chartjs-2";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Timestamp } from "firebase/firestore";
-import { useAuth } from "@/hooks/useAuth"; 
+import { useAuth } from "@/hooks/useAuth";
 
 import {
   Chart as ChartJS,
@@ -61,7 +61,7 @@ export default function Chart({
   month: number;
   year: number;
 }) {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
   const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
 
@@ -69,7 +69,7 @@ export default function Chart({
   const incomeByMonth = income.filter((i) => {
     const transactionDate = (i.timestamp as Timestamp).toDate();
     return (
-      i.userId === user?.uid && 
+      i.userId === user?.uid &&
       transactionDate.getMonth() + 1 === month &&
       transactionDate.getFullYear() === year
     );
@@ -78,7 +78,7 @@ export default function Chart({
   const outcomeByMonth = outcome.filter((i) => {
     const transactionDate = (i.timestamp as Timestamp).toDate();
     return (
-      i.userId === user?.uid && 
+      i.userId === user?.uid &&
       transactionDate.getMonth() + 1 === month &&
       transactionDate.getFullYear() === year
     );
