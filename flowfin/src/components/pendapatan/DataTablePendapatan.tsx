@@ -6,7 +6,13 @@ import { useRouter } from "next/navigation";
 import { deleteData } from "@/lib/firestore";
 import { toast } from "react-toastify";
 
-export default function DataTablePendapatan({ item }: { item: IncomeTransaction[] }) {
+export default function DataTablePendapatan({
+  item,
+  currentPage,
+}: {
+  item: IncomeTransaction[];
+  currentPage: number;
+}) {
   const router = useRouter();
 
   const handleDelete = async (id?: string) => {
@@ -19,11 +25,15 @@ export default function DataTablePendapatan({ item }: { item: IncomeTransaction[
       return;
     }
 
-    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data ini?");
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data ini?"
+    );
     if (!isConfirmed) return;
 
     try {
-      const toastId = toast.loading("Menghapus data...", { position: "top-right" });
+      const toastId = toast.loading("Menghapus data...", {
+        position: "top-right",
+      });
 
       await deleteData(id);
 
@@ -81,10 +91,18 @@ export default function DataTablePendapatan({ item }: { item: IncomeTransaction[
           {item &&
             item.map((data, index) => (
               <tr key={data.id} className="border-b-2 border-gray-200">
-                <td className="px-3 text-[14px] font-normal">{index + 1}</td>
-                <td className="px-3 text-[14px] font-normal text-left">{formatDate(data.timestamp)}</td>
-                <td className="px-3 text-[14px] font-normal text-left">{data.productName}</td>
-                <td className="px-3 text-[14px] font-normal text-left">{data.category}</td>
+                <td className="px-3 text-[14px] font-normal">
+                  {(currentPage - 1) * 8 + index + 1}
+                </td>
+                <td className="px-3 text-[14px] font-normal text-left">
+                  {formatDate(data.timestamp)}
+                </td>
+                <td className="px-3 text-[14px] font-normal text-left">
+                  {data.productName}
+                </td>
+                <td className="px-3 text-[14px] font-normal text-left">
+                  {data.category}
+                </td>
                 <td className="px-3 text-[14px] font-normal text-left">
                   Rp. {data.amount.toLocaleString("id-ID")}
                 </td>
@@ -113,10 +131,15 @@ export default function DataTablePendapatan({ item }: { item: IncomeTransaction[
       <div className="md:hidden space-y-3 mt-4">
         {item &&
           item.map((data, index) => (
-            <div key={data.id} className="bg-white rounded-lg shadow p-4 border border-gray-200">
+            <div
+              key={data.id}
+              className="bg-white rounded-lg shadow p-4 border border-gray-200"
+            >
               {/* Header Info */}
               <div className="flex justify-between items-center mb-2">
-                <span className="text-sm font-semibold text-gray-600">No: {index + 1}</span>
+                <span className="text-sm font-semibold text-gray-600">
+                  No: {(currentPage - 1) * 8 + index + 1}
+                </span>
                 <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
                   {data.category}
                 </span>
@@ -125,8 +148,12 @@ export default function DataTablePendapatan({ item }: { item: IncomeTransaction[
               {/* Main Info */}
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-medium text-gray-900">{data.productName}</h3>
-                  <p className="text-sm text-gray-500">{formatDate(data.timestamp)}</p>
+                  <h3 className="font-medium text-gray-900">
+                    {data.productName}
+                  </h3>
+                  <p className="text-sm text-gray-500">
+                    {formatDate(data.timestamp)}
+                  </p>
                 </div>
               </div>
 

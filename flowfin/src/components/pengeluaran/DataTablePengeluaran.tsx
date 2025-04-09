@@ -8,8 +8,10 @@ import { toast } from "react-toastify";
 
 export default function DataTablePengeluaran({
   data,
+  currentPage,
 }: {
   data: IncomeTransaction[];
+  currentPage: number;
 }) {
   const router = useRouter();
 
@@ -60,23 +62,47 @@ export default function DataTablePengeluaran({
       <table className="hidden md:table table-auto mt-4 w-full text-left">
         <thead>
           <tr>
-            <th className="bg-gray-100 px-3 py-2 font-semibold rounded-tl-lg text-[14px] text-center">No</th>
-            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">Tanggal</th>
-            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">Nama Produk/Layanan</th>
-            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">Kategori</th>
-            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">Jumlah</th>
-            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">Deskripsi</th>
-            <th className="bg-gray-100 px-3 py-2 font-semibold rounded-tr-lg text-center text-[14px]">Aksi</th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold rounded-tl-lg text-[14px] text-center">
+              No
+            </th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">
+              Tanggal
+            </th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">
+              Nama Produk/Layanan
+            </th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">
+              Kategori
+            </th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">
+              Jumlah
+            </th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold text-left text-[14px]">
+              Deskripsi
+            </th>
+            <th className="bg-gray-100 px-3 py-2 font-semibold rounded-tr-lg text-center text-[14px]">
+              Aksi
+            </th>
           </tr>
         </thead>
         <tbody className="text-center">
           {data.map((item, index) => (
             <tr key={item.id} className="border-b-2 border-gray-200">
-              <td className="px-3 text-[14px] font-normal">{index + 1}</td>
-              <td className="px-3 text-[14px] font-normal text-left">{formatDate(item.timestamp)}</td>
-              <td className="px-3 text-[14px] font-normal text-left">{item.productName}</td>
-              <td className="px-3 text-[14px] font-normal text-left">{item.category}</td>
-              <td className="px-3 text-[14px] font-normal text-left">Rp. {item.amount.toLocaleString("id-ID")}</td>
+              <td className="px-3 text-[14px] font-normal">
+                {(currentPage - 1) * 8 + index + 1}
+              </td>
+              <td className="px-3 text-[14px] font-normal text-left">
+                {formatDate(item.timestamp)}
+              </td>
+              <td className="px-3 text-[14px] font-normal text-left">
+                {item.productName}
+              </td>
+              <td className="px-3 text-[14px] font-normal text-left">
+                {item.category}
+              </td>
+              <td className="px-3 text-[14px] font-normal text-left">
+                Rp. {item.amount.toLocaleString("id-ID")}
+              </td>
               <td className="px-3 text-[14px] font-normal text-left">
                 {truncateDescription(item.description || "")}
               </td>
@@ -101,23 +127,40 @@ export default function DataTablePengeluaran({
       {/* Mobile & Tablet Card View */}
       <div className="md:hidden space-y-3 mt-4">
         {data.map((item, index) => (
-          <div key={item.id} className="bg-white rounded-lg shadow p-4 border border-gray-200">
+          <div
+            key={item.id}
+            className="bg-white rounded-lg shadow p-4 border border-gray-200"
+          >
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm font-semibold text-gray-600">No: {index + 1}</span>
-              <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">{item.category}</span>
+              <span className="text-sm font-semibold text-gray-600">
+                No: {(currentPage - 1) * 8 + index + 1}
+              </span>
+              <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+                {item.category}
+              </span>
             </div>
 
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-medium text-gray-900">{item.productName}</h3>
-                <p className="text-sm text-gray-500">{formatDate(item.timestamp)}</p>
+                <h3 className="font-medium text-gray-900">
+                  {item.productName}
+                </h3>
+                <p className="text-sm text-gray-500">
+                  {formatDate(item.timestamp)}
+                </p>
               </div>
             </div>
 
             <div className="mt-2 text-sm">
-              <p><span className="font-medium">Jumlah:</span> Rp. {item.amount.toLocaleString("id-ID")}</p>
+              <p>
+                <span className="font-medium">Jumlah:</span> Rp.{" "}
+                {item.amount.toLocaleString("id-ID")}
+              </p>
               {item.description && (
-                <p className="mt-1"><span className="font-medium">Deskripsi:</span> {truncateDescription(item.description)}</p>
+                <p className="mt-1">
+                  <span className="font-medium">Deskripsi:</span>{" "}
+                  {truncateDescription(item.description)}
+                </p>
               )}
             </div>
 
