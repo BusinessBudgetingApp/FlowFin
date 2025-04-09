@@ -18,6 +18,7 @@ export default function MainContentPengeluaran() {
   );
   const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
 
   const {
     transactions,
@@ -30,25 +31,39 @@ export default function MainContentPengeluaran() {
   } = usePaginatedTransactions("pengeluaran", 8);
 
   const [isExporting, setIsExporting] = useState(false);
+  const bodyData = useRealTimeUpdate("pengeluaran");
+
+  const sortProducts = (data: IncomeTransaction[], order: string) => {
+    if (order === "harga-tertinggi") {
+      return [...data].sort((a, b) => b.amount - a.amount);
+    } else if (order === "harga-terendah") {
+      return [...data].sort((a, b) => a.amount - b.amount);
+    }
+    return data;
+  };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    if (!query) {
-      setFilteredData(transactions);
-      return;
-    }
-    const filterData = transactions.filter((item) =>
-      item.productName.toLowerCase().includes(query)
-    );
-    setFilteredData(filterData);
+
+    const filtered = !query
+      ? transactions
+      : transactions.filter((item) =>
+          item.productName.toLowerCase().includes(query)
+        );
+
+    const sorted = sortProducts(filtered, sortOrder);
+    setFilteredData(sorted);
   };
 
-  const bodyData = useRealTimeUpdate("pengeluaran");
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const order = e.target.value;
+    setSortOrder(order);
+    setFilteredData(sortProducts(filteredData, order));
+  };
 
   const exportToExcel = () => {
     if (isExporting) return;
-
     setIsExporting(true);
 
     try {
@@ -57,7 +72,6 @@ export default function MainContentPengeluaran() {
         return;
       }
 
-      // Format data untuk Excel
       const formattedData = filteredData.map((item) => ({
         Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
           day: "2-digit",
@@ -71,33 +85,28 @@ export default function MainContentPengeluaran() {
         "Tipe Transaksi": item.transactionType || "-",
       }));
 
-      // Buat worksheet
       const worksheet = XLSX.utils.json_to_sheet(formattedData);
-
-      // Atur lebar kolom
       worksheet["!cols"] = [
-        { wch: 12 }, // Tanggal
-        { wch: 20 }, // Nama Produk
-        { wch: 20 }, // Kategori
-        { wch: 15 }, // Jumlah
-        { wch: 30 }, // Deskripsi
-        { wch: 20 }, // Tipe Transaksi
+        { wch: 12 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 15 },
+        { wch: 30 },
+        { wch: 20 },
       ];
 
-      // Buat workbook
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pengeluaran");
 
-      // Generate file Excel
       const excelBuffer = XLSX.write(workbook, {
         bookType: "xlsx",
         type: "array",
       });
 
-      // Buat blob dan download
       const blob = new Blob([excelBuffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       const transactionType = filteredData[0]?.transactionType || "Pengeluaran";
@@ -107,7 +116,6 @@ export default function MainContentPengeluaran() {
       a.click();
 
       URL.revokeObjectURL(url);
-
       toast.success("Data berhasil diunduh");
     } catch (error) {
       console.error("Gagal mengekspor data:", error);
@@ -119,10 +127,11 @@ export default function MainContentPengeluaran() {
 
   useEffect(() => {
     if (transactions) {
-      setDataTransaction(transactions);
-      setFilteredData(transactions);
+      const sorted = sortProducts(transactions, sortOrder);
+      setDataTransaction(sorted);
+      setFilteredData(sorted);
     }
-  }, [transactions]);
+  }, [transactions, sortOrder]);
 
   return (
     <>
@@ -139,11 +148,12 @@ export default function MainContentPengeluaran() {
                 type="text"
                 placeholder="Search..."
                 onChange={handleSearch}
+                value={searchQuery}
               />
             </form>
             <div className="flex gap-5 w-full items-center">
               <div className="flex items-center gap-3">
-                <h2 className="font-medium items-center text-[#797B8C] text-[16px]">
+                <h2 className="font-medium text-[#797B8C] text-[16px]">
                   Urutkan:
                 </h2>
                 <div className="border border-gray-300 px-1.5 rounded-full font-semibold text-[14px] cursor-pointer">
@@ -151,8 +161,10 @@ export default function MainContentPengeluaran() {
                     name="urutkan"
                     id="urutkan"
                     className="py-3 pr-2 mx-1.5 outline-none"
-                    defaultValue={""}
+                    value={sortOrder}
+                    onChange={handleSortChange}
                   >
+                    <option value="">-- Pilih --</option>
                     <option value="harga-tertinggi">Harga Tertinggi</option>
                     <option value="harga-terendah">Harga Terendah</option>
                   </select>
@@ -160,12 +172,14 @@ export default function MainContentPengeluaran() {
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0]">
                 <div className="flex gap-3">
-                  <button className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white">
+                  <button
+                    className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white"
+                    onClick={() => exportPDF(bodyData, "Pengeluaran")}
+                  >
                     <DocumentDownload
                       size="18"
                       variant="Bold"
                       className="group-hover:fill-white fill-[#00859B]"
-                      onClick={() => exportPDF(bodyData, "Pengeluaran")}
                     />
                     Cetak
                   </button>
@@ -178,41 +192,11 @@ export default function MainContentPengeluaran() {
                 </div>
               </div>
             </div>
-
-            {/* <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button
-                onClick={exportToExcel}
-                disabled={isExporting}
-                className={`group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto cursor-pointer${
-                  isExporting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                <DocumentDownload
-                  size="18"
-                  variant="Bold"
-                  className={`group-hover:fill-white fill-[#00859B] ${
-                    isExporting ? "animate-pulse" : ""
-                  }`}
-                />
-                {isExporting ? "Mengekspor..." : "Download"}
-              </button>
-              <Link href="/pengeluaran/add" passHref>
-                <button className="bg-[#00859B] text-white px-4 py-2 cursor-pointer rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#006F7D] transition-colors duration-200 w-full sm:w-auto">
-                  <AddCircle size="18" color="#ffff" variant="Bold" />
-                  Tambah Data
-                </button>
-              </Link>
-            </div> */}
           </div>
         </div>
 
-        {/* Tabel */}
-        {isLoading ? (
-          <p className="text-center">Loading...</p>
-        ) : (
-          <DataTablePengeluaran data={filteredData} currentPage={currentPage} />
-        )}
-        {/* Pagination */}
+        <DataTablePengeluaran data={filteredData} currentPage={currentPage} />
+
         <PaginationPengeluaran
           currentPage={currentPage}
           totalPages={totalPages}

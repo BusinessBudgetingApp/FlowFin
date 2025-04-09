@@ -18,6 +18,7 @@ export default function MainContentPendapatan() {
   );
   const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
+  const [sortOrder, setSortOrder] = useState<string>("");
 
   const {
     transactions,
@@ -30,25 +31,39 @@ export default function MainContentPendapatan() {
   } = usePaginatedTransactions("pendapatan", 8);
   const [isExporting, setIsExporting] = useState(false);
 
-  // Data cetak
   const bodyData = useRealTimeUpdate("pendapatan");
 
-  // fungsi search
+  const sortProducts = (data: IncomeTransaction[], order: string) => {
+    if (order === "harga-tertinggi") {
+      return [...data].sort((a, b) => b.amount - a.amount);
+    } else if (order === "harga-terendah") {
+      return [...data].sort((a, b) => a.amount - b.amount);
+    }
+    return data;
+  };
+
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const query = e.target.value.toLowerCase();
     setSearchQuery(query);
-    if (!query) {
-      setFilteredData(transactions);
-      return;
-    }
-    const filterData = transactions.filter((item) =>
-      item.productName.toLowerCase().includes(query)
-    );
-    setFilteredData(filterData);
+
+    const filtered = !query
+      ? transactions
+      : transactions.filter((item) =>
+          item.productName.toLowerCase().includes(query)
+        );
+
+    const sorted = sortProducts(filtered, sortOrder);
+    setFilteredData(sorted);
   };
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const order = e.target.value;
+    setSortOrder(order);
+    setFilteredData(sortProducts(filteredData, order));
+  };
+
   const exportToExcel = () => {
     if (isExporting) return;
-
     setIsExporting(true);
 
     try {
@@ -57,7 +72,6 @@ export default function MainContentPendapatan() {
         return;
       }
 
-      // Format data untuk Excel
       const formattedData = filteredData.map((item) => ({
         Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
           day: "2-digit",
@@ -70,40 +84,33 @@ export default function MainContentPendapatan() {
         Deskripsi: item.description || "-",
       }));
 
-      // Buat worksheet
       const worksheet = XLSX.utils.json_to_sheet(formattedData);
-
-      // Atur lebar kolom
       worksheet["!cols"] = [
-        { wch: 12 }, // Tanggal
-        { wch: 20 }, // Nama Produk
-        { wch: 20 }, // Kategori
-        { wch: 15 }, // Jumlah
-        { wch: 30 }, // Deskripsi
+        { wch: 12 },
+        { wch: 20 },
+        { wch: 20 },
+        { wch: 15 },
+        { wch: 30 },
       ];
 
-      // Buat workbook
       const workbook = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pendapatan");
 
-      // Generate file Excel
       const excelBuffer = XLSX.write(workbook, {
         bookType: "xlsx",
         type: "array",
       });
 
-      // Buat blob dan download
       const blob = new Blob([excelBuffer], {
         type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
       });
+
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
       a.download = `Data_Pendapatan_${new Date().toISOString().split("T")[0]
         }.xlsx`;
       a.click();
-
-      // Bersihkan
       URL.revokeObjectURL(url);
 
       toast.success("Data berhasil diunduh");
@@ -117,10 +124,11 @@ export default function MainContentPendapatan() {
 
   useEffect(() => {
     if (transactions) {
-      setDataTransaction(transactions);
-      setFilteredData(transactions);
+      const sorted = sortProducts(transactions, sortOrder);
+      setDataTransaction(sorted);
+      setFilteredData(sorted);
     }
-  }, [transactions]);
+  }, [transactions, sortOrder]);
 
   return (
     <>
@@ -150,8 +158,10 @@ export default function MainContentPendapatan() {
                     name="urutkan"
                     id="urutkan"
                     className="py-3 pr-2 mx-1.5 outline-none"
-                    defaultValue={""}
+                    value={sortOrder}
+                    onChange={handleSortChange}
                   >
+                    <option value="">-- Pilih --</option>
                     <option value="harga-tertinggi">Harga Tertinggi</option>
                     <option value="harga-terendah">Harga Terendah</option>
                   </select>
@@ -159,12 +169,14 @@ export default function MainContentPendapatan() {
               </div>
               <div className="pl-5 border-l-1 border-[#B7BBC0] w-full">
                 <div className="flex gap-3 w-full items-center">
-                  <button className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white h-[40px]">
+                  <button
+                    className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white h-[40px]"
+                    onClick={() => exportPDF(bodyData, "Pendapatan")}
+                  >
                     <DocumentDownload
                       size="18"
                       variant="Bold"
                       className="group-hover:fill-white fill-[#00859B]"
-                      onClick={() => exportPDF(bodyData, "Pendapatan")}
                     />
                     Cetak
                   </button>
@@ -180,14 +192,12 @@ export default function MainContentPendapatan() {
           </div>
         </div>
 
-        {/* Tabel */}
         {isLoading ? (
           <p className="text-center">Loading...</p>
         ) : (
           <DataTablePendapatan item={filteredData} currentPage={currentPage} />
         )}
 
-        {/* Pagination */}
         <PaginationPendapatan
           currentPage={currentPage}
           totalPages={totalPages}
