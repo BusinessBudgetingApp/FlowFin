@@ -105,7 +105,7 @@ export default function Chart({
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 px-2 items-start">
       {/* Income Section */}
       <div className="w-full">
-        <h3 className="font-semibold text-sm md:text-base text-center mb-2">
+        <h3 className="font-semibold text-sm md:text-base mb-2">
           Pendapatan Terbesar
         </h3>
         <div className="flex gap-4">
@@ -118,7 +118,7 @@ export default function Chart({
 
       {/* Outcome Section */}
       <div className="w-full">
-        <h3 className="font-semibold text-sm md:text-base text-center mb-2">
+        <h3 className="font-semibold text-sm md:text-base mb-2">
           Pengeluaran Terbesar
         </h3>
         <div className="flex gap-4">
