@@ -183,7 +183,7 @@ export default function MainContentPendapatan() {
 
         {/* Tabel */}
         {isLoading ? (
-          <p>Loading...</p>
+          <p className="text-center">Loading...</p>
         ) : (
           <DataTablePendapatan item={filteredData} currentPage={currentPage} />
         )}
