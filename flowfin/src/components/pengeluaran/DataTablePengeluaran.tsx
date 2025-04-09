@@ -59,7 +59,7 @@ export default function DataTablePengeluaran({
   return (
     <div className="overflow-x-auto md:bg-white">
       {/* Desktop Table */}
-      <table className="hidden md:table table-auto mt-4 w-full text-left">
+      <table className="hidden md:table table-auto w-full text-left">
         <thead>
           <tr>
             <th className="bg-gray-100 px-3 py-2 font-semibold text-[14px] text-center border-y-1 border-gray-200">

@@ -137,14 +137,15 @@ export default function MainContentPengeluaran() {
   return (
     <>
       <div className="main-content px-6 py-6 h-fit">
-        <div className="content bg-white px-4 pt-4 rounded-t-md">
-          <h1 className="text-[16px] font-bold text-[#212121] pb-4">
+        <div className="content bg-white px-2 sm:px-4 py-3 sm:py-4 rounded-t-md">
+          <h1 className="text-[14px] sm:text-[16px] font-bold text-[#212121] pb-3 sm:pb-4">
             Daftar Transaksi Pengeluaran
           </h1>
-          <div className="flex w-full gap-5 items-center justify-between">
+          <div className="flex flex-col sm:flex-row w-full gap-3 sm:gap-5 items-start sm:items-center justify-between">
+            {/* Form Pencarian */}
             <form action="" className="w-full">
               <input
-                className="search h-[40px] text-[14px] text-gray-600 w-full bg-[#F2F2F2] px-3 py-1 rounded-lg border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#00859B] focus:ring-offset-0.5 focus:ring-offset-[#09090b] transition-all duration-150 ease-in-out"
+                className="search h-[36px] sm:h-[40px] text-[12px] sm:text-[14px] text-gray-600 w-full bg-[#F2F2F2] px-2 sm:px-3 py-1 rounded-lg border border-white/10 focus:outline-none focus:ring-1 focus:ring-[#00859B] focus:ring-offset-0.5 focus:ring-offset-[#09090b] transition-all duration-150 ease-in-out"
                 name="text"
                 type="text"
                 placeholder="Search..."
@@ -152,16 +153,19 @@ export default function MainContentPengeluaran() {
                 value={searchQuery}
               />
             </form>
-            <div className="flex gap-5 w-full items-center">
-              <div className="flex items-center gap-3">
-                <h2 className="font-medium text-[#797B8C] text-[16px]">
+
+            {/* Bagian Sorting dan Tombol */}
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 w-full items-start sm:items-center">
+              {/* Sorting */}
+              <div className="flex items-center gap-2 sm:gap-3">
+                <h2 className="font-medium text-[#797B8C] text-[14px] sm:text-[16px]">
                   Urutkan:
                 </h2>
-                <div className="border border-gray-300 px-1.5 rounded-full font-semibold text-[14px] cursor-pointer">
+                <div className="border border-gray-300 px-1 sm:px-1.5 rounded-full font-semibold text-[12px] sm:text-[14px] cursor-pointer">
                   <select
                     name="urutkan"
                     id="urutkan"
-                    className="py-3 pr-2 mx-1.5 outline-none"
+                    className="py-2 sm:py-3 pr-1 sm:pr-2 mx-1 sm:mx-1.5 outline-none bg-transparent"
                     value={sortOrder}
                     onChange={handleSortChange}
                   >
@@ -171,26 +175,30 @@ export default function MainContentPengeluaran() {
                   </select>
                 </div>
               </div>
-              <div className="pl-5 border-l-1 border-[#B7BBC0]">
-                <div className="flex gap-3">
-                  <button
-                    className="btn-add group border border-[#00859B] text-[#00859B] px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white"
-                    onClick={() => exportPDF(bodyData, "Pengeluaran")}
-                  >
-                    <DocumentDownload
-                      size="18"
+
+              {/* Tombol Cetak dan Tambah Data */}
+              <div className="pl-0 sm:pl-5 border-l-0 sm:border-l border-[#B7BBC0] flex gap-2 sm:gap-3 w-full sm:w-auto">
+                <button
+                  className="btn-add group border border-[#00859B] text-[#00859B] px-3 sm:px-4 py-2 sm:py-2.5 rounded-full font-semibold text-[12px] sm:text-[14px] flex gap-1 sm:gap-2 items-center cursor-pointer hover:bg-[#00859B] hover:text-white transition-colors duration-200"
+                  onClick={() => exportPDF(bodyData, "Pengeluaran")}
+                >
+                  <DocumentDownload
+                    size="16" // Mobile
+                    className="group-hover:fill-white fill-[#00859B]"
+                    variant="Bold"
+                  />
+                  Cetak
+                </button>
+                <Link href="/pengeluaran/add" passHref>
+                  <button className="btn-add bg-[#00859B] text-white px-3 sm:px-4 py-2 sm:py-2.5 rounded-full font-semibold text-[12px] sm:text-[14px] flex gap-1 sm:gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer">
+                    <AddCircle
+                      size="16" // Mobile
+                      color="#ffff"
                       variant="Bold"
-                      className="group-hover:fill-white fill-[#00859B]"
                     />
-                    Cetak
+                    Tambah Data
                   </button>
-                  <Link href="/pengeluaran/add" passHref>
-                    <button className="btn-add bg-[#00859B] text-white px-4 py-2.5 rounded-full font-semibold text-[14px] flex gap-2 items-center hover:bg-[#006F7D] transition-colors duration-200 cursor-pointer">
-                      <AddCircle size="18" color="#ffff" variant="Bold" />
-                      Tambah Data
-                    </button>
-                  </Link>
-                </div>
+                </Link>
               </div>
             </div>
           </div>
