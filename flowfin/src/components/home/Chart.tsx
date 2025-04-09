@@ -4,6 +4,7 @@ import { Pie } from "react-chartjs-2";
 import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Timestamp } from "firebase/firestore";
+import { useAuth } from "@/hooks/useAuth"; 
 
 import {
   Chart as ChartJS,
@@ -19,7 +20,16 @@ const options: ChartOptions<"pie"> = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false,
+
+      position: "bottom",
+      labels: {
+        boxWidth: 20,
+        font: {
+          size: 12,
+        },
+      },
+
+
     },
     tooltip: {
       enabled: true,
@@ -51,14 +61,29 @@ export default function Chart({
   month: number;
   year: number;
 }) {
+  const { user } = useAuth(); 
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
   const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
 
-  const filterByMonth = (transactions: IncomeTransaction[]) =>
-    transactions.filter((i) => {
-      const date = (i.timestamp as Timestamp).toDate();
-      return date.getMonth() + 1 === month && date.getFullYear() === year;
-    });
+
+  const incomeByMonth = income.filter((i) => {
+    const transactionDate = (i.timestamp as Timestamp).toDate();
+    return (
+      i.userId === user?.uid && 
+      transactionDate.getMonth() + 1 === month &&
+      transactionDate.getFullYear() === year
+    );
+  });
+
+  const outcomeByMonth = outcome.filter((i) => {
+    const transactionDate = (i.timestamp as Timestamp).toDate();
+    return (
+      i.userId === user?.uid && 
+      transactionDate.getMonth() + 1 === month &&
+      transactionDate.getFullYear() === year
+    );
+  });
+
 
   const incomeByMonth = filterByMonth(income);
   const outcomeByMonth = filterByMonth(outcome);

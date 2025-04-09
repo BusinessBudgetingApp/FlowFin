@@ -6,8 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useAuth } from "@/hooks/useAuth"; 
 
 export default function AddData() {
+  const { user } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
   const baseRoute = pathname.split("/")[1];
@@ -39,6 +41,7 @@ export default function AddData() {
         description,
         timestamp: Timestamp.fromDate(timestamp),
         transactionType,
+        userId: user?.uid, 
       };
 
       const toastId = toast.loading("Menyimpan data...");

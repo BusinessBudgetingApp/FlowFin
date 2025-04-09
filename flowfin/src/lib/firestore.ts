@@ -11,12 +11,10 @@ import {
 import { db } from "./firebase";
 import { IncomeTransaction } from "@/types/transaction";
 
-// fungsi add data ke firestore
 export async function addData(transaction: IncomeTransaction) {
   await addDoc(collection(db, "transaction"), transaction);
 }
 
-// fungsi mengambil data dari firestore
 export async function getData() {
   const q = query(collection(db, "transaction"), orderBy("timestamp", "desc"));
   const querySnapshot = await getDocs(q);
@@ -28,7 +26,14 @@ export async function updateData(
   id: string,
   transaction: Partial<IncomeTransaction>
 ) {
-  await updateDoc(doc(db, "transaction", id), transaction);
+  try {
+    const docRef = doc(db, "transaction", id); 
+    await updateDoc(docRef, transaction);
+    console.log(`Data with ID ${id} successfully updated.`);
+  } catch (error) {
+    console.error("Error updating document:", error);
+    throw error;
+  }
 }
 
 export async function deleteData(id: string) {

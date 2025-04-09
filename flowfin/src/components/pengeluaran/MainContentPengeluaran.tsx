@@ -11,8 +11,11 @@ import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
 import { exportPDF } from "@/app/utils/exportPDF";
+import { deleteData, updateData } from "@/lib/firestore"; 
+import { useAuth } from "@/hooks/useAuth";
 
 export default function MainContentPengeluaran() {
+  const { user } = useAuth();
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
     []
   );
@@ -49,8 +52,8 @@ export default function MainContentPengeluaran() {
     const filtered = !query
       ? transactions
       : transactions.filter((item) =>
-          item.productName.toLowerCase().includes(query)
-        );
+        item.productName.toLowerCase().includes(query)
+      );
 
     const sorted = sortProducts(filtered, sortOrder);
     setFilteredData(sorted);
@@ -111,9 +114,8 @@ export default function MainContentPengeluaran() {
       const a = document.createElement("a");
       const transactionType = filteredData[0]?.transactionType || "Pengeluaran";
       a.href = url;
-      a.download = `Data_${transactionType}_${
-        new Date().toISOString().split("T")[0]
-      }.xlsx`;
+      a.download = `Data_${transactionType}_${new Date().toISOString().split("T")[0]
+        }.xlsx`;
       a.click();
 
       URL.revokeObjectURL(url);
@@ -126,13 +128,44 @@ export default function MainContentPengeluaran() {
     }
   };
 
+  const handleDelete = async (id?: string) => {
+    if (!id) {
+      toast.error("ID transaksi tidak valid");
+      return;
+    }
+
+    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data ini?");
+    if (!isConfirmed) return;
+
+    try {
+      const toastId = toast.loading("Menghapus data...");
+      await deleteData(id);
+
+      setFilteredData((prev) => prev.filter((item) => item.id !== id));
+      setDataTransaction((prev) => prev.filter((item) => item.id !== id));
+
+      toast.update(toastId, {
+        render: "Data berhasil dihapus!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
+    } catch (error) {
+      console.error("Gagal menghapus data:", error);
+      toast.error("Terjadi kesalahan saat menghapus data");
+    }
+  };
+
   useEffect(() => {
     if (transactions) {
-      const sorted = sortProducts(transactions, sortOrder);
+      const userTransactions = transactions.filter(
+        (t) => t.userId === user?.uid
+      );
+      const sorted = sortProducts(userTransactions, sortOrder);
       setDataTransaction(sorted);
       setFilteredData(sorted);
     }
-  }, [transactions, sortOrder]);
+  }, [transactions, sortOrder, user?.uid]);
 
   return (
     <>
@@ -209,7 +242,7 @@ export default function MainContentPengeluaran() {
             <p className="text-lg text-black dark:text-white">Loading...</p>
           </div>
         ) : (
-          <DataTablePengeluaran data={filteredData} currentPage={currentPage} />
+          <DataTablePengeluaran data={filteredData} currentPage={currentPage} onDelete={handleDelete} />
         )}
         <PaginationPengeluaran
           currentPage={currentPage}

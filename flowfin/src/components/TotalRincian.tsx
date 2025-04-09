@@ -1,10 +1,32 @@
-export function TotalRincian({
-  pendapatan,
-  pengeluaran,
-}: {
-  pendapatan: number;
-  pengeluaran: number;
-}) {
+import { useEffect, useState } from "react";
+import { useAuth } from "@/hooks/useAuth"; 
+import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate"; 
+import { IncomeTransaction } from "@/types/transaction";
+
+export function TotalRincian() {
+  const { user } = useAuth(); 
+  const allPendapatan: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+  const allPengeluaran: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
+
+  const [pendapatan, setPendapatan] = useState<number>(0);
+  const [pengeluaran, setPengeluaran] = useState<number>(0);
+
+  useEffect(() => {
+    if (user) {
+     
+      const userPendapatan = allPendapatan
+        .filter((t) => t.userId === user.uid)
+        .reduce((total, t) => total + t.amount, 0);
+
+      const userPengeluaran = allPengeluaran
+        .filter((t) => t.userId === user.uid)
+        .reduce((total, t) => total + t.amount, 0);
+
+      setPendapatan(userPendapatan);
+      setPengeluaran(userPengeluaran);
+    }
+  }, [user, allPendapatan, allPengeluaran]);
+
   return (
     <div className="content bg-white rounded-md shadow col-span-1 sm:col-span-2 md:col-span-4">
       <h2 className="text-base md:text-lg font-bold p-4 border-b mb-2">

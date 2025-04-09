@@ -9,8 +9,11 @@ import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { formatDate } from "@/app/utils/formatDate";
 import Dashboard from "./Dashboard";
+import { useAuth } from "@/hooks/useAuth"; 
+import { updateData } from "@/lib/firestore"; 
 
 export default function MainContentHome() {
+  const { user } = useAuth(); 
   const {
     transactions,
     currentPage,
@@ -20,6 +23,19 @@ export default function MainContentHome() {
     hasPrev,
     isLoading,
   } = usePaginatedTransactions();
+
+  const [filteredTransactions, setFilteredTransactions] = useState<
+    IncomeTransaction[]
+  >([]);
+
+  useEffect(() => {
+    if (transactions) {
+      const userTransactions = transactions.filter(
+        (t) => t.userId === user?.uid 
+      );
+      setFilteredTransactions(userTransactions);
+    }
+  }, [transactions, user?.uid]);
 
   const truncate = (desc: string, max = 25) =>
     desc.length > max ? `${desc.slice(0, max)}...` : desc;
@@ -51,20 +67,26 @@ export default function MainContentHome() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-gray-100">
-                  {transactions?.map((data, index) => (
-                    <tr key={data.id} className="hover:bg-gray-50 text-center">
+
+                  {filteredTransactions.map((data, index) => (
+                    <tr
+                      key={data.id}
+                      className="hover:bg-gray-50 text-center"
+                    >
                       <td className="p-4">
                         {(currentPage - 1) * 8 + index + 1}
                       </td>
                       <td className="p-4 text-left">
                         {formatDate(data.timestamp)}
                       </td>
+
                       <td className="p-4 text-left capitalize">
                         {data.productName}
                       </td>
                       <td className="p-4 text-left capitalize">
                         {data.category}
                       </td>
+                      
                       <td className="p-4 text-green-600 font-medium text-left">
                         {data.transactionType === "pendapatan"
                           ? `Rp ${data.amount.toLocaleString("id-ID")}`
@@ -75,7 +97,9 @@ export default function MainContentHome() {
                           ? `Rp ${data.amount.toLocaleString("id-ID")}`
                           : "-"}
                       </td>
+
                       <td className="p-4 text-left text-gray-600 capitalize">
+
                         {truncate(data.description || "")}
                       </td>
                     </tr>
@@ -87,7 +111,9 @@ export default function MainContentHome() {
 
           {/* Mobile View */}
           <div className="md:hidden space-y-4 mt-4">
-            {transactions?.map((data, index) => (
+
+            {filteredTransactions.map((data, index) => (
+
               <div
                 key={data.id}
                 className="bg-white rounded-lg p-4 border border-gray-200"
@@ -96,12 +122,14 @@ export default function MainContentHome() {
                   <span className="text-sm font-semibold text-gray-600">
                     No: {(currentPage - 1) * 8 + index + 1}
                   </span>
+
                   <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded capitalize">
                     {data.category}
                   </span>
                 </div>
 
                 <div className="mb-1">
+
                   <h3 className="font-medium text-gray-900 capitalize">
                     {data.productName}
                   </h3>
@@ -116,6 +144,7 @@ export default function MainContentHome() {
                     {data.transactionType === "pendapatan"
                       ? `Rp ${data.amount.toLocaleString("id-ID")}`
                       : "-"}
+
                   </p>
                   <p className="text-red-500">
                     <span className="font-medium">Pengeluaran: </span>
@@ -125,6 +154,7 @@ export default function MainContentHome() {
                   </p>
                   {data.description && (
                     <p className="mt-1 text-gray-700 capitalize">
+
                       <span className="font-medium">Deskripsi: </span>
                       {truncate(data.description)}
                     </p>

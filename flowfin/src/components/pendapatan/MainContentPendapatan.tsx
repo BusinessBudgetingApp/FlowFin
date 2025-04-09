@@ -11,8 +11,12 @@ import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
 import { exportPDF } from "@/app/utils/exportPDF";
+import { deleteData } from "@/lib/firestore";
+import { useAuth } from "@/hooks/useAuth";
+import { updateData } from "@/lib/firestore";
 
 export default function MainContentPendapatan() {
+  const { user } = useAuth();
   const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
     []
   );
@@ -49,8 +53,8 @@ export default function MainContentPendapatan() {
     const filtered = !query
       ? transactions
       : transactions.filter((item) =>
-          item.productName.toLowerCase().includes(query)
-        );
+        item.productName.toLowerCase().includes(query)
+      );
 
     const sorted = sortProducts(filtered, sortOrder);
     setFilteredData(sorted);
@@ -108,9 +112,8 @@ export default function MainContentPendapatan() {
       const url = URL.createObjectURL(blob);
       const a = document.createElement("a");
       a.href = url;
-      a.download = `Data_Pendapatan_${
-        new Date().toISOString().split("T")[0]
-      }.xlsx`;
+      a.download = `Data_Pendapatan_${new Date().toISOString().split("T")[0]
+        }.xlsx`;
       a.click();
       URL.revokeObjectURL(url);
 
@@ -123,13 +126,45 @@ export default function MainContentPendapatan() {
     }
   };
 
+  const handleDelete = async (id?: string) => {
+    if (!id) {
+      toast.error("ID transaksi tidak valid");
+      return;
+    }
+
+    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data ini?");
+    if (!isConfirmed) return;
+
+    try {
+      const toastId = toast.loading("Menghapus data...");
+      await deleteData(id);
+
+
+      setFilteredData((prev) => prev.filter((item) => item.id !== id));
+      setDataTransaction((prev) => prev.filter((item) => item.id !== id));
+
+      toast.update(toastId, {
+        render: "Data berhasil dihapus!",
+        type: "success",
+        isLoading: false,
+        autoClose: 2000,
+      });
+    } catch (error) {
+      console.error("Gagal menghapus data:", error);
+      toast.error("Terjadi kesalahan saat menghapus data");
+    }
+  };
+
   useEffect(() => {
     if (transactions) {
-      const sorted = sortProducts(transactions, sortOrder);
+      const userTransactions = transactions.filter(
+        (t) => t.userId === user?.uid 
+      );
+      const sorted = sortProducts(userTransactions, sortOrder);
       setDataTransaction(sorted);
       setFilteredData(sorted);
     }
-  }, [transactions, sortOrder]);
+  }, [transactions, sortOrder, user?.uid]);
 
   return (
     <>
@@ -207,7 +242,7 @@ export default function MainContentPendapatan() {
            <p className="text-lg text-black dark:text-white">Loading...</p>
          </div>
         ) : (
-          <DataTablePendapatan item={filteredData} currentPage={currentPage} />
+          <DataTablePendapatan item={filteredData} currentPage={currentPage} onDelete={handleDelete} />
         )}
 
         <PaginationPendapatan

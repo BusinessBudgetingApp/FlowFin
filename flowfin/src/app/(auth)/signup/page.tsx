@@ -31,7 +31,7 @@ export default function SignUpPage() {
             const userCredential = await createUserWithEmailAndPassword(auth, email, password);
             await updateProfile(userCredential.user, { displayName: name });
             await signInWithEmailAndPassword(auth, email, password);
-            router.push("/dashboard");
+            router.push("/");
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);
@@ -46,7 +46,7 @@ export default function SignUpPage() {
         const provider = new GoogleAuthProvider();
         try {
             await signInWithPopup(auth, provider);
-            router.push("/dashboard");
+            router.push("/");
         } catch (err: unknown) {
             if (err instanceof Error) {
                 setError(err.message);
