@@ -178,32 +178,6 @@ export default function MainContentPendapatan() {
                 </div>
               </div>
             </div>
-
-            <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-              <button
-                onClick={exportToExcel}
-                disabled={isExporting}
-                className={`group border border-[#00859B] text-[#00859B] px-4 py-2 rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#00859B] hover:text-white transition-colors duration-200 w-full sm:w-auto cursor-pointer ${
-                  isExporting ? "opacity-50 cursor-not-allowed" : ""
-                }`}
-              >
-                <DocumentDownload
-                  size="18"
-                  variant="Bold"
-                  className={`group-hover:fill-white fill-[#00859B] ${
-                    isExporting ? "animate-pulse" : ""
-                  }`}
-                />
-                {isExporting ? "Mengekspor..." : "Download"}
-              </button>
-
-              <Link href="/pendapatan/add" passHref>
-                <button className="bg-[#00859B] text-white px-4 py-2 cursor-pointer rounded-full font-semibold text-[14px] flex justify-center items-center gap-2 hover:bg-[#006F7D] transition-colors duration-200 w-full sm:w-auto">
-                  <AddCircle size="18" color="#fff" variant="Bold" />
-                  Tambah Data
-                </button>
-              </Link>
-            </div>
           </div>
         </div>
 
