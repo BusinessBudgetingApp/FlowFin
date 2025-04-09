@@ -29,56 +29,56 @@ export default function PaginationPengeluaran({
   }
 
   return (
-    <div className="flex items-center justify-center py-5 gap-2 flex-wrap text-[12px] bg-white">
-      {/* Tombol "Sebelumnya" */}
-      <button
-        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${hasPrev
-          ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
-          : "cursor-not-allowed text-gray-400 border-gray-300"
-          }`}
-        onClick={() => hasPrev && setCurrentPage(currentPage - 1)}
-        disabled={!hasPrev}
-      >
-        <ArrowLeft2
-          size="16"
-          color={hasPrev ? "#797B8C" : "#B7BBC0"}
-          variant="Bold"
-        />
-        <span>Sebelumnya</span>
-      </button>
+    <div className="flex items-center justify-center py-3 md:py-5 gap-1 md:gap-2 flex-wrap text-[10px] md:text-[12px] md:bg-white">
+  {/* Tombol "Sebelumnya" */}
+  <button
+    className={`border px-2 py-1 md:px-3 md:py-2 rounded-md font-medium flex items-center gap-1 ${hasPrev
+      ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
+      : "cursor-not-allowed text-gray-400 border-gray-300"
+    }`}
+    onClick={() => hasPrev && setCurrentPage(currentPage - 1)}
+    disabled={!hasPrev}
+  >
+    <ArrowLeft2
+      size="14" // Mobile
+      color={hasPrev ? "#797B8C" : "#B7BBC0"}
+      variant="Bold"
+    />
+    <span>Sebelumnya</span>
+  </button>
 
-      {/* Nomor Halaman (maksimal 3, tetap tampil di mobile) */}
-      <div className="flex gap-1 overflow-x-auto max-w-full scrollbar-hide">
-        {pagesToShow.map((page) => (
-          <button
-            key={page}
-            className={`border px-3 py-2 rounded-md font-medium min-w-[36px] cursor-pointer ${currentPage === page
-              ? "bg-[#00859B] text-white"
-              : "hover:bg-gray-100 text-[#212121] border-[#B7BBC0]"
-              }`}
-            onClick={() => setCurrentPage(page)}
-          >
-            {page}
-          </button>
-        ))}
-      </div>
-
-      {/* Tombol "Selanjutnya" */}
+  {/* Nomor Halaman (maksimal 3, tetap tampil di mobile) */}
+  <div className="flex gap-1 overflow-x-auto max-w-full scrollbar-hide">
+    {pagesToShow.map((page) => (
       <button
-        className={`border px-3 py-2 rounded-md font-medium flex items-center gap-1 ${hasNext
-          ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
-          : "cursor-not-allowed text-gray-400 border-gray-300"
-          }`}
-        onClick={() => hasNext && setCurrentPage(currentPage + 1)}
-        disabled={!hasNext}
+        key={page}
+        className={`border px-2 py-1 md:px-3 md:py-2 rounded-md font-medium min-w-[28px] md:min-w-[36px] cursor-pointer ${currentPage === page
+          ? "bg-[#00859B] text-white"
+          : "hover:bg-gray-100 text-[#212121] border-[#B7BBC0]"
+        }`}
+        onClick={() => setCurrentPage(page)}
       >
-        <span>Selanjutnya</span>
-        <ArrowRight2
-          size="16"
-          color={hasNext ? "#797B8C" : "#B7BBC0"}
-          variant="Bold"
-        />
+        {page}
       </button>
-    </div>
+    ))}
+  </div>
+
+  {/* Tombol "Selanjutnya" */}
+  <button
+    className={`border px-2 py-1 md:px-3 md:py-2 rounded-md font-medium flex items-center gap-1 ${hasNext
+      ? "cursor-pointer hover:bg-gray-100 text-[#212121]"
+      : "cursor-not-allowed text-gray-400 border-gray-300"
+    }`}
+    onClick={() => hasNext && setCurrentPage(currentPage + 1)}
+    disabled={!hasNext}
+  >
+    <span>Selanjutnya</span>
+    <ArrowRight2
+      size="14" // Mobile
+      color={hasNext ? "#797B8C" : "#B7BBC0"}
+      variant="Bold"
+    />
+  </button>
+</div>
   );
 }

@@ -30,13 +30,13 @@ export default function MainContentHome() {
         <Dashboard />
       </div>
 
-      <div className="bg-white mx-6 py-4 rounded-lg md:px-6">
+      <div className="md:bg-white mx-6 py-4 rounded-lg md:px-6">
         <h1 className="text-lg font-bold text-[#212121] pb-2">
           Daftar Transaksi Pendapatan & Pengeluaran
         </h1>
         {/* Desktop Table */}
         {isLoading ? (
-          <p>Load</p>
+          <p>Loading...</p>
         ) : (
           <div className="hidden md:block overflow-x-auto rounded-lg border border-gray-200 bg-white">
             <table className="min-w-full text-sm text-left divide-y divide-gray-200">
