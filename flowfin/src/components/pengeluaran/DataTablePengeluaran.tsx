@@ -58,7 +58,6 @@ export default function DataTablePengeluaran({
 
   return (
     <div className="overflow-x-auto md:bg-white">
-      {/* Desktop Table */}
       <table className="hidden md:table table-auto w-full text-left">
         <thead>
           <tr>
@@ -94,16 +93,16 @@ export default function DataTablePengeluaran({
               <td className="px-3 text-[14px] font-normal text-left">
                 {formatDate(item.timestamp)}
               </td>
-              <td className="px-3 text-[14px] font-normal text-left">
+              <td className="px-3 text-[14px] font-normal text-left capitalize">
                 {item.productName}
               </td>
-              <td className="px-3 text-[14px] font-normal text-left">
+              <td className="px-3 text-[14px] font-normal text-left capitalize">
                 {item.category}
               </td>
               <td className="px-3 text-[14px] font-normal text-left">
                 Rp {item.amount.toLocaleString("id-ID")}
               </td>
-              <td className="px-3 text-[14px] font-normal text-left">
+              <td className="px-3 text-[14px] font-normal text-left capitalize">
                 {truncateDescription(item.description || "")}
               </td>
               <td className="flex justify-center">
