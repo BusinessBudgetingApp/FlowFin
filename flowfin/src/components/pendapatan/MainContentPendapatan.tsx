@@ -194,7 +194,7 @@ export default function MainContentPendapatan() {
         </div>
 
         {isLoading ? (
-          <p>Loading...</p>
+          <p className="text-center">Loading...</p>
         ) : (
           <DataTablePendapatan item={filteredData} currentPage={currentPage} />
         )}

@@ -27,6 +27,7 @@ export default function MainContentPengeluaran() {
     setCurrentPage,
     hasNext,
     hasPrev,
+    isLoading,
   } = usePaginatedTransactions("pengeluaran", 8);
 
   const [isExporting, setIsExporting] = useState(false);

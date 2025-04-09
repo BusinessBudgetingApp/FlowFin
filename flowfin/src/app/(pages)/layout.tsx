@@ -30,8 +30,8 @@ export default function RootLayout({
 }: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <ToastContainer />
       <body className="overflow-x-hidden">
+      <ToastContainer />
         <div className="min-w-screen container min-h-screen bg-gray-100 flex ">
           <Sidebar />
           <div className="w-full">
