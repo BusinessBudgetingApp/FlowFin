@@ -84,10 +84,6 @@ export default function Chart({
     );
   });
 
-
-  const incomeByMonth = filterByMonth(income);
-  const outcomeByMonth = filterByMonth(outcome);
-
   const incomeData = {
     labels: incomeByMonth.map((i) => i.productName),
     datasets: [
