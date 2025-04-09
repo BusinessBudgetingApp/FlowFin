@@ -97,16 +97,16 @@ export default function DataTablePendapatan({
                 <td className="px-3 text-[14px] font-normal text-left">
                   {formatDate(data.timestamp)}
                 </td>
-                <td className="px-3 text-[14px] font-normal text-left">
+                <td className="px-3 text-[14px] font-normal text-left capitalize">
                   {data.productName}
                 </td>
-                <td className="px-3 text-[14px] font-normal text-left">
+                <td className="px-3 text-[14px] font-normal text-left capitalize">
                   {data.category}
                 </td>
                 <td className="px-3 text-[14px] font-normal text-left">
                   Rp {data.amount.toLocaleString("id-ID")}
                 </td>
-                <td className="px-3 text-[14px] font-normal text-left">
+                <td className="px-3 text-[14px] font-normal text-left capitalize">
                   {truncateDescription(data.description || "")}
                 </td>
                 <td className="flex justify-center">
