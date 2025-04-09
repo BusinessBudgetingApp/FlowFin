@@ -48,7 +48,7 @@ export default function Sidebar() {
   isOpen ? (
     <button
       onClick={() => setIsOpen(false)}
-      className="fixed lg:hidden z-30 top-4 left-4 p-2 rounded-md bg-white"
+      className="fixed lg:hidden z-20 top-4 left-4 p-2 rounded-md bg-white"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -68,7 +68,7 @@ export default function Sidebar() {
   ) : (
     <button
       onClick={() => setIsOpen(true)}
-      className="fixed lg:hidden z-30 top-4 left-4 p-2 rounded-md bg-white"
+      className="fixed lg:hidden z-20 top-4 left-4 p-2 rounded-md bg-white"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"

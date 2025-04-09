@@ -60,7 +60,6 @@ export default function DataTablePengeluaran({
 
   return (
     <div className="overflow-x-auto md:bg-white">
-      {/* Desktop Table */}
       <table className="hidden md:table table-auto w-full text-left">
         <thead>
           <tr>
@@ -96,16 +95,16 @@ export default function DataTablePengeluaran({
               <td className="px-3 text-[14px] font-normal text-left">
                 {formatDate(item.timestamp)}
               </td>
-              <td className="px-3 text-[14px] font-normal text-left">
+              <td className="px-3 text-[14px] font-normal text-left capitalize">
                 {item.productName}
               </td>
-              <td className="px-3 text-[14px] font-normal text-left">
+              <td className="px-3 text-[14px] font-normal text-left capitalize">
                 {item.category}
               </td>
               <td className="px-3 text-[14px] font-normal text-left">
                 Rp {item.amount.toLocaleString("id-ID")}
               </td>
-              <td className="px-3 text-[14px] font-normal text-left">
+              <td className="px-3 text-[14px] font-normal text-left capitalize">
                 {truncateDescription(item.description || "")}
               </td>
               <td className="flex justify-center">
@@ -137,14 +136,14 @@ export default function DataTablePengeluaran({
               <span className="text-sm font-semibold text-gray-600">
                 No: {(currentPage - 1) * 8 + index + 1}
               </span>
-              <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+              <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded capitalize">
                 {item.category}
               </span>
             </div>
 
             <div className="flex justify-between items-start">
               <div>
-                <h3 className="font-medium text-gray-900">
+                <h3 className="font-medium text-gray-900 capitalize">
                   {item.productName}
                 </h3>
                 <p className="text-sm text-gray-500">
@@ -159,7 +158,7 @@ export default function DataTablePengeluaran({
                 {item.amount.toLocaleString("id-ID")}
               </p>
               {item.description && (
-                <p className="mt-1">
+                <p className="mt-1 capitalize">
                   <span className="font-medium">Deskripsi:</span>{" "}
                   {truncateDescription(item.description)}
                 </p>

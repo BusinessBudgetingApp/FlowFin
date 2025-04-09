@@ -30,8 +30,8 @@ export default function MainContentPengeluaran() {
     setCurrentPage,
     hasNext,
     hasPrev,
-    isLoading,
-  } = usePaginatedTransactions("pengeluaran", 8);
+    isLoading
+  } = usePaginatedTransactions("pengeluaran", 10);
 
   const [isExporting, setIsExporting] = useState(false);
   const bodyData = useRealTimeUpdate("pengeluaran");
@@ -237,7 +237,10 @@ export default function MainContentPengeluaran() {
           </div>
         </div>
         {isLoading ? (
-          <p className="text-center">Loading...</p>
+          <div className="flex justify-center p-5 gap-3">
+            <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+            <p className="text-lg text-black dark:text-white">Loading...</p>
+          </div>
         ) : (
           <DataTablePengeluaran data={filteredData} currentPage={currentPage} onDelete={handleDelete} />
         )}

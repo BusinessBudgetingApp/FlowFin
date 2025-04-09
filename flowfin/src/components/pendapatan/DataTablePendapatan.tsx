@@ -99,16 +99,16 @@ export default function DataTablePendapatan({
                 <td className="px-3 text-[14px] font-normal text-left">
                   {formatDate(data.timestamp)}
                 </td>
-                <td className="px-3 text-[14px] font-normal text-left">
+                <td className="px-3 text-[14px] font-normal text-left capitalize">
                   {data.productName}
                 </td>
-                <td className="px-3 text-[14px] font-normal text-left">
+                <td className="px-3 text-[14px] font-normal text-left capitalize">
                   {data.category}
                 </td>
                 <td className="px-3 text-[14px] font-normal text-left">
                   Rp {data.amount.toLocaleString("id-ID")}
                 </td>
-                <td className="px-3 text-[14px] font-normal text-left">
+                <td className="px-3 text-[14px] font-normal text-left capitalize">
                   {truncateDescription(data.description || "")}
                 </td>
                 <td className="flex justify-center">
@@ -142,7 +142,7 @@ export default function DataTablePendapatan({
                 <span className="text-sm font-semibold text-gray-600">
                   No: {(currentPage - 1) * 8 + index + 1}
                 </span>
-                <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded">
+                <span className="bg-gray-100 text-gray-800 text-xs px-2 py-1 rounded capitalize">
                   {data.category}
                 </span>
               </div>
@@ -150,7 +150,7 @@ export default function DataTablePendapatan({
               {/* Main Info */}
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="font-medium text-gray-900">
+                  <h3 className="font-medium text-gray-900 capitalize">
                     {data.productName}
                   </h3>
                   <p className="text-sm text-gray-500">
@@ -166,7 +166,7 @@ export default function DataTablePendapatan({
                   {data.amount.toLocaleString("id-ID")}
                 </p>
                 {data.description && (
-                  <p className="text-sm mt-1">
+                  <p className="text-sm mt-1 capitalize">
                     <span className="font-medium">Deskripsi:</span>{" "}
                     {truncateDescription(data.description)}
                   </p>

@@ -56,7 +56,7 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
           />
 
           {/* MODAL */}
-          <section className="fixed top-0 right-0 h-full w-full max-w-md bg-white shadow-xl transition-all duration-300 ease-in-out z-50 translate-x-0">
+          <section className="fixed top-0 right-0 h-full max-w-3xl  bg-white shadow-xl transition-all duration-300 ease-in-out z-50 translate-x-0">
             {/* Header */}
             <header className="relative flex justify-center items-center bg-[#F2F2F2] border-b p-4 top-0 z-10">
               <div className="flex items-center space-x-2">
@@ -93,11 +93,13 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
                   <div className="h-4 bg-gray-200 rounded w-4/5"></div>
                 </div>
               ) : (
-                <div className="text-gray-700">
+                <div className="text-gray-700 ">
                   {response ? (
-                    <p className="whitespace-pre-line leading-relaxed">
-                      {response}
-                    </p>
+                    <div className="space-y-4 text-sm leading-relaxed">
+                      {response.split("\n").map((paragraph, index) => (
+                        <p key={index}>{paragraph}</p>
+                      ))}
+                    </div>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
                       <p>Tidak ada data yang tersedia</p>
@@ -108,7 +110,7 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
             </div>
           </section>
         </>
-      )}  
+      )}
     </>
   );
 }
