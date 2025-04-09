@@ -129,7 +129,7 @@ export default function DataTablePengeluaran({
         {data.map((item, index) => (
           <div
             key={item.id}
-            className="bg-white rounded-lg shadow p-4 border border-gray-200"
+            className="bg-white rounded-lg p-4 border border-gray-200"
           >
             <div className="flex justify-between items-center mb-2">
               <span className="text-sm font-semibold text-gray-600">

@@ -26,11 +26,11 @@ export default function MainContentHome() {
 
   return (
     <>
-      <div className="mb-2">
         <Dashboard />
-      </div>
 
-      <div className="md:bg-white mx-6 py-4 rounded-lg md:px-6">
+<div className="px-4 md:px-6">
+
+      <div className="bg-white px-4 py-4 rounded-lg md:py-6 md:px-6 shadow">
         <h1 className="text-lg font-bold text-[#212121] pb-2">
           Daftar Transaksi Pendapatan & Pengeluaran
         </h1>
@@ -85,7 +85,7 @@ export default function MainContentHome() {
           {transactions?.map((data, index) => (
             <div
               key={data.id}
-              className="bg-white rounded-lg shadow p-4 border border-gray-200"
+              className="bg-white rounded-lg p-4 border border-gray-200"
             >
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-semibold text-gray-600">
@@ -140,6 +140,7 @@ export default function MainContentHome() {
           />
         </div>
       </div>
+</div>
     </>
   );
 }

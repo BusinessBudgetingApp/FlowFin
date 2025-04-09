@@ -137,7 +137,7 @@ export default function MainContentPengeluaran() {
   return (
     <>
       <div className="main-content px-6 py-6 h-fit">
-        <div className="content bg-white px-2 sm:px-4 py-3 sm:py-4 rounded-t-md">
+        <div className="content shadow bg-white px-2 sm:px-4 py-3 sm:py-4 rounded-t-md rounded-b-md md:rounded-b-none">
           <h1 className="text-[14px] sm:text-[16px] font-bold text-[#212121] pb-3 sm:pb-4">
             Daftar Transaksi Pengeluaran
           </h1>

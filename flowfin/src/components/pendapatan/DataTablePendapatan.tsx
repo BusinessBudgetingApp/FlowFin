@@ -133,7 +133,7 @@ export default function DataTablePendapatan({
           item.map((data, index) => (
             <div
               key={data.id}
-              className="bg-white rounded-lg shadow p-4 border border-gray-200"
+              className="bg-white rounded-lg p-4 border border-gray-200"
             >
               {/* Header Info */}
               <div className="flex justify-between items-center mb-2">

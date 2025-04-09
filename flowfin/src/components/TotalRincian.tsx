@@ -6,7 +6,7 @@ export function TotalRincian({
   pengeluaran: number;
 }) {
   return (
-    <div className="content bg-white rounded-md col-span-1 sm:col-span-2 md:col-span-4">
+    <div className="content bg-white rounded-md shadow col-span-1 sm:col-span-2 md:col-span-4">
       <h2 className="text-base md:text-lg font-bold p-4 border-b mb-2">
         Total Rincian Transaksi
       </h2>
