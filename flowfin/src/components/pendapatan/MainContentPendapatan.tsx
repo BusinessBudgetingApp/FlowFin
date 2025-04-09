@@ -133,7 +133,7 @@ export default function MainContentPendapatan() {
   return (
     <>
       <div className="main-content px-6 py-6 h-fit w-full">
-        <div className="content bg-white px-4 pt-4 rounded-md">
+        <div className="content bg-white px-4 pt-4 rounded-t-md">
           <h1 className="text-[16px] font-bold text-[#212121] pb-4">
             Daftar Transaksi Pendapatan
           </h1>

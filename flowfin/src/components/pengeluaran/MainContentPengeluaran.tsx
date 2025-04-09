@@ -111,8 +111,9 @@ export default function MainContentPengeluaran() {
       const a = document.createElement("a");
       const transactionType = filteredData[0]?.transactionType || "Pengeluaran";
       a.href = url;
-      a.download = `Data_${transactionType}_${new Date().toISOString().split("T")[0]
-        }.xlsx`;
+      a.download = `Data_${transactionType}_${
+        new Date().toISOString().split("T")[0]
+      }.xlsx`;
       a.click();
 
       URL.revokeObjectURL(url);
@@ -136,7 +137,7 @@ export default function MainContentPengeluaran() {
   return (
     <>
       <div className="main-content px-6 py-6 h-fit">
-        <div className="content bg-white px-4 pt-4 rounded-md">
+        <div className="content bg-white px-4 pt-4 rounded-t-md">
           <h1 className="text-[16px] font-bold text-[#212121] pb-4">
             Daftar Transaksi Pengeluaran
           </h1>
@@ -194,9 +195,11 @@ export default function MainContentPengeluaran() {
             </div>
           </div>
         </div>
-
-        <DataTablePengeluaran data={filteredData} currentPage={currentPage} />
-
+        {isLoading ? (
+          <p className="text-center">Loading...</p>
+        ) : (
+          <DataTablePengeluaran data={filteredData} currentPage={currentPage} />
+        )}
         <PaginationPengeluaran
           currentPage={currentPage}
           totalPages={totalPages}
