@@ -38,7 +38,7 @@ export default function MainContentPengeluaran() {
       return;
     }
     const filterData = transactions.filter((item) =>
-      item.category.toLowerCase().includes(query)
+      item.productName.toLowerCase().includes(query)
     );
     setFilteredData(filterData);
   };

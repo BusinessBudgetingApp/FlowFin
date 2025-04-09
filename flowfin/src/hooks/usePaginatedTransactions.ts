@@ -93,15 +93,5 @@ export const usePaginatedTransactions = (
     setCurrentPage,
     hasNext: currentPage < totalPages,
     hasPrev: currentPage > 1,
-    goNext: () => {
-      if (currentPage < totalPages) {
-        setCurrentPage((prev) => prev + 1);
-      }
-    },
-    goPrev: () => {
-      if (currentPage > 1) {
-        setCurrentPage((prev) => prev - 1);
-      }
-    },
   };
 };
