@@ -3,11 +3,12 @@ import axios from "axios";
 
 const API_KEY = process.env.NEXT_PUBLIC_GROQ_API_KEY;
 
-export async function getAiRecommendation(month?: number, year?: number) {
+export async function getAiRecommendation(userId?: string) {
   const now = new Date();
-  const selectedMonth = now.getMonth() + 1;
-  const selectedYear = now.getFullYear();
+  const selectedMonth = now.getMonth() + 1; // Bulan saat ini
+  const selectedYear = now.getFullYear(); // Tahun saat ini
   const { pemasukan, pengeluaran } = await getDataByMonth(
+    userId,
     selectedMonth,
     selectedYear
   );

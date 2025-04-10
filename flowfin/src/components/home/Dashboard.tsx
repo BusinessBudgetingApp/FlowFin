@@ -2,9 +2,7 @@
 import { useState } from "react";
 import Chart from "./Chart";
 import AnimatedDropdown, { DropdownItem } from "../AnimatedDropdown";
-import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
-import { IncomeTransaction } from "@/types/transaction";
-import { Timestamp } from "firebase/firestore";
+
 import { useGetAllData } from "@/hooks/useGetAllData";
 import { TotalRincian } from "../TotalRincian";
 
@@ -15,36 +13,36 @@ export default function Dashboard() {
   const [selectedMonth, setSelectedMonth] = useState(now.getMonth() + 1);
 
   const item = useGetAllData();
-  const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
-  const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
+  // const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
+  // const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
 
-  const incomeByYearMonth = income.filter((i) => {
-    if (!i.timestamp) return false;
-    const transactionDate = (i.timestamp as Timestamp).toDate();
-    return (
-      transactionDate.getFullYear() === selectedYear &&
-      transactionDate.getMonth() + 1 === selectedMonth
-    );
-  });
+  // const incomeByYearMonth = income.filter((i) => {
+  //   if (!i.timestamp) return false;
+  //   const transactionDate = (i.timestamp as Timestamp).toDate();
+  //   return (
+  //     transactionDate.getFullYear() === selectedYear &&
+  //     transactionDate.getMonth() + 1 === selectedMonth
+  //   );
+  // });
 
-  const totalIncome = incomeByYearMonth.reduce(
-    (sum, i) => sum + (i.amount || 0),
-    0
-  );
+  // const totalIncome = incomeByYearMonth.reduce(
+  //   (sum, i) => sum + (i.amount || 0),
+  //   0
+  // );
 
-  const outcomeByYearMonth = outcome.filter((i) => {
-    if (!i.timestamp) return false;
-    const transactionDate = (i.timestamp as Timestamp).toDate();
-    return (
-      transactionDate.getFullYear() === selectedYear &&
-      transactionDate.getMonth() + 1 === selectedMonth
-    );
-  });
+  // const outcomeByYearMonth = outcome.filter((i) => {
+  //   if (!i.timestamp) return false;
+  //   const transactionDate = (i.timestamp as Timestamp).toDate();
+  //   return (
+  //     transactionDate.getFullYear() === selectedYear &&
+  //     transactionDate.getMonth() + 1 === selectedMonth
+  //   );
+  // });
 
-  const totalOutcome = outcomeByYearMonth.reduce(
-    (sum, i) => sum + (i.amount || 0),
-    0
-  );
+  // const totalOutcome = outcomeByYearMonth.reduce(
+  //   (sum, i) => sum + (i.amount || 0),
+  //   0
+  // );
 
   const uniqueYears = Array.from(
     new Set(
@@ -73,7 +71,7 @@ export default function Dashboard() {
     <div className="px-4 py-4 md:px-6 md:py-6">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 md:gap-5">
         {/* Total Rincian */}
-        <TotalRincian pendapatan={totalIncome} pengeluaran={totalOutcome} />
+        <TotalRincian />
 
         {/* Chart + Dropdown Filter */}
         <div className="bg-white rounded-md col-span-1 md:col-span-8 shadow">

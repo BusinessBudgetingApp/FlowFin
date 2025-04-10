@@ -20,16 +20,7 @@ const options: ChartOptions<"pie"> = {
   maintainAspectRatio: false,
   plugins: {
     legend: {
-      display: false
-      // position: "bottom",
-      // labels: {
-      //   boxWidth: 20,
-      //   font: {
-      //     size: 12,
-      //   },
-      // },
-
-
+      display: false,
     },
     tooltip: {
       enabled: true,
@@ -64,7 +55,6 @@ export default function Chart({
   const { user } = useAuth();
   const income: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
   const outcome: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
-
 
   const incomeByMonth = income.filter((i) => {
     const transactionDate = (i.timestamp as Timestamp).toDate();

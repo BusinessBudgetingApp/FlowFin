@@ -2,9 +2,14 @@ import { IncomeTransaction } from "@/types/transaction";
 import { getData } from "./firestore";
 import { Timestamp } from "firebase/firestore";
 
-export async function getDataByMonth(month?: number, year?: number) {
+export async function getDataByMonth(
+  userId?: string,
+  month?: number,
+  year?: number
+) {
   try {
-    const transactions: IncomeTransaction[] = await getData();
+    const getTransactions: IncomeTransaction[] = await getData();
+    const transactions = getTransactions.filter((t) => t.userId === userId); // Filter berdasarkan userId
 
     const filteredTransactions = transactions.filter((t) => {
       if (!t.timestamp) return false; // Pastikan timestamp ada

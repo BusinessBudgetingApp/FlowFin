@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import aiPen from "../../../public/ai-pen.png";
 import { getAiRecommendation } from "@/hooks/useAi";
+import { useAuth } from "@/hooks/useAuth";
 
 interface AIInsightProps {
   show: boolean;
@@ -15,11 +16,14 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
   const [response, setResponse] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { user } = useAuth();
+  console.log(user);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const result = await getAiRecommendation();
+        const result = await getAiRecommendation(user?.uid);
         setResponse(result);
       } catch (error) {
         console.error("Error fetching AI recommendation:", error);
