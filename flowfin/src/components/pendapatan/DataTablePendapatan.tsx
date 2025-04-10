@@ -17,45 +17,6 @@ export default function DataTablePendapatan({
 }) {
   const router = useRouter();
 
-  const handleDelete = async (id?: string) => {
-    if (!id) {
-      console.error("ID tidak tersedia");
-      toast.error("ID transaksi tidak valid", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      return;
-    }
-
-    const isConfirmed = window.confirm(
-      "Apakah Anda yakin ingin menghapus data ini?"
-    );
-    if (!isConfirmed) return;
-
-    try {
-      const toastId = toast.loading("Menghapus data...", {
-        position: "top-right",
-      });
-
-      await deleteData(id);
-
-      toast.update(toastId, {
-        render: "Data berhasil dihapus!",
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-      });
-
-      router.refresh();
-    } catch (error) {
-      console.error("Gagal menghapus data:", error);
-      toast.error("Terjadi kesalahan saat menghapus data", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
-  };
-
   const truncateDescription = (desc: string, limit = 25) => {
     return desc.length > limit ? `${desc.slice(0, limit)}...` : desc;
   };

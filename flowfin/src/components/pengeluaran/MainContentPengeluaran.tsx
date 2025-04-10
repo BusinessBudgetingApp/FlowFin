@@ -10,14 +10,12 @@ import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { exportPDF } from "@/app/utils/exportPDF";
-import { deleteData, updateData } from "@/lib/firestore";
+import { deleteData } from "@/lib/firestore";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function MainContentPengeluaran() {
   const { user } = useAuth();
-  const [dataTransaction, setDataTransaction] = useState<IncomeTransaction[]>(
-    []
-  );
+
   const [filteredData, setFilteredData] = useState<IncomeTransaction[]>([]);
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [sortOrder, setSortOrder] = useState<string>("");
@@ -32,7 +30,6 @@ export default function MainContentPengeluaran() {
     isLoading,
   } = usePaginatedTransactions(user?.uid, "pengeluaran", 10);
 
-  const [isExporting, setIsExporting] = useState(false);
   const bodyData = useRealTimeUpdate("pengeluaran").filter(
     (item) => item.userId === user?.uid
   );
@@ -145,7 +142,6 @@ export default function MainContentPengeluaran() {
       await deleteData(id);
 
       setFilteredData((prev) => prev.filter((item) => item.id !== id));
-      setDataTransaction((prev) => prev.filter((item) => item.id !== id));
 
       toast.update(toastId, {
         render: "Data berhasil dihapus!",
@@ -165,7 +161,7 @@ export default function MainContentPengeluaran() {
         (t) => t.userId === user?.uid
       );
       const sorted = sortProducts(userTransactions, sortOrder);
-      setDataTransaction(sorted);
+
       setFilteredData(sorted);
     }
   }, [transactions, sortOrder, user?.uid]);

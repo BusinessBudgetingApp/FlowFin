@@ -1,17 +1,12 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import DataTablePendapatan from "../pendapatan/DataTablePendapatan";
 import PaginationPendapatan from "../pendapatan/PaginationPendapatan";
-import { AddCircle, DocumentDownload, Link } from "iconsax-react";
 import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
-import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
 import { formatDate } from "@/app/utils/formatDate";
 import Dashboard from "./Dashboard";
 import { useAuth } from "@/hooks/useAuth";
-import { updateData } from "@/lib/firestore";
-
 export default function MainContentHome() {
   const { user } = useAuth();
   const {

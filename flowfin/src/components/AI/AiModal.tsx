@@ -42,7 +42,7 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
       setResponse(null);
       setLoading(true);
     }
-  }, [show]);
+  }, [show, user?.uid]);
 
   const handleBackdropClick = (e: React.MouseEvent) => {
     if (e.target === e.currentTarget) {

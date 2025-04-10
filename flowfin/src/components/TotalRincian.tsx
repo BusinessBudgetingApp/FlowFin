@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { useAuth } from "@/hooks/useAuth"; 
-import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate"; 
+import { useAuth } from "@/hooks/useAuth";
+import { useRealTimeUpdate } from "@/hooks/useRealtimeUpdate";
 import { IncomeTransaction } from "@/types/transaction";
+import Image from "next/image";
 
 export function TotalRincian() {
-  const { user } = useAuth(); 
+  const { user } = useAuth();
   const allPendapatan: IncomeTransaction[] = useRealTimeUpdate("pendapatan");
   const allPengeluaran: IncomeTransaction[] = useRealTimeUpdate("pengeluaran");
 
@@ -13,7 +14,6 @@ export function TotalRincian() {
 
   useEffect(() => {
     if (user) {
-     
       const userPendapatan = allPendapatan
         .filter((t) => t.userId === user.uid)
         .reduce((total, t) => total + t.amount, 0);
@@ -35,11 +35,12 @@ export function TotalRincian() {
       <div className="space-y-4 p-4 w-full">
         <div className="flex items-center p-3 md:p-4 border border-gray-200 rounded-md">
           <div className="mr-3 md:mr-4">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center">
-              <img
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-full flex items-center justify-center relative">
+              <Image
                 src="/icons/pemasukan.svg"
                 alt="Pemasukan Icon"
-                className="w-6 h-6 md:w-9 md:h-9"
+                fill
+                className="object-contain"
               />
             </div>
           </div>
@@ -47,17 +48,20 @@ export function TotalRincian() {
             <p className="text-lg md:text-2xl font-bold">
               Rp {pendapatan.toLocaleString("id-ID")}
             </p>
-            <p className="text-gray-500 text-sm md:text-base">Total Pendapatan</p>
+            <p className="text-gray-500 text-sm md:text-base">
+              Total Pendapatan
+            </p>
           </div>
         </div>
 
         <div className="flex items-center p-3 md:p-4 border border-gray-200 rounded-md">
           <div className="mr-3 md:mr-4">
-            <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-full flex items-center justify-center">
-              <img
+            <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-full flex items-center justify-center relative">
+              <Image
                 src="/icons/pengeluaran.svg"
                 alt="Pengeluaran Icon"
-                className="w-6 h-6 md:w-9 md:h-9"
+                fill
+                className="object-contain"
               />
             </div>
           </div>
@@ -65,7 +69,9 @@ export function TotalRincian() {
             <p className="text-lg md:text-2xl font-bold">
               Rp {pengeluaran.toLocaleString("id-ID")}
             </p>
-            <p className="text-gray-500 text-sm md:text-base">Total Pengeluaran</p>
+            <p className="text-gray-500 text-sm md:text-base">
+              Total Pengeluaran
+            </p>
           </div>
         </div>
       </div>

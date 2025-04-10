@@ -1,5 +1,5 @@
 "use client";
-import React, { ReactNode, MouseEventHandler } from "react";
+import React, { ReactNode } from "react";
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
@@ -62,7 +62,7 @@ export default function AnimatedDropdown({
               {React.Children.map(children, (child) => {
                 if (React.isValidElement(child)) {
                   return React.cloneElement(child, {
-                    // @ts-ignore
+                    // @ts-expect-error
                     onSelect: (value: string) => {
                       onSelect(value);
                       setIsOpen(false);

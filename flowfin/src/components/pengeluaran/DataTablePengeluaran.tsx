@@ -2,9 +2,6 @@ import { formatDate } from "@/app/utils/formatDate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Edit2, Trash } from "iconsax-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { deleteData } from "@/lib/firestore";
-import { toast } from "react-toastify";
 
 export default function DataTablePengeluaran({
   data,
@@ -15,45 +12,6 @@ export default function DataTablePengeluaran({
   currentPage: number;
   onDelete: (id?: string) => void;
 }) {
-  const router = useRouter();
-
-  const handleDelete = async (id?: string) => {
-    if (!id) {
-      toast.error("ID transaksi tidak valid", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-      return;
-    }
-
-    const isConfirmed = window.confirm(
-      "Apakah Anda yakin ingin menghapus data pengeluaran ini?"
-    );
-    if (!isConfirmed) return;
-
-    try {
-      const toastId = toast.loading("Menghapus data pengeluaran...", {
-        position: "top-right",
-      });
-
-      await deleteData(id);
-
-      toast.update(toastId, {
-        render: "Data pengeluaran berhasil dihapus!",
-        type: "success",
-        isLoading: false,
-        autoClose: 2000,
-      });
-
-      router.refresh();
-    } catch (error) {
-      toast.error("Terjadi kesalahan saat menghapus data pengeluaran", {
-        position: "top-right",
-        autoClose: 3000,
-      });
-    }
-  };
-
   const truncateDescription = (desc: string, limit = 25) => {
     return desc.length > limit ? `${desc.slice(0, limit)}...` : desc;
   };
