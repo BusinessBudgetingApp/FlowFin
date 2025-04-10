@@ -2,9 +2,6 @@ import { formatDate } from "@/app/utils/formatDate";
 import { IncomeTransaction } from "@/types/transaction";
 import { Edit2, Trash } from "iconsax-react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
-import { deleteData } from "@/lib/firestore";
-import { toast } from "react-toastify";
 
 export default function DataTablePendapatan({
   item,
@@ -15,8 +12,6 @@ export default function DataTablePendapatan({
   currentPage: number;
   onDelete: (id?: string) => void;
 }) {
-  const router = useRouter();
-
   const truncateDescription = (desc: string, limit = 25) => {
     return desc.length > limit ? `${desc.slice(0, limit)}...` : desc;
   };

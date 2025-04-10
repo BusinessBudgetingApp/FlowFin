@@ -2,7 +2,6 @@ import { db } from "@/lib/firebase";
 import { IncomeTransaction } from "@/types/transaction";
 import {
   collection,
-  DocumentSnapshot,
   onSnapshot,
   orderBy,
   query,
