@@ -51,7 +51,10 @@ export default function MainContentHome() {
           </h1>
           {/* Desktop Table */}
           {isLoading ? (
-            <p>Loading...</p>
+            <div className="flex justify-center p-5 gap-3">
+              <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+              <p className="text-lg text-black dark:text-white">Loading...</p>
+            </div>
           ) : (
             <div className="hidden md:block overflow-x-auto rounded-lg border border-gray-200 bg-white">
               <table className="min-w-full text-sm text-left divide-y divide-gray-200">
@@ -155,15 +158,17 @@ export default function MainContentHome() {
           </div>
 
           {/* Pagination */}
-          <div className="justify-center flex">
-            <PaginationPendapatan
-              currentPage={currentPage}
-              totalPages={totalPages}
-              setCurrentPage={setCurrentPage}
-              hasPrev={hasPrev}
-              hasNext={hasNext}
-            />
-          </div>
+          {filteredTransactions.length > 10 && (
+            <div className="justify-center flex">
+              <PaginationPendapatan
+                currentPage={currentPage}
+                totalPages={totalPages}
+                setCurrentPage={setCurrentPage}
+                hasPrev={hasPrev}
+                hasNext={hasNext}
+              />
+            </div>
+          )}
         </div>
       </div>
     </>

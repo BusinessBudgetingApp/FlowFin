@@ -251,13 +251,15 @@ export default function MainContentPengeluaran() {
             onDelete={handleDelete}
           />
         )}
-        <PaginationPengeluaran
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          hasPrev={hasPrev}
-          hasNext={hasNext}
-        />
+        {filteredData.length > 10 && (
+          <PaginationPengeluaran
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
+        )}
       </div>
     </>
   );

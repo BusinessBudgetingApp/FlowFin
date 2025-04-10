@@ -254,14 +254,15 @@ export default function MainContentPendapatan() {
             onDelete={handleDelete}
           />
         )}
-
-        <PaginationPendapatan
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          hasPrev={hasPrev}
-          hasNext={hasNext}
-        />
+        {filteredData.length > 10 && (
+          <PaginationPendapatan
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
+        )}
       </div>
     </>
   );
