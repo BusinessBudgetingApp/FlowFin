@@ -95,7 +95,6 @@ export default function Dashboard() {
                   label="Tahun"
                   selected={selectedYear.toString()}
                   onSelect={(value) => setSelectedYear(Number(value))}
-                  className="w-full"
                 >
                   {uniqueYears.map((year) => (
                     <DropdownItem
@@ -116,7 +115,6 @@ export default function Dashboard() {
                   label="Bulan"
                   selected={selectedMonth.toString()}
                   onSelect={(value) => setSelectedMonth(Number(value))}
-                  className="w-full"
                 >
                   {months.map(({ id, name }) => (
                     <DropdownItem
