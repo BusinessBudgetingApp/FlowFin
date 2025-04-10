@@ -8,4 +8,5 @@ export interface IncomeTransaction {
   timestamp: Timestamp;
   transactionType?: string;
   description: string;
+  userId?: string; // Optional user ID field
 }

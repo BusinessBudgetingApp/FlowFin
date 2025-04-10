@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
 import { exportPDF } from "@/app/utils/exportPDF";
-import { deleteData, updateData } from "@/lib/firestore"; 
+import { deleteData, updateData } from "@/lib/firestore";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function MainContentPengeluaran() {
@@ -30,11 +30,13 @@ export default function MainContentPengeluaran() {
     setCurrentPage,
     hasNext,
     hasPrev,
-    isLoading
+    isLoading,
   } = usePaginatedTransactions("pengeluaran", 10);
 
   const [isExporting, setIsExporting] = useState(false);
-  const bodyData = useRealTimeUpdate("pengeluaran");
+  const bodyData = useRealTimeUpdate("pengeluaran").filter(
+    (item) => item.userId === user?.uid
+  );
 
   const sortProducts = (data: IncomeTransaction[], order: string) => {
     if (order === "harga-tertinggi") {
@@ -52,8 +54,8 @@ export default function MainContentPengeluaran() {
     const filtered = !query
       ? transactions
       : transactions.filter((item) =>
-        item.productName.toLowerCase().includes(query)
-      );
+          item.productName.toLowerCase().includes(query)
+        );
 
     const sorted = sortProducts(filtered, sortOrder);
     setFilteredData(sorted);
@@ -65,68 +67,68 @@ export default function MainContentPengeluaran() {
     setFilteredData(sortProducts(filteredData, order));
   };
 
-  const exportToExcel = () => {
-    if (isExporting) return;
-    setIsExporting(true);
+  // const exportToExcel = () => {
+  //   if (isExporting) return;
+  //   setIsExporting(true);
 
-    try {
-      if (!filteredData || filteredData.length === 0) {
-        toast.warning("Tidak ada data untuk diekspor");
-        return;
-      }
+  //   try {
+  //     if (!filteredData || filteredData.length === 0) {
+  //       toast.warning("Tidak ada data untuk diekspor");
+  //       return;
+  //     }
 
-      const formattedData = filteredData.map((item) => ({
-        Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        }),
-        "Nama Produk": item.productName,
-        Kategori: item.category,
-        Jumlah: item.amount,
-        Deskripsi: item.description || "-",
-        "Tipe Transaksi": item.transactionType || "-",
-      }));
+  //     const formattedData = filteredData.map((item) => ({
+  //       Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
+  //         day: "2-digit",
+  //         month: "2-digit",
+  //         year: "numeric",
+  //       }),
+  //       "Nama Produk": item.productName,
+  //       Kategori: item.category,
+  //       Jumlah: item.amount,
+  //       Deskripsi: item.description || "-",
+  //       "Tipe Transaksi": item.transactionType || "-",
+  //     }));
 
-      const worksheet = XLSX.utils.json_to_sheet(formattedData);
-      worksheet["!cols"] = [
-        { wch: 12 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 15 },
-        { wch: 30 },
-        { wch: 20 },
-      ];
+  //     const worksheet = XLSX.utils.json_to_sheet(formattedData);
+  //     worksheet["!cols"] = [
+  //       { wch: 12 },
+  //       { wch: 20 },
+  //       { wch: 20 },
+  //       { wch: 15 },
+  //       { wch: 30 },
+  //       { wch: 20 },
+  //     ];
 
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pengeluaran");
+  //     const workbook = XLSX.utils.book_new();
+  //     XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pengeluaran");
 
-      const excelBuffer = XLSX.write(workbook, {
-        bookType: "xlsx",
-        type: "array",
-      });
+  //     const excelBuffer = XLSX.write(workbook, {
+  //       bookType: "xlsx",
+  //       type: "array",
+  //     });
 
-      const blob = new Blob([excelBuffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
+  //     const blob = new Blob([excelBuffer], {
+  //       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  //     });
 
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      const transactionType = filteredData[0]?.transactionType || "Pengeluaran";
-      a.href = url;
-      a.download = `Data_${transactionType}_${new Date().toISOString().split("T")[0]
-        }.xlsx`;
-      a.click();
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     const transactionType = filteredData[0]?.transactionType || "Pengeluaran";
+  //     a.href = url;
+  //     a.download = `Data_${transactionType}_${new Date().toISOString().split("T")[0]
+  //       }.xlsx`;
+  //     a.click();
 
-      URL.revokeObjectURL(url);
-      toast.success("Data berhasil diunduh");
-    } catch (error) {
-      console.error("Gagal mengekspor data:", error);
-      toast.error("Gagal mengekspor data");
-    } finally {
-      setIsExporting(false);
-    }
-  };
+  //     URL.revokeObjectURL(url);
+  //     toast.success("Data berhasil diunduh");
+  //   } catch (error) {
+  //     console.error("Gagal mengekspor data:", error);
+  //     toast.error("Gagal mengekspor data");
+  //   } finally {
+  //     setIsExporting(false);
+  //   }
+  // };
 
   const handleDelete = async (id?: string) => {
     if (!id) {
@@ -134,7 +136,9 @@ export default function MainContentPengeluaran() {
       return;
     }
 
-    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data ini?");
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data ini?"
+    );
     if (!isConfirmed) return;
 
     try {
@@ -242,7 +246,11 @@ export default function MainContentPengeluaran() {
             <p className="text-lg text-black dark:text-white">Loading...</p>
           </div>
         ) : (
-          <DataTablePengeluaran data={filteredData} currentPage={currentPage} onDelete={handleDelete} />
+          <DataTablePengeluaran
+            data={filteredData}
+            currentPage={currentPage}
+            onDelete={handleDelete}
+          />
         )}
         <PaginationPengeluaran
           currentPage={currentPage}

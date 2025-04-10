@@ -33,9 +33,12 @@ export default function MainContentPendapatan() {
     hasPrev,
     isLoading,
   } = usePaginatedTransactions("pendapatan", 10);
-  const [isExporting, setIsExporting] = useState(false);
+  // const [isExporting, setIsExporting] = useState(false);
 
-  const bodyData = useRealTimeUpdate("pendapatan");
+  // export to pdf
+  const bodyData = useRealTimeUpdate("pendapatan").filter(
+    (item) => item.userId === user?.uid
+  );
 
   const sortProducts = (data: IncomeTransaction[], order: string) => {
     if (order === "harga-tertinggi") {
@@ -53,8 +56,8 @@ export default function MainContentPendapatan() {
     const filtered = !query
       ? transactions
       : transactions.filter((item) =>
-        item.productName.toLowerCase().includes(query)
-      );
+          item.productName.toLowerCase().includes(query)
+        );
 
     const sorted = sortProducts(filtered, sortOrder);
     setFilteredData(sorted);
@@ -66,79 +69,82 @@ export default function MainContentPendapatan() {
     setFilteredData(sortProducts(filteredData, order));
   };
 
-  const exportToExcel = () => {
-    if (isExporting) return;
-    setIsExporting(true);
+  // const exportToExcel = () => {
+  //   if (isExporting) return;
+  //   setIsExporting(true);
 
-    try {
-      if (!filteredData || filteredData.length === 0) {
-        toast.warning("Tidak ada data untuk diekspor");
-        return;
-      }
+  //   try {
+  //     if (!filteredData || filteredData.length === 0) {
+  //       toast.warning("Tidak ada data untuk diekspor");
+  //       return;
+  //     }
 
-      const formattedData = filteredData.map((item) => ({
-        Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "numeric",
-        }),
-        "Nama Produk": item.productName,
-        Kategori: item.category,
-        Jumlah: item.amount,
-        Deskripsi: item.description || "-",
-      }));
+  //     const formattedData = filteredData.map((item) => ({
+  //       Tanggal: item.timestamp.toDate().toLocaleDateString("id-ID", {
+  //         day: "2-digit",
+  //         month: "2-digit",
+  //         year: "numeric",
+  //       }),
+  //       "Nama Produk": item.productName,
+  //       Kategori: item.category,
+  //       Jumlah: item.amount,
+  //       Deskripsi: item.description || "-",
+  //     }));
 
-      const worksheet = XLSX.utils.json_to_sheet(formattedData);
-      worksheet["!cols"] = [
-        { wch: 12 },
-        { wch: 20 },
-        { wch: 20 },
-        { wch: 15 },
-        { wch: 30 },
-      ];
+  //     const worksheet = XLSX.utils.json_to_sheet(formattedData);
+  //     worksheet["!cols"] = [
+  //       { wch: 12 },
+  //       { wch: 20 },
+  //       { wch: 20 },
+  //       { wch: 15 },
+  //       { wch: 30 },
+  //     ];
 
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pendapatan");
+  //     const workbook = XLSX.utils.book_new();
+  //     XLSX.utils.book_append_sheet(workbook, worksheet, "Data Pendapatan");
 
-      const excelBuffer = XLSX.write(workbook, {
-        bookType: "xlsx",
-        type: "array",
-      });
+  //     const excelBuffer = XLSX.write(workbook, {
+  //       bookType: "xlsx",
+  //       type: "array",
+  //     });
 
-      const blob = new Blob([excelBuffer], {
-        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-      });
+  //     const blob = new Blob([excelBuffer], {
+  //       type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+  //     });
 
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
-      a.href = url;
-      a.download = `Data_Pendapatan_${new Date().toISOString().split("T")[0]
-        }.xlsx`;
-      a.click();
-      URL.revokeObjectURL(url);
+  //     const url = URL.createObjectURL(blob);
+  //     const a = document.createElement("a");
+  //     a.href = url;
+  //     a.download = `Data_Pendapatan_${new Date().toISOString().split("T")[0]
+  //       }.xlsx`;
+  //     a.click();
+  //     URL.revokeObjectURL(url);
 
-      toast.success("Data berhasil diunduh");
-    } catch (error) {
-      console.error("Gagal mengekspor data:", error);
-      toast.error("Gagal mengekspor data");
-    } finally {
-      setIsExporting(false);
-    }
-  };
+  //     toast.success("Data berhasil diunduh");
+  //   } catch (error) {
+  //     console.error("Gagal mengekspor data:", error);
+  //     toast.error("Gagal mengekspor data");
+  //   } finally {
+  //     setIsExporting(false);
+  //   }
+  // };
+  //
 
+  // fungsi delete data
   const handleDelete = async (id?: string) => {
     if (!id) {
       toast.error("ID transaksi tidak valid");
       return;
     }
 
-    const isConfirmed = window.confirm("Apakah Anda yakin ingin menghapus data ini?");
+    const isConfirmed = window.confirm(
+      "Apakah Anda yakin ingin menghapus data ini?"
+    );
     if (!isConfirmed) return;
 
     try {
       const toastId = toast.loading("Menghapus data...");
       await deleteData(id);
-
 
       setFilteredData((prev) => prev.filter((item) => item.id !== id));
       setDataTransaction((prev) => prev.filter((item) => item.id !== id));
@@ -158,7 +164,7 @@ export default function MainContentPendapatan() {
   useEffect(() => {
     if (transactions) {
       const userTransactions = transactions.filter(
-        (t) => t.userId === user?.uid 
+        (t) => t.userId === user?.uid
       );
       const sorted = sortProducts(userTransactions, sortOrder);
       setDataTransaction(sorted);
@@ -237,12 +243,16 @@ export default function MainContentPendapatan() {
         </div>
 
         {isLoading ? (
-           <div className="flex justify-center p-5 gap-3">
-           <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
-           <p className="text-lg text-black dark:text-white">Loading...</p>
-         </div>
+          <div className="flex justify-center p-5 gap-3">
+            <div className="animate-spin w-8 h-8 border-4 border-blue-500 border-t-transparent rounded-full"></div>
+            <p className="text-lg text-black dark:text-white">Loading...</p>
+          </div>
         ) : (
-          <DataTablePendapatan item={filteredData} currentPage={currentPage} onDelete={handleDelete} />
+          <DataTablePendapatan
+            item={filteredData}
+            currentPage={currentPage}
+            onDelete={handleDelete}
+          />
         )}
 
         <PaginationPendapatan
