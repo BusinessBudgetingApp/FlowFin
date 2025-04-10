@@ -31,7 +31,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className="overflow-x-hidden">
-      <ToastContainer />
+        <ToastContainer />
         <div className="min-w-screen container min-h-screen bg-gray-100 flex ">
           <Sidebar />
           <div className="w-full">

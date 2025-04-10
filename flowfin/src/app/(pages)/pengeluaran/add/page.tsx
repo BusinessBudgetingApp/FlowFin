@@ -7,9 +7,10 @@ import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useAuth } from "@/hooks/useAuth";
+import { withAuth } from "@/lib/withAuth";
 
-export default function AddPengeluaran() {
-  const { user } = useAuth(); 
+function AddPengeluaran() {
+  const { user } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
   const baseRoute = pathname.split("/")[1];
@@ -44,7 +45,7 @@ export default function AddPengeluaran() {
         description,
         timestamp: Timestamp.fromDate(timestamp),
         transactionType,
-        userId: user?.uid, 
+        userId: user?.uid,
       };
 
       // Show loading toast
@@ -187,3 +188,5 @@ export default function AddPengeluaran() {
     </>
   );
 }
+
+export default withAuth(AddPengeluaran);

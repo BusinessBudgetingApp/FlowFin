@@ -6,9 +6,10 @@ import { usePathname, useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { useAuth } from "@/hooks/useAuth"; 
+import { useAuth } from "@/hooks/useAuth";
+import { withAuth } from "@/lib/withAuth";
 
-export default function AddData() {
+function AddData() {
   const { user } = useAuth();
   const pathname = usePathname();
   const router = useRouter();
@@ -41,7 +42,7 @@ export default function AddData() {
         description,
         timestamp: Timestamp.fromDate(timestamp),
         transactionType,
-        userId: user?.uid, 
+        userId: user?.uid,
       };
 
       const toastId = toast.loading("Menyimpan data...");
@@ -58,7 +59,6 @@ export default function AddData() {
       setTimeout(() => {
         router.push("/pendapatan");
       }, 1000);
-
     } catch (error) {
       console.error("Error saving data:", error);
       toast.error("Gagal menyimpan data");
@@ -172,3 +172,5 @@ export default function AddData() {
     </div>
   );
 }
+
+export default withAuth(AddData);

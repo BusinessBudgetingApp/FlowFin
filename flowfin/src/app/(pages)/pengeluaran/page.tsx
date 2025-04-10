@@ -4,11 +4,11 @@ import MainContentPengeluaran from "@/components/pengeluaran/MainContentPengelua
 import { withAuth } from "@/lib/withAuth";
 
 function PengeluaranPage() {
-    return (
-        <>
-            <MainContentPengeluaran />
-        </>
-    );
+  return (
+    <>
+      <MainContentPengeluaran />
+    </>
+  );
 }
 
 export default withAuth(PengeluaranPage);

@@ -9,8 +9,9 @@ import { Timestamp } from "firebase/firestore";
 import { updateData } from "@/lib/firestore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { withAuth } from "@/lib/withAuth";
 
-export default function EditPengeluaran() {
+function EditPengeluaran() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -217,3 +218,5 @@ export default function EditPengeluaran() {
     </>
   );
 }
+
+export default withAuth(EditPengeluaran);

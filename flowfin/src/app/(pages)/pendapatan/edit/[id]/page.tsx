@@ -9,8 +9,9 @@ import { Timestamp } from "firebase/firestore";
 import { updateData } from "@/lib/firestore";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { withAuth } from "@/lib/withAuth";
 
-export default function EditPendapatan() {
+function EditPendapatan() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -51,9 +52,11 @@ export default function EditPendapatan() {
     fetchData();
   }, [id, router]);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       [name]: name === "amount" ? Number(value) : value,
     }));
@@ -61,7 +64,7 @@ export default function EditPendapatan() {
 
   const handleDateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const date = new Date(e.target.value);
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
       timestamp: Timestamp.fromDate(date),
     }));
@@ -72,7 +75,7 @@ export default function EditPendapatan() {
 
     try {
       const toastId = toast.loading("Menyimpan perubahan...", {
-        position: "top-right"
+        position: "top-right",
       });
 
       await updateData(id, formData);
@@ -87,7 +90,6 @@ export default function EditPendapatan() {
       setTimeout(() => {
         router.push("/pendapatan");
       }, 1000);
-
     } catch (error) {
       console.error("Error updating document: ", error);
       toast.error("Gagal menyimpan perubahan", {
@@ -99,7 +101,7 @@ export default function EditPendapatan() {
 
   const formatDateForInput = (timestamp: Timestamp) => {
     const date = timestamp.toDate();
-    return date.toISOString().split('T')[0];
+    return date.toISOString().split("T")[0];
   };
 
   return (
@@ -113,7 +115,9 @@ export default function EditPendapatan() {
             {/* Responsive grid */}
             <div className="flex flex-col md:flex-row flex-wrap gap-4">
               <div className="flex-1 min-w-[240px]">
-                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Nama Produk</label>
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">
+                  Nama Produk
+                </label>
                 <input
                   placeholder="Nama Produk"
                   type="text"
@@ -126,11 +130,17 @@ export default function EditPendapatan() {
               </div>
 
               <div className="flex-1 min-w-[240px]">
-                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Tanggal</label>
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">
+                  Tanggal
+                </label>
                 <input
                   type="date"
                   name="timestamp"
-                  value={formData.timestamp ? formatDateForInput(formData.timestamp) : ""}
+                  value={
+                    formData.timestamp
+                      ? formatDateForInput(formData.timestamp)
+                      : ""
+                  }
                   onChange={handleDateChange}
                   className="w-full p-2 border border-gray-300 rounded-md text-gray-600"
                   required
@@ -138,7 +148,9 @@ export default function EditPendapatan() {
               </div>
 
               <div className="flex-1 min-w-[240px]">
-                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Kategori Pendapatan</label>
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">
+                  Kategori Pendapatan
+                </label>
                 <input
                   name="category"
                   value={formData.category}
@@ -151,7 +163,9 @@ export default function EditPendapatan() {
               </div>
 
               <div className="flex-1 min-w-[240px]">
-                <label className="block text-[14px] text-[#212121] mb-2 font-medium">Jumlah Pendapatan</label>
+                <label className="block text-[14px] text-[#212121] mb-2 font-medium">
+                  Jumlah Pendapatan
+                </label>
                 <input
                   type="number"
                   name="amount"
@@ -165,7 +179,9 @@ export default function EditPendapatan() {
             </div>
 
             <div>
-              <label className="block text-[14px] text-[#212121] mb-2 font-medium">Deskripsi Transaksi</label>
+              <label className="block text-[14px] text-[#212121] mb-2 font-medium">
+                Deskripsi Transaksi
+              </label>
               <textarea
                 className="w-full p-2 border border-gray-300 rounded-md text-gray-600 placeholder-gray-400"
                 placeholder="Deskripsi Transaksi"
@@ -180,12 +196,14 @@ export default function EditPendapatan() {
               <button
                 type="button"
                 onClick={() => router.push("/pendapatan")}
-                className="bg-gray-300 text-gray-700 px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-gray-400 transition-colors cursor-pointer">
+                className="bg-gray-300 text-gray-700 px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-gray-400 transition-colors cursor-pointer"
+              >
                 Batal
               </button>
               <button
                 className="bg-[#00859B] text-white px-4 py-2 font-semibold text-[14px] rounded-full hover:bg-[#497d88] transition-colors cursor-pointer"
-                type="submit">
+                type="submit"
+              >
                 Simpan Perubahan
               </button>
             </div>
@@ -195,3 +213,5 @@ export default function EditPendapatan() {
     </div>
   );
 }
+
+export default withAuth(EditPendapatan);
