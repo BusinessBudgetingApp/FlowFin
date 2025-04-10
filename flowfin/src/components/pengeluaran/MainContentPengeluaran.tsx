@@ -8,7 +8,6 @@ import DataTablePengeluaran from "./DataTablePengeluaran";
 import PaginationPengeluaran from "./PaginationPengeluaran";
 import { usePaginatedTransactions } from "@/hooks/usePaginatedTransactions";
 import { useEffect, useState } from "react";
-import * as XLSX from "xlsx";
 import { toast } from "react-toastify";
 import { exportPDF } from "@/app/utils/exportPDF";
 import { deleteData, updateData } from "@/lib/firestore";
@@ -31,7 +30,7 @@ export default function MainContentPengeluaran() {
     hasNext,
     hasPrev,
     isLoading,
-  } = usePaginatedTransactions("pengeluaran", 10);
+  } = usePaginatedTransactions(user?.uid, "pengeluaran", 10);
 
   const [isExporting, setIsExporting] = useState(false);
   const bodyData = useRealTimeUpdate("pengeluaran").filter(

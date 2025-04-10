@@ -13,6 +13,7 @@ import {
 import { useEffect, useState } from "react";
 
 export const usePaginatedTransactions = (
+  userId?: string,
   categoryTransaction?: string,
   pageLimit = 8
 ) => {
@@ -26,21 +27,22 @@ export const usePaginatedTransactions = (
     setIsLoading(true);
 
     const productRef = collection(db, "transaction");
-    let conditions = [
-      where("transactionType", "==", categoryTransaction),
+
+    // Build filter conditions
+    const conditions = [
+      where("userId", "==", userId),
+      ...(categoryTransaction
+        ? [where("transactionType", "==", categoryTransaction)]
+        : []),
       orderBy("timestamp", "desc"),
     ];
-
-    if (!categoryTransaction) {
-      conditions = [orderBy("timestamp", "desc")];
-    }
 
     let q;
 
     if (page === 1) {
       q = query(productRef, ...conditions, limit(pageLimit));
     } else {
-      const lastSnapshot = pageSnapshots[page - 2]; // halaman sebelumnya
+      const lastSnapshot = pageSnapshots[page - 2]; // page-2 = halaman sebelumnya
       if (!lastSnapshot) {
         setIsLoading(false);
         return;
@@ -62,7 +64,7 @@ export const usePaginatedTransactions = (
     setTransactions(data);
     setCurrentPage(page);
 
-    // simpan snapshot terakhir untuk pagination
+    // Simpan snapshot terakhir
     if (querySnapshot.docs.length > 0) {
       setPageSnapshots((prev) => {
         const newSnapshots = [...prev];
@@ -72,6 +74,7 @@ export const usePaginatedTransactions = (
       });
     }
 
+    // Hitung total halaman (hanya sekali di halaman 1)
     if (page === 1) {
       const total = (await getDocs(query(productRef, ...conditions))).size;
       setTotalPages(Math.ceil(total / pageLimit));
@@ -81,9 +84,11 @@ export const usePaginatedTransactions = (
   };
 
   useEffect(() => {
-    fetchTransactions(currentPage);
+    if (userId) {
+      fetchTransactions(currentPage);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [categoryTransaction, currentPage]);
+  }, [userId, categoryTransaction, currentPage]);
 
   return {
     transactions,

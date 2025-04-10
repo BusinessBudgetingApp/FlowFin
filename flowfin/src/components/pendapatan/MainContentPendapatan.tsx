@@ -32,7 +32,7 @@ export default function MainContentPendapatan() {
     hasNext,
     hasPrev,
     isLoading,
-  } = usePaginatedTransactions("pendapatan", 10);
+  } = usePaginatedTransactions(user?.uid, "pendapatan", 10);
   // const [isExporting, setIsExporting] = useState(false);
 
   // export to pdf
