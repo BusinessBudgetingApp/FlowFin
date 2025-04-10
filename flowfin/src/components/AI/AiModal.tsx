@@ -2,10 +2,11 @@
 
 import { X } from "lucide-react";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+
 import aiPen from "../../../public/ai-pen.png";
 import { getAiRecommendation } from "@/hooks/useAi";
 import { useAuth } from "@/hooks/useAuth";
+import { useEffect, useState } from "react";
 
 interface AIInsightProps {
   show: boolean;
@@ -75,15 +76,18 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
                   Insight dari AI
                 </h2>
               </div>
-
-              <button
-                onClick={onClose}
-                className="absolute right-4 flex items-center space-x-1 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
-                aria-label="Tutup modal"
-              >
-                <X className="w-5 h-5" />
-                <span className="text-sm hidden sm:inline">Tutup</span>
-              </button>
+              {loading ? (
+                ""
+              ) : (
+                <button
+                  onClick={onClose}
+                  className="absolute right-4 flex items-center space-x-1 text-gray-500 hover:text-gray-700 transition-colors cursor-pointer"
+                  aria-label="Tutup modal"
+                >
+                  <X className="w-5 h-5" />
+                  <span className="text-sm hidden sm:inline">Tutup</span>
+                </button>
+              )}
             </header>
 
             {/* Konten */}
@@ -100,9 +104,11 @@ export default function AiModal({ show, onClose }: AIInsightProps) {
                 <div className="text-gray-700 ">
                   {response ? (
                     <div className="space-y-4 text-sm leading-relaxed">
-                      {response.split("\n").map((paragraph, index) => (
-                        <p key={index}>{paragraph}</p>
-                      ))}
+                      {response
+                        .split("\n")
+                        .map((paragraph: string, index: number) => (
+                          <p key={index}>{paragraph}</p>
+                        ))}
                     </div>
                   ) : (
                     <div className="text-center py-8 text-gray-500">
