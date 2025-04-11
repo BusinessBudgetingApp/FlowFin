@@ -28,6 +28,7 @@ export default function MainContentPengeluaran() {
     hasNext,
     hasPrev,
     isLoading,
+    refetch,
   } = usePaginatedTransactions(user?.uid, "pengeluaran", 8);
 
   const bodyData = useRealTimeUpdate("pengeluaran").filter(
@@ -140,7 +141,7 @@ export default function MainContentPengeluaran() {
     try {
       const toastId = toast.loading("Menghapus data...");
       await deleteData(id);
-
+      await refetch(); // Refetch data setelah menghapus
       setFilteredData((prev) => prev.filter((item) => item.id !== id));
 
       toast.update(toastId, {

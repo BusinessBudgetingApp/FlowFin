@@ -28,6 +28,7 @@ export default function MainContentPendapatan() {
     hasNext,
     hasPrev,
     isLoading,
+    refetch,
   } = usePaginatedTransactions(user?.uid, "pendapatan", 8);
   // const [isExporting, setIsExporting] = useState(false);
 
@@ -80,7 +81,7 @@ export default function MainContentPendapatan() {
     try {
       const toastId = toast.loading("Menghapus data...");
       await deleteData(id);
-
+      await refetch(); // Refetch data setelah menghapus
       setFilteredData((prev) => prev.filter((item) => item.id !== id));
 
       toast.update(toastId, {

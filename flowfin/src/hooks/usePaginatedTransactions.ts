@@ -98,5 +98,6 @@ export const usePaginatedTransactions = (
     setCurrentPage,
     hasNext: currentPage < totalPages,
     hasPrev: currentPage > 1,
+    refetch: () => fetchTransactions(currentPage),
   };
 };
