@@ -188,15 +188,14 @@ export default function MainContentPendapatan() {
             onDelete={handleDelete}
           />
         )}
-        {filteredData.length > 10 && (
-          <PaginationPendapatan
-            currentPage={currentPage}
-            totalPages={totalPages}
-            setCurrentPage={setCurrentPage}
-            hasPrev={hasPrev}
-            hasNext={hasNext}
-          />
-        )}
+
+        <PaginationPendapatan
+          currentPage={currentPage}
+          totalPages={totalPages}
+          setCurrentPage={setCurrentPage}
+          hasPrev={hasPrev}
+          hasNext={hasNext}
+        />
       </div>
     </>
   );

@@ -17,7 +17,9 @@ export default function MainContentHome() {
     hasNext,
     hasPrev,
     isLoading,
-  } = usePaginatedTransactions(user?.uid); // Ambil userId dari auth context
+  } = usePaginatedTransactions(); // Ambil userId dari auth context
+
+  console.log(totalPages, "<<<<<");
 
   const [filteredTransactions, setFilteredTransactions] = useState<
     IncomeTransaction[]
@@ -153,17 +155,16 @@ export default function MainContentHome() {
           </div>
 
           {/* Pagination */}
-          {filteredTransactions.length > 10 && (
-            <div className="justify-center flex">
-              <PaginationPendapatan
-                currentPage={currentPage}
-                totalPages={totalPages}
-                setCurrentPage={setCurrentPage}
-                hasPrev={hasPrev}
-                hasNext={hasNext}
-              />
-            </div>
-          )}
+
+          <div className="justify-center flex">
+            <PaginationPendapatan
+              currentPage={currentPage}
+              totalPages={totalPages}
+              setCurrentPage={setCurrentPage}
+              hasPrev={hasPrev}
+              hasNext={hasNext}
+            />
+          </div>
         </div>
       </div>
     </>
