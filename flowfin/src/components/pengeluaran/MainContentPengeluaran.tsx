@@ -260,7 +260,8 @@ export default function MainContentPengeluaran() {
         )}
         {searchQuery && (
           <p className="text-sm text-gray-500 mt-2">
-            Ditemukan {filteredData.length} hasil untuk "{searchQuery}"
+            Ditemukan {filteredData.length} hasil untuk &quot;{searchQuery}
+            &quot;
           </p>
         )}
       </div>
