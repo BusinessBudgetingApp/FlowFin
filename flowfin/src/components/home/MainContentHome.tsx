@@ -19,8 +19,6 @@ export default function MainContentHome() {
     isLoading,
   } = usePaginatedTransactions(user?.uid); // Ambil userId dari auth context
 
-  console.log(totalPages, "<<<<<");
-
   const [filteredTransactions, setFilteredTransactions] = useState<
     IncomeTransaction[]
   >([]);

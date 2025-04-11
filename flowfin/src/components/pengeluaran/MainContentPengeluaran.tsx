@@ -28,7 +28,7 @@ export default function MainContentPengeluaran() {
     hasNext,
     hasPrev,
     isLoading,
-  } = usePaginatedTransactions(user?.uid, "pengeluaran", 10);
+  } = usePaginatedTransactions(user?.uid, "pengeluaran", 8);
 
   const bodyData = useRealTimeUpdate("pengeluaran").filter(
     (item) => item.userId === user?.uid
