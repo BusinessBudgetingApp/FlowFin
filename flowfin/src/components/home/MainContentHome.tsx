@@ -17,7 +17,7 @@ export default function MainContentHome() {
     hasNext,
     hasPrev,
     isLoading,
-  } = usePaginatedTransactions(); // Ambil userId dari auth context
+  } = usePaginatedTransactions(user?.uid); // Ambil userId dari auth context
 
   console.log(totalPages, "<<<<<");
 
