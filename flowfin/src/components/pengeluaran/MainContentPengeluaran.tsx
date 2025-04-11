@@ -50,7 +50,7 @@ export default function MainContentPengeluaran() {
 
     const filtered = !query
       ? transactions
-      : transactions.filter((item) =>
+      : bodyData.filter((item) =>
           item.productName.toLowerCase().includes(query)
         );
 

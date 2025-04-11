@@ -52,7 +52,7 @@ export default function MainContentPendapatan() {
 
     const filtered = !query
       ? transactions
-      : transactions.filter((item) =>
+      : bodyData.filter((item) =>
           item.productName.toLowerCase().includes(query)
         );
 
