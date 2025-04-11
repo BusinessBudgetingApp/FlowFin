@@ -13,7 +13,7 @@ export async function getAiRecommendation(userId?: string) {
     selectedYear
   );
   const prompt = `
-    Saya memiliki usaha UMKM dan berikut adalah data finansial saya untuk bulan ${selectedMonth}-${selectedYear}:
+    Saya memiliki usaha  dan berikut adalah data finansial saya untuk bulan ${selectedMonth}-${selectedYear}:
 
     **Pemasukan:**
     ${pemasukan.length > 0 ? pemasukan.join("\n") : "Tidak ada pemasukan"}
@@ -21,7 +21,11 @@ export async function getAiRecommendation(userId?: string) {
     **Pengeluaran:**
     ${pengeluaran.length > 0 ? pengeluaran.join("\n") : "Tidak ada pengeluaran"}
 
-    Berdasarkan data di atas, berikan saya saran finansial yang spesifik untuk meningkatkan profit di bulan berikutnya.
+    Berdasarkan data di atas, berikan saya saran finansial yang spesifik untuk meningkatkan profit di bulan berikutnya. Dan juga berikan saya saran untuk mengurangi pengeluaran yang tidak perlu. Saya ingin tahu langkah-langkah konkret yang bisa saya ambil untuk mencapai tujuan ini.
+    Pastikan saran yang diberikan relevan dengan data yang saya berikan dan mudah dipahami. Saya ingin saran yang praktis dan dapat langsung diterapkan.
+    Saya juga ingin tahu tentang potensi risiko yang mungkin saya hadapi dan bagaimana cara mengatasinya. Berikan saya panduan langkah demi langkah untuk mencapai tujuan finansial saya.
+    Saya ingin saran yang dapat membantu saya mengelola keuangan dengan lebih baik dan mencapai tujuan finansial saya.
+    pastikan ini tidak hanya sekedar saran, tetapi juga contoh langkah yang harus saya ambil misal "kurangi pengeluaran untuk iklan sebesar 20% dan alokasikan ke pemasaran digital" dan lain-lain. saya ingin kamu lebih berfokus kepada saran yang lebih konkret dan spesifik, bukan hanya saran umum.
   `;
   try {
     const response = await axios.post(
