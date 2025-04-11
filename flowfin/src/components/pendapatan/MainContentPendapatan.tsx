@@ -190,13 +190,20 @@ export default function MainContentPendapatan() {
           />
         )}
 
-        <PaginationPendapatan
-          currentPage={currentPage}
-          totalPages={totalPages}
-          setCurrentPage={setCurrentPage}
-          hasPrev={hasPrev}
-          hasNext={hasNext}
-        />
+        {searchQuery === "" && (
+          <PaginationPendapatan
+            currentPage={currentPage}
+            totalPages={totalPages}
+            setCurrentPage={setCurrentPage}
+            hasPrev={hasPrev}
+            hasNext={hasNext}
+          />
+        )}
+        {searchQuery && (
+          <p className="text-sm text-gray-500 mt-2">
+            Ditemukan {filteredData.length} hasil untuk "{searchQuery}"
+          </p>
+        )}
       </div>
     </>
   );
